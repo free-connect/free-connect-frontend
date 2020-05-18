@@ -5,7 +5,12 @@ const adminRoutes = require('./server/routes/admin')
 const authRoutes = require('./server/routes/auth')
 const path = require('path')
 
+//switch pw with this when pushing to github === [***enter your pw here!!! I took it out for privacy or whatever :0***]
+
+const DB_URI = 'mongodb+srv://HelloImTheUser:MrDataDOOD301@clusternode-rhosu.mongodb.net/boulderServices'
+
 const app = express();
+
 const port = process.env.PORT || 3000
 
 app.use(express.static(path.join(__dirname, 'build')))
@@ -27,11 +32,9 @@ app.get('*', (req, res, next) => {
     res.sendFile(path.join(__dirname, 'build', 'index.html'))
 })
 
-//switch pw with this when pushing to github === [***enter your pw here!!! I took it out for privacy or whatever :0***]
-
 mongoose
     .connect(
-        'mongodb+srv://HelloImTheUser:[***enter your pw here!!! I took it out for privacy or whatever :0***]@clusternode-rhosu.mongodb.net/boulderServices?retryWrites=true&w=majority',
+        DB_URI,
         {
             useNewUrlParser: true, 
             useUnifiedTopology: true

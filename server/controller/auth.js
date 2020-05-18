@@ -1,5 +1,6 @@
-const User = require('../models/user')
-const bcrypt = require('bcryptjs')
+const User = require('../models/user');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken')
 
 exports.postRegister = (req, res, next) => {
     const {username, password, affiliation, name, email} = req.body;
@@ -41,6 +42,7 @@ exports.postRegister = (req, res, next) => {
 
 exports.postLogin = (req, res, next) => {
     const { password, username } = req.body;
+    let AuthedUser;
     User
         .findOne({
             username: username
@@ -51,23 +53,42 @@ exports.postLogin = (req, res, next) => {
                     msg: 'no user'
                 })
             }
+            AuthedUser = user;
             return bcrypt
                 .compare(password, user.password)
                 .then(match => {
-                    if (match) {
-                        //set session here!!!
-                        //req.session.loggedIn = true;
-                        //req.session.user = user
-                        // return req.session.save(err => {
-                        //     console.log(err);
-                            return res.json({
+                    if (!match) {
+                        res.json({
+                            msg: 'no match'
+                        })
+                        return;
+                    };
+                    const token = jwt.sign({
+                        email: AuthedUser.email,
+                        userId: AuthedUser._id.toString()
+                    }, 
+                    'ThisStringisObnoxiouslylongforSAFETYBROSEPh!!!!!',
+                    {
+                        expiresIn: '1hr'
+                    }
+                    );
+                    res.json({
+                                token: token,
+                                userId: AuthedUser._id,
                                 msg: 'success'
                             })
-                        // })
-                    }
-                    res.json({
-                        msg: 'no match'
-                    })
                 })
         })
+        .catch(err => console.log(err))
+}
+
+exports.postLogout = (req, res, next) => {
+    // console.log(req.session.user)
+    // req.session
+    // .destroy(err => {
+    //     console.log(err)
+    //     res.json({
+    //         msg: true
+    //     })
+    // })
 }

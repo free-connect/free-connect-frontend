@@ -9,6 +9,11 @@ exports.getResources = (req, res, next) => {
         .catch(err => res.status(500))
 }
 
+exports.getMyResource = (req, res, next) => {
+    //get resource from the resource collection by using the Id specified in the user collection. 
+    // then return it based on the authenticated token.
+}
+
 exports.postAddResource = (req, res, next) => {
     const {title, address, phone, url, services, website} = req.body;
     const resource = new Resource({
