@@ -1,16 +1,16 @@
+require('dotenv').config()
+
 const express = require('express');
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const adminRoutes = require('./server/routes/admin')
 const authRoutes = require('./server/routes/auth')
 const path = require('path')
-
-//switch pw with this when pushing to github === [***enter your pw here!!! I took it out for privacy or whatever :0***]
-
-const DB_URI = 'mongodb+srv://HelloImTheUser:MrDataDOOD301@clusternode-rhosu.mongodb.net/boulderServices'
+const dataBasePassword = process.env.dataBasePassword;
+const dataBaseUser = process.env.dataBaseUser;
+const cluster = process.env.cluster;
 
 const app = express();
-
 const port = process.env.PORT || 3000
 
 app.use(express.static(path.join(__dirname, 'build')))
@@ -34,11 +34,10 @@ app.get('*', (req, res, next) => {
 
 mongoose
     .connect(
-        DB_URI,
+        'mongodb+srv://'+dataBaseUser+':'+dataBasePassword+'@'+cluster+'?retryWrites=true&w=majority',
         {
             useNewUrlParser: true, 
             useUnifiedTopology: true
         })
     .then(() => app.listen(port))
     .catch(err => console.log(err))
-
