@@ -8,7 +8,7 @@ const path = require('path')
 
 //switch pw with this when pushing to github === [***enter your pw here!!! I took it out for privacy or whatever :0***]
 
-const DB_URI = 'mongodb+srv://HelloImTheUser:MrDataDOOD301@clusternode-rhosu.mongodb.net/boulderServices'
+const DB_URI = 'mongodb+srv://HelloImTheUser:[***enter your pw here!!! I took it out for privacy or whatever :0***]@clusternode-rhosu.mongodb.net/boulderServices'
 
 const app = express();
 
