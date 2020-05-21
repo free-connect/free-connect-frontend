@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
@@ -6,9 +8,11 @@ const authRoutes = require('./server/routes/auth');
 const userRoutes = require('./server/routes/user')
 const path = require('path')
 
-//switch pw with this when pushing to github === [***enter your pw here!!! I took it out for privacy or whatever :0***]
+const dataBasePassword = process.env.dataBasePassword
+const dataBaseUser = process.env.dataBaseUser
+const cluster = process.env.cluster
 
-const DB_URI = 'mongodb+srv://HelloImTheUser:[***enter your pw here!!! I took it out for privacy or whatever :0***]@clusternode-rhosu.mongodb.net/boulderServices'
+const DB_URI = 'mongodb+srv://'+dataBaseUser+':'+dataBasePassword+'@' + cluster;
 
 const app = express();
 
