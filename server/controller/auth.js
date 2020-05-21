@@ -67,7 +67,7 @@ exports.postLogin = (req, res, next) => {
                         email: AuthedUser.email,
                         userId: AuthedUser._id.toString()
                     }, 
-                    'ThisStringisObnoxiouslylongforSAFETYBROSEPh!!!!!',
+                    process.env.secret,
                     {
                         expiresIn: '1hr'
                     }
