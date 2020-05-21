@@ -2,7 +2,7 @@ import React from 'react'
 import { ResourceList } from '../components/resource-list/resource-list.component';
 import AddResource from '../components/add-resource-form/add-resource.component';
 
-export const AdminResourcePage = () => {
+export const AdminResourcePage = (props) => {
     const [updated, setUpdated] = React.useState(false)
     
     const handleUpdate = () => {

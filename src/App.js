@@ -31,7 +31,7 @@ function App(props) {
         })
         .then(res => res.json())
         .then(response => {
-            console.log(response)
+            console.log('res', response)
             if (response.msg === 'no user') {
                 alert("You're not a user! That's all good, come register!")
                 props.history.push('/register')
@@ -51,7 +51,13 @@ function App(props) {
               new Date().getTime() + remainingMilliseconds
             );
             localStorage.setItem('expiryDate', expiryDate.toISOString());
-            props.history.push('/resources');
+            console.log('main page token', token)
+            props.history.push({
+              pathname: '/profile',
+              state: {
+                token: response.token
+              }
+            });
         })
         .catch(err => {
           console.log(err);
@@ -70,7 +76,7 @@ function App(props) {
           <Route exact path='/about' component={AboutPage} />
           <Route exact path='/edit-resource' component={AddResource} />
           <Route exact path="/admin-resources" component={AdminResourcePage} />
-          <Route exact path ="/profile" component={ProfilePage} />
+          <Route exact path ="/profile" render={() => <ProfilePage token={token}/>} />
         </Switch>
     </div>
   );

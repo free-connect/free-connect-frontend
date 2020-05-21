@@ -2,7 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const adminRoutes = require('./server/routes/admin')
-const authRoutes = require('./server/routes/auth')
+const authRoutes = require('./server/routes/auth');
+const userRoutes = require('./server/routes/user')
 const path = require('path')
 
 //switch pw with this when pushing to github === [***enter your pw here!!! I took it out for privacy or whatever :0***]
@@ -26,6 +27,7 @@ app.use((req, res, next) => {
 
 app.use(authRoutes);
 app.use(adminRoutes);
+app.use(userRoutes);
 
 
 app.get('*', (req, res, next) => {
