@@ -1,7 +1,16 @@
 const Resource = require('../models/resources')
 
 exports.getResources = (req, res, next) => {
-    Resource
+    if (req.query.city) {
+        const city = req.query.city
+        return Resource
+                .find({city: city})
+                .then(resources => {
+                    res.json(resources)
+                })
+                .catch(err => res.status(500))
+    }           
+    return Resource
         .find()
         .then(resources => {
             res.json(resources)
@@ -10,14 +19,15 @@ exports.getResources = (req, res, next) => {
 }
 
 exports.postAddResource = (req, res, next) => {
-    const {title, address, phone, url, services, website} = req.body;
+    const {title, address, phone, url, services, website, city} = req.body;
     const resource = new Resource({
         title: title,
         address: address,
         phone: phone.split(/\D+/gi).join('').trim(),
         url: url,
         website: website,
-        services: services
+        services: services,
+        city: city
     })
     resource
         .save()
@@ -30,7 +40,7 @@ exports.postAddResource = (req, res, next) => {
 } 
 
 exports.postEditResource = (req, res, next) => {
-    const {title, address, phone, url, services, website, id} = req.body;
+    const {title, address, phone, url, services, website, id, city} = req.body;
     Resource
         .findById(id)
         .then(resource => {
@@ -40,6 +50,7 @@ exports.postEditResource = (req, res, next) => {
             resource.services = services;
             resource.phone = phone;
             resource.website = website;
+            resource.city = city;
             return resource.save()
         })
         .then(() => {

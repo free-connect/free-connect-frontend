@@ -12,7 +12,7 @@ const dataBasePassword = process.env.dataBasePassword
 const dataBaseUser = process.env.dataBaseUser
 const cluster = process.env.cluster
 
-const DB_URI = 'mongodb+srv://'+dataBaseUser+':'+dataBasePassword+'@' + cluster;
+const DB_URI = 'mongodb+srv://'+dataBaseUser+':'+dataBasePassword+'@'+cluster;
 
 const app = express();
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { MainPage } from './pages/main-page/main-page.component';
+import MainPage from './pages/main-page/main-page.component';
 import { AdminResourcePage } from './pages/admin-resource-page.component';
 import { ResourcesPage } from './pages/resources-page.component';
 import AddResource from './components/add-resource-form/add-resource.component';

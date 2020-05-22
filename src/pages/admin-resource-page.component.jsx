@@ -12,7 +12,7 @@ export const AdminResourcePage = (props) => {
     return(
         <React.Fragment>
             <AddResource handleUpdate={handleUpdate}/>
-            <ResourceList admin={true}/>
+            <ResourceList admin={true} city={props.location.state ? props.location.state.city : ''}/>
         </React.Fragment>
     )
 }

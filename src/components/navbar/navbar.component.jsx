@@ -17,7 +17,6 @@ const NavBar = (props) => {
             .then(res => res.json())
             .then(response => {
                 if (response.msg) {
-                    console.log('success message', response.msg, props)
                     alert('logged out!');
                     props.history.push('/login')
                 }
