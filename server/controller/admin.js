@@ -9,6 +9,18 @@ exports.getResources = (req, res, next) => {
                     res.json(resources)
                 })
                 .catch(err => res.status(500))
+    } else if (req.query.register) {
+        return Resource
+            .find()
+            .then((resource) => {
+                let newResource = resource.map(a => {
+                    return {
+                    title: a.title, 
+                    _id: a._id
+                    }
+                })
+                res.json(newResource)
+            })
     }           
     return Resource
         .find()

@@ -27,10 +27,10 @@ const RegisterPage = (props) => {
     }
 
     const loadResources = () => {
-        fetch('/data/resources')
+        fetch('/data/resources?register=true')
                 .then(response => response.json())
                 .then(newData => {
-                    console.log(newData)
+                    console.log('data', newData)
                     setResources(newData)
                 })
                 .catch(err => console.log(err))
