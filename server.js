@@ -8,6 +8,7 @@ const authRoutes = require('./server/routes/auth');
 const userRoutes = require('./server/routes/user')
 const path = require('path')
 
+
 const dataBasePassword = process.env.dataBasePassword
 const dataBaseUser = process.env.dataBaseUser
 const cluster = process.env.cluster
@@ -15,7 +16,6 @@ const cluster = process.env.cluster
 const DB_URI = 'mongodb+srv://'+dataBaseUser+':'+dataBasePassword+'@'+cluster;
 
 const app = express();
-
 const port = process.env.PORT || 3000
 
 app.use(express.static(path.join(__dirname, 'build')))
@@ -47,4 +47,3 @@ mongoose
         })
     .then(() => app.listen(port))
     .catch(err => console.log(err))
-
