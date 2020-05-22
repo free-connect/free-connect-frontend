@@ -25,6 +25,10 @@ const resourceSchema = new Schema({
     services: {
         type: Array,
         required: true
+    },
+    city: {
+        type: String,
+        required: true
     }
 });
 

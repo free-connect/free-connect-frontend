@@ -1,5 +1,5 @@
 import React from 'react';
-import { MainPage } from './pages/main-page/main-page.component';
+import MainPage from './pages/main-page/main-page.component';
 import { AdminResourcePage } from './pages/admin-resource-page.component';
 import { ResourcesPage } from './pages/resources-page.component';
 import AddResource from './components/add-resource-form/add-resource.component';
@@ -12,9 +12,42 @@ import { Route, withRouter, Switch } from 'react-router-dom'
 import './App.css';
 
 function App(props) {
-  const [isAuth, setIsAuth] = React.useState(null);
+  const [isAuth, setIsAuth] = React.useState(false);
   const [token, setToken] = React.useState(null);
   const [userId, setUserId] = React.useState(null);
+  const [load, setLoad] = React.useState(false)
+
+  const handleLoad = () => {
+    const token = localStorage.getItem('token');
+    const expiryDate = localStorage.getItem('expiryDate');
+    if (!token || !expiryDate) {
+      return;
+    }
+    if (new Date(expiryDate) <= new Date()) {
+      handleSubmitLogout();
+      return;
+    }
+    setIsAuth(true);
+    const userId = localStorage.getItem('userId');
+    setUserId(userId);
+    setToken(token);
+  }
+
+  React.useEffect(() => {
+    handleLoad()
+    setLoad(true)
+    }, [])
+
+  const handleSubmitLogout = () => {
+    setIsAuth(false);
+    setToken(null);
+    setUserId(null);
+    localStorage.removeItem('token');
+    localStorage.removeItem('expiryDate');
+    localStorage.removeItem('userId');
+    props.history.push('/login')
+    window.location.reload(false);
+}
 
   const handleLogin = (e, authData) => {
     e.preventDefault()
@@ -31,10 +64,11 @@ function App(props) {
         })
         .then(res => res.json())
         .then(response => {
-            console.log(response)
+            console.log('res', response)
             if (response.msg === 'no user') {
                 alert("You're not a user! That's all good, come register!")
-                props.history.push('/register')
+                props.history.push('/register');
+                return;
             } else if (response.msg === 'no match') {
                 alert("Username and Password didn't match. Try again!")
                 return;
@@ -51,7 +85,14 @@ function App(props) {
               new Date().getTime() + remainingMilliseconds
             );
             localStorage.setItem('expiryDate', expiryDate.toISOString());
-            props.history.push('/resources');
+            console.log('main page token', token)
+            props.history.push({
+              pathname: '/profile',
+              state: {
+                token: response.token
+              }
+            });
+            window.location.reload(false);
         })
         .catch(err => {
           console.log(err);
@@ -61,16 +102,17 @@ function App(props) {
 
   return (
     <div className="App">
-        <NavBar />
+        {load ? <NavBar logout={handleSubmitLogout} isAuth={isAuth}/> : null}
         <Switch>
           <Route exact path='/' component={MainPage} />
           <Route exact path='/login' render={props => <LoginPage handleLogin = {handleLogin}/>} />
           <Route exact path='/register' component={RegisterPage} />
           <Route exact path='/resources' component={ResourcesPage} />
           <Route exact path='/about' component={AboutPage} />
-          <Route exact path='/edit-resource' component={AddResource} />
-          <Route exact path="/admin-resources" component={AdminResourcePage} />
-          <Route exact path ="/profile" component={ProfilePage} />
+          {isAuth ? <Route exact path='/edit-resource' component={AddResource} /> : null}
+          {isAuth ? <Route exact path="/admin-resources" component={AdminResourcePage} /> : null}
+          {isAuth ? <Route exact path ="/profile" render={() => <ProfilePage token={token}/>} /> : null}
+          <Route path='*' render={() => <p>Sorry, there's nothing here!</p>} />
         </Switch>
     </div>
   );

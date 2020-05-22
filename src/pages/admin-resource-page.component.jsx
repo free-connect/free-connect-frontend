@@ -2,7 +2,7 @@ import React from 'react'
 import { ResourceList } from '../components/resource-list/resource-list.component';
 import AddResource from '../components/add-resource-form/add-resource.component';
 
-export const AdminResourcePage = () => {
+export const AdminResourcePage = (props) => {
     const [updated, setUpdated] = React.useState(false)
     
     const handleUpdate = () => {
@@ -12,7 +12,7 @@ export const AdminResourcePage = () => {
     return(
         <React.Fragment>
             <AddResource handleUpdate={handleUpdate}/>
-            <ResourceList admin={true}/>
+            <ResourceList admin={true} city={props.location.state ? props.location.state.city : ''}/>
         </React.Fragment>
     )
 }

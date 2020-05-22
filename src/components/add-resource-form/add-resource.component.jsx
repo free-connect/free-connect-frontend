@@ -9,10 +9,11 @@ const AddResource = (props) => {
     const [url, setUrl] = React.useState('');
     const [website, setWebsite] = React.useState('');
     const [services, setServices] = React.useState([]);
+    const [city, setCity] = React.useState('Boulder')
     const [id, setId] = React.useState('');
 
     const handleEdit = () => {
-        const { title, phone, address, url, website, services, _id } = props.location.state.data;
+        const { title, phone, address, url, website, services, _id, city } = props.location.state.data;
         setTitle(title);
         setAddress(address);
         setPhone(phone);
@@ -20,13 +21,13 @@ const AddResource = (props) => {
         setWebsite(website);
         setServices(services);
         setId(_id);
+        setCity(city)
     }
 
     React.useEffect(() => {
         if (!props.location.state) {
             return;
         } else {
-            console.log(props)
             handleEdit()
         }
     }, [])
@@ -44,13 +45,15 @@ const AddResource = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        console.log('city', city)
         const data = {
             title: title,
             address: address,
             phone: phone,
             url: url,
             services: services,
-            website: website
+            website: website,
+            city: city
         }
         if (!props.location.state) {
             fetch('/', {
@@ -131,6 +134,13 @@ const AddResource = (props) => {
                 value={url} 
                 type="text" 
                 changeFunction = {setUrl}/>
+            <p>
+                <label>Cities</label>
+                <select id = "myList" onChange={(e) => setCity(e.target.value)}>
+                    <option >Boulder</option>
+                    <option >Denver</option>
+                </select>
+            </p>
             <div className='checks' onChange={handleChange}>
                 {servicesList.map((a,i) => {
                     let truthy = false;

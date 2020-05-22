@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { Form } from '../../components/form/form.component';
 
 const LoginPage = (props) => {
@@ -28,6 +28,7 @@ const LoginPage = (props) => {
                     changeFunction = {setPassword}/>
                 <button type='submit'>Submit</button>
             </form>
+            <Link to='/register'>Not a member? Register here!</Link>
         </div>
     )
 }

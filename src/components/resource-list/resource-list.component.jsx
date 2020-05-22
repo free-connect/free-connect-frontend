@@ -3,10 +3,12 @@ import Resource from '../resource/resource.component';
 
 export const ResourceList = (props) => {
     const [data, setData] = React.useState([]);
-    const [loaded, setLoaded] = React.useState(false)
+    const [loaded, setLoaded] = React.useState(false);
 
     const getData = () => {
-        fetch('/data/resources')
+        let query = '?city='+props.city
+        console.log(query)
+        fetch('/data/resources'+query)
                 .then(response => response.json())
                 .then(newData => {
                     setData([...data, ...newData])

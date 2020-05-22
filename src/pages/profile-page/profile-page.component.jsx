@@ -2,23 +2,40 @@ import React from 'react';
 import Resource from '../../components/resource/resource.component';
 import { withRouter } from 'react-router-dom';
 
-const ProfilePage = () => {
+const ProfilePage = (props) => {
 
-    const [affiliation, setAffiliation] = React.useState({})
+    const [affiliation, setAffiliation] = React.useState(null)
+    const [loaded, setLoaded] = React.useState(false)
 
     const loadMyResource = () => {
+        if (!props.location.state) {
+            return
+        }
+        console.log(props.location.state.token, 'token')
         fetch('/my-resource', {
-            //finish this up. Also remember that this page won't load unless there's data passed in Resource, so 
-            //you might get an unhandled error if you navigate to this page.
+            headers: {
+                Authorization: 'Bearer ' + props.location.state.token
+            }
         })
+            .then(res => res.json())
+            .then(response => setAffiliation(response))
+            .then(() => setTimeout(setLoaded(true), 1000))
+            .catch(err => console.log(err))
     }
 
-    React.useEffect(loadMyResource(), [])
+    React.useEffect(() => loadMyResource(), [])
 
     return(
         <div>
-            <h1>Affiliated Resource</h1>
-            <Resource data={affiliation}/>
+            {loaded && affiliation ? 
+                <React.Fragment>
+                    <h1>Affiliated Resource</h1>
+                    <Resource data={affiliation}/>
+               </React.Fragment> : 
+               <React.Fragment>
+                   <p>no data!</p>
+               </React.Fragment>
+            }
         </div>
     )
 }

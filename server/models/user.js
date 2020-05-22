@@ -11,7 +11,8 @@ const userSchema = new Schema({
         required: true
     },
     affiliation: {
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref: 'Resource',
         required: true
     },
     name: {
