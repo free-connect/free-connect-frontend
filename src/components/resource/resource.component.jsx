@@ -30,10 +30,23 @@ const Resource = (props) => {
         <div className="resource-box">
             <h1>{props.data.title}</h1>
             <p>address: {props.data.address}</p>
+            <p>city: {props.data.city ? props.data.city : 'none'}</p>
             <p>phone: {props.data.phone}</p>
             <a href={props.data.website}>Click to visit {props.data.name}</a>
-            <img src={props.data.url} alt={props.data.title}/>
-            <p>resources offered: {props.data.services.map(a => <span>{a} </span>)}</p>
+            <img 
+                src={props.data.url} 
+                alt={props.data.title}
+                height='350px'
+                width='350px'
+                />
+            <p>resources offered: {
+                props
+                    .data
+                    .services
+                    .map((a, i) => i === 0 ? 
+                        <span>  {a} </span> : 
+                        <span>| {a} </span>)}
+            </p>
             {props.admin ? 
             <div className='delete-resource'>
                 <button onClick={handleDelete}>

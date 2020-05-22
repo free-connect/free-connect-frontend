@@ -20,12 +20,18 @@ const RegisterPage = (props) => {
         }
     }
 
+    const handleDropdown = (e) => {
+        e.preventDefault();
+        let resource = resources.find(a => a.title === e.target.value);
+        setAffiliation(resource._id)
+    }
+
     const loadResources = () => {
-        fetch('/data/resources')
+        fetch('/data/resources?register=true')
                 .then(response => response.json())
                 .then(newData => {
-                    let data = newData.map(a => a.title);
-                    setResources(data)
+                    console.log('data', newData)
+                    setResources(newData)
                 })
                 .catch(err => console.log(err))
     }
@@ -108,12 +114,12 @@ const RegisterPage = (props) => {
                         <label>Affiliation</label>
                         <select 
                             id = "resources" 
-                            onChange={(e) => setAffiliation(e.target.value)}>
+                            onChange={handleDropdown}>
                                 <option disabled selected="selected">Select a Resource</option>
                                 {resources.map(a => {
                                     return(
                                         <React.Fragment>
-                                            <option >{a}</option>
+                                            <option>{a.title}</option>
                                         </React.Fragment>
                                     )
                                 })}

@@ -67,7 +67,7 @@ exports.postLogin = (req, res, next) => {
                         email: AuthedUser.email,
                         userId: AuthedUser._id.toString()
                     }, 
-                    'ThisStringisObnoxiouslylongforSAFETYBROSEPh!!!!!',
+                    process.env.secret,
                     {
                         expiresIn: '1hr'
                     }
@@ -83,6 +83,7 @@ exports.postLogin = (req, res, next) => {
 }
 
 exports.postLogout = (req, res, next) => {
+    console.log(req.body, req.user)
     // console.log(req.session.user)
     // req.session
     // .destroy(err => {

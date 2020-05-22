@@ -1,14 +1,19 @@
-require('dotenv').config()
+require('dotenv').config();
 
 const express = require('express');
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const adminRoutes = require('./server/routes/admin')
-const authRoutes = require('./server/routes/auth')
+const authRoutes = require('./server/routes/auth');
+const userRoutes = require('./server/routes/user')
 const path = require('path')
-const dataBasePassword = process.env.dataBasePassword;
-const dataBaseUser = process.env.dataBaseUser;
-const cluster = process.env.cluster;
+
+
+const dataBasePassword = process.env.dataBasePassword
+const dataBaseUser = process.env.dataBaseUser
+const cluster = process.env.cluster
+
+const DB_URI = 'mongodb+srv://'+dataBaseUser+':'+dataBasePassword+'@'+cluster;
 
 const app = express();
 const port = process.env.PORT || 3000
@@ -26,6 +31,7 @@ app.use((req, res, next) => {
 
 app.use(authRoutes);
 app.use(adminRoutes);
+app.use(userRoutes);
 
 
 app.get('*', (req, res, next) => {
@@ -34,7 +40,7 @@ app.get('*', (req, res, next) => {
 
 mongoose
     .connect(
-        'mongodb+srv://'+dataBaseUser+':'+dataBasePassword+'@'+cluster+'?retryWrites=true&w=majority',
+        DB_URI,
         {
             useNewUrlParser: true, 
             useUnifiedTopology: true
