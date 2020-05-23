@@ -70,7 +70,7 @@ const RegisterPage = (props) => {
                     alert('approved!');
                     props.history.push('/login')
                 } else {
-                    alert('email already exists! Go to Login Page, idiot');
+                    alert('email/username already exists! Go to Login Page, idiot. Or, you can try a different username/email :)');
                     props.history.push('/login')
                 }
             })
@@ -81,31 +81,31 @@ const RegisterPage = (props) => {
         <div>
             <form className='register-form' onSubmit={handleSubmit}>
                 <Form 
-                    title='username' 
-                    label="Username" 
+                    title="username" 
+                    label="username" 
                     value={username} 
                     type="text" 
                     changeFunction = {setUsername}/>
                 <Form 
-                    title='name' 
-                    label="Name" 
+                    title="name" 
+                    label="name" 
                     value={name} 
                     type="text" 
                     changeFunction = {setName}/>
                 <Form 
-                    title='email' 
+                    title="email" 
                     label="Email" 
                     value={email} 
                     type="email" 
                     changeFunction = {setEmail}/>
                 <Form 
-                    title='password' 
-                    label="Password" 
+                    title="password"
+                    label="password" 
                     value={password} 
                     type="password" 
                     changeFunction = {setPassword}/>
                 <Form 
-                    title='confirm-password' 
+                    title="confirm-password" 
                     label="Confirm Password" 
                     value={confirmPassword} 
                     type="password" 

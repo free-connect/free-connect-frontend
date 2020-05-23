@@ -33,7 +33,12 @@ exports.postRegister = (req, res, next) => {
                                     msg: true
                                 })
                             })
-                            .catch(err => console.log(err))
+                            .catch(err => {
+                                console.log(err)
+                                return res.json({
+                                    msg: false
+                                })
+                            })
                     })
             }
         })
@@ -80,16 +85,4 @@ exports.postLogin = (req, res, next) => {
                 })
         })
         .catch(err => console.log(err))
-}
-
-exports.postLogout = (req, res, next) => {
-    console.log(req.body, req.user)
-    // console.log(req.session.user)
-    // req.session
-    // .destroy(err => {
-    //     console.log(err)
-    //     res.json({
-    //         msg: true
-    //     })
-    // })
 }

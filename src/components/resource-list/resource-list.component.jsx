@@ -7,7 +7,6 @@ export const ResourceList = (props) => {
 
     const getData = () => {
         let query = '?city='+props.city
-        console.log(query)
         fetch('/data/resources'+query)
                 .then(response => response.json())
                 .then(newData => {

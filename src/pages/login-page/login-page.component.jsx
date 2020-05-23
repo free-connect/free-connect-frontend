@@ -15,14 +15,14 @@ const LoginPage = (props) => {
         <div>
             <form className='login-form' onSubmit={(e) => props.handleLogin(e, data)}>
                 <Form 
-                    title='username' 
-                    label="Username" 
+                    title="username"
+                    label="username" 
                     value={username} 
                     type="text" 
                     changeFunction = {setUsername}/>
                 <Form 
-                    title='password' 
-                    label="Password" 
+                    title="password"
+                    label="password" 
                     value={password} 
                     type="password" 
                     changeFunction = {setPassword}/>

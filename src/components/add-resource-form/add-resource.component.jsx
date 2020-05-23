@@ -45,7 +45,6 @@ const AddResource = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log('city', city)
         const data = {
             title: title,
             address: address,
@@ -55,29 +54,38 @@ const AddResource = (props) => {
             website: website,
             city: city
         }
+        const token = localStorage.getItem('token')
         if (!props.location.state) {
             fetch('/', {
                 method: "POST", 
                 body: JSON.stringify(data),
                 headers: {
                     'Content-Type': 'application/json',
+                    Authorization: 'bearer ' + token
                     }
                 })
                 .then(res => res.json())
                 .then(response => {
                     if (response.msg) {
                         alert('approved!');
-                        props.history.push('/resources')
+                        props.history.push('/admin-resources')
+                        window.location.reload(false);
                     }
                 })
                 .catch(err => console.log(err))
         } else {
             data.id = id;
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('not authorized')
+                return;
+            }
             fetch('/edit-resource', {
                 method: "POST", 
                 body: JSON.stringify(data),
                 headers: {
                     'Content-Type': 'application/json',
+                    Authorization: 'bearer '+ token
                     }
                 })
                 .then(res => res.json())

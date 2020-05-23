@@ -9,18 +9,25 @@ const Resource = (props) => {
         let data = {
             id: props.data._id
         }
+        const token = localStorage.getItem('token')
+        if (!token) {
+            alert('not authorized');
+            return
+        }
         fetch('/delete-resource', {
             method: "POST", 
             body: JSON.stringify(data),
             headers: {
                 'Content-Type': 'application/json',
+                Authorization: 'bearer ' + token
                 }
             })
             .then(res => res.json())
             .then(response => {
                 if (response.msg) {
                     alert('Successfully Deleted!');
-                    props.history.push('/resources');
+                    props.history.push('/admin-resources');
+                    window.location.reload(false);
                 }
             })
             .catch(err => console.log(err))
@@ -49,9 +56,14 @@ const Resource = (props) => {
             </p>
             {props.admin ? 
             <div className='delete-resource'>
-                <button onClick={handleDelete}>
-                    Delete
-                </button>
+                {!props.profile ?
+                <React.Fragment>
+                    <button onClick={handleDelete}>
+                        Delete
+                    </button>
+                </React.Fragment> : 
+                null
+                }
                 <Link to={{
                     pathname: "/edit-resource",
                     state: {

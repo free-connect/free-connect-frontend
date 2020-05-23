@@ -8,13 +8,13 @@ const ProfilePage = (props) => {
     const [loaded, setLoaded] = React.useState(false)
 
     const loadMyResource = () => {
-        if (!props.location.state) {
+        const token = localStorage.getItem('token')
+        if (!token) {
             return
         }
-        console.log(props.location.state.token, 'token')
         fetch('/my-resource', {
             headers: {
-                Authorization: 'Bearer ' + props.location.state.token
+                Authorization: 'Bearer ' + token
             }
         })
             .then(res => res.json())
@@ -30,7 +30,7 @@ const ProfilePage = (props) => {
             {loaded && affiliation ? 
                 <React.Fragment>
                     <h1>Affiliated Resource</h1>
-                    <Resource data={affiliation}/>
+                    <Resource admin={true} profile={true} data={affiliation}/>
                </React.Fragment> : 
                <React.Fragment>
                    <p>no data!</p>

@@ -1,13 +1,13 @@
 import React from 'react';
 import MainPage from './pages/main-page/main-page.component';
-import { AdminResourcePage } from './pages/admin-resource-page.component';
-import { ResourcesPage } from './pages/resources-page.component';
 import AddResource from './components/add-resource-form/add-resource.component';
 import LoginPage from './pages/login-page/login-page.component'; 
 import RegisterPage from './pages/register-page/register-page.component';
 import ProfilePage from './pages/profile-page/profile-page.component';
-import { AboutPage } from './pages/about-page.component'
 import NavBar from './components/navbar/navbar.component';
+import { AdminResourcePage } from './pages/admin-resource-page.component';
+import { ResourcesPage } from './pages/resources-page.component';
+import { AboutPage } from './pages/about-page.component'
 import { Route, withRouter, Switch } from 'react-router-dom' 
 import './App.css';
 
@@ -63,7 +63,7 @@ function App(props) {
             }
         })
         .then(res => res.json())
-        .then(response => {
+        .then(async (response) => {
             console.log('res', response)
             if (response.msg === 'no user') {
                 alert("You're not a user! That's all good, come register!")
@@ -85,13 +85,7 @@ function App(props) {
               new Date().getTime() + remainingMilliseconds
             );
             localStorage.setItem('expiryDate', expiryDate.toISOString());
-            console.log('main page token', token)
-            props.history.push({
-              pathname: '/profile',
-              state: {
-                token: response.token
-              }
-            });
+            props.history.push('/profile');
             window.location.reload(false);
         })
         .catch(err => {
@@ -102,7 +96,8 @@ function App(props) {
 
   return (
     <div className="App">
-        {load ? <NavBar logout={handleSubmitLogout} isAuth={isAuth}/> : null}
+        {load ? 
+        <NavBar logout={handleSubmitLogout} admin={userId === process.env.REACT_APP_USER_ID ? true : false} isAuth={isAuth}/> : null}
         <Switch>
           <Route exact path='/' component={MainPage} />
           <Route exact path='/login' render={props => <LoginPage handleLogin = {handleLogin}/>} />
@@ -110,7 +105,9 @@ function App(props) {
           <Route exact path='/resources' component={ResourcesPage} />
           <Route exact path='/about' component={AboutPage} />
           {isAuth ? <Route exact path='/edit-resource' component={AddResource} /> : null}
-          {isAuth ? <Route exact path="/admin-resources" component={AdminResourcePage} /> : null}
+          {(isAuth && userId === process.env.REACT_APP_USER_ID) ? 
+            <Route exact path="/admin-resources" component={AdminResourcePage} /> : 
+            null}
           {isAuth ? <Route exact path ="/profile" render={() => <ProfilePage token={token}/>} /> : null}
           <Route path='*' render={() => <p>Sorry, there's nothing here!</p>} />
         </Switch>
