@@ -43,9 +43,11 @@ exports.postAddResource = (req, res, next) => {
     })
     resource
         .save()
-        .then(() => {
+        .then(data => {
+            console.log('data', data)
             res.json({
-                msg: true
+                msg: true,
+                affiliation: data._id
             })
         })
         .catch(err => console.log(err))

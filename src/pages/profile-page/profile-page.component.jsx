@@ -1,6 +1,7 @@
 import React from 'react';
 import Resource from '../../components/resource/resource.component';
 import { withRouter } from 'react-router-dom';
+import AddResource from '../../components/add-resource-form/add-resource.component';
 
 const ProfilePage = (props) => {
 
@@ -32,9 +33,12 @@ const ProfilePage = (props) => {
                     <h1>Affiliated Resource</h1>
                     <Resource admin={true} profile={true} data={affiliation}/>
                </React.Fragment> : 
+               loaded ?
                <React.Fragment>
-                   <p>no data!</p>
-               </React.Fragment>
+                   <p>You haven't added a resource! Add one here...</p>
+                   <AddResource register={true}/>
+               </React.Fragment> : 
+               null
             }
         </div>
     )

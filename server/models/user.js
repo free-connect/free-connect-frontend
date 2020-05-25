@@ -14,8 +14,7 @@ const userSchema = new Schema({
     },
     affiliation: {
         type: Schema.Types.ObjectId,
-        ref: 'Resource',
-        required: true
+        ref: 'Resource'
     },
     name: {
         type:  String,
@@ -31,8 +30,11 @@ const userSchema = new Schema({
         required: true
     },
     reviews: {
-        type: [],
-        required: true
+        allReviews: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Resources',
+            required: true
+        }]
     },
     admin: {
         type: Boolean,

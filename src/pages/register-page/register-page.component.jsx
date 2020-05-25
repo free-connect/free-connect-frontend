@@ -23,6 +23,10 @@ const RegisterPage = (props) => {
     const handleDropdown = (e) => {
         e.preventDefault();
         let resource = resources.find(a => a.title === e.target.value);
+        if (e.target.value === 'None') {
+            setAffiliation(null);
+            return;
+        }
         setAffiliation(resource._id)
     }
 
@@ -30,7 +34,6 @@ const RegisterPage = (props) => {
         fetch('/data/resources?register=true')
                 .then(response => response.json())
                 .then(newData => {
-                    console.log('data', newData)
                     setResources(newData)
                 })
                 .catch(err => console.log(err))
@@ -123,6 +126,7 @@ const RegisterPage = (props) => {
                                         </React.Fragment>
                                     )
                                 })}
+                                <option>None</option>
                         </select>
                     </p>
                 <button type='submit'>Submit</button>

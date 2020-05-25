@@ -1,8 +1,53 @@
 import React from 'react';
 import './resource.styles.css'
-import { Link, withRouter } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom';
+import { Review } from '../review/review.component';
 
 const Resource = (props) => {
+    const [reviewAct, setReviewAct] = React.useState(false)
+
+    const handleClick = (e) => {
+        e.preventDefault();
+        setReviewAct(true);    
+    }
+
+    const handleClickOff = () => {
+        setReviewAct(false)
+    }
+
+    const handleSubmitReview = (e, review) => {
+        e.preventDefault();
+        let data = {
+            resourceId: props.data._id,
+            review: review
+        };
+        const token = localStorage.getItem('token')
+        if (!token) {
+            alert("Oh No! You're not a user! come register :)")
+            props.location.push('/register');
+            return;
+        };
+        fetch('/review', {
+            method: "POST", 
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'bearer ' + token
+                }
+        })
+            .then(res => res.json())
+            .then(response => {
+                console.log('res', response.msg)
+                if (response.msg === 'success') {
+                    alert('thanks for reviewing!');
+                    setReviewAct(false);
+                    return;
+                } else {
+                    throw Error('something broke...')
+                }
+            })
+            .catch(err => console.log(err))
+    }
 
     const handleDelete = (e) => {
         e.preventDefault()
@@ -35,6 +80,11 @@ const Resource = (props) => {
 
     return(
         <div className="resource-box">
+            <Review 
+                active={reviewAct} 
+                handleSubmitReview={handleSubmitReview} 
+                handleClickOff={handleClickOff}/> 
+            {reviewAct ? <div className="layer"></div> : null}
             <h1>{props.data.title}</h1>
             <p>address: {props.data.address}</p>
             <p>city: {props.data.city ? props.data.city : 'none'}</p>
@@ -54,6 +104,8 @@ const Resource = (props) => {
                         <span>  {a} </span> : 
                         <span>| {a} </span>)}
             </p>
+            <button onClick={handleClick}>Review</button>
+            <button>See All Reviews</button>
             {props.admin ? 
             <div className='delete-resource'>
                 {!props.profile ?

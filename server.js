@@ -8,6 +8,7 @@ const authRoutes = require('./server/routes/auth');
 const userRoutes = require('./server/routes/user')
 const path = require('path')
 
+mongoose.set('useFindAndModify', false);
 
 const dataBasePassword = process.env.dataBasePassword
 const dataBaseUser = process.env.dataBaseUser

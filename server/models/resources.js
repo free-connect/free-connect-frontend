@@ -29,7 +29,20 @@ const resourceSchema = new Schema({
     city: {
         type: String,
         required: true
-    }
+    },
+    reviews:[
+            {
+            userId: {
+                type: Schema.Types.ObjectId,
+                ref: 'User',
+                required: true
+            }, 
+            review: {
+                type: String, 
+                required: true
+            }
+        }
+    ]
 });
 
 module.exports = mongoose.model('Resource', resourceSchema)

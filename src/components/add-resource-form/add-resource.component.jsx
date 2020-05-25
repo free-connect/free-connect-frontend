@@ -11,6 +11,7 @@ const AddResource = (props) => {
     const [services, setServices] = React.useState([]);
     const [city, setCity] = React.useState('Boulder')
     const [id, setId] = React.useState('');
+    const [loading, setLoading] = React.useState(false)
 
     const handleEdit = () => {
         const { title, phone, address, url, website, services, _id, city } = props.location.state.data;
@@ -54,8 +55,9 @@ const AddResource = (props) => {
             website: website,
             city: city
         }
-        const token = localStorage.getItem('token')
+        const token = localStorage.getItem('token');
         if (!props.location.state) {
+            setLoading(true)
             fetch('/', {
                 method: "POST", 
                 body: JSON.stringify(data),
@@ -67,9 +69,30 @@ const AddResource = (props) => {
                 .then(res => res.json())
                 .then(response => {
                     if (response.msg) {
-                        alert('approved!');
-                        props.history.push('/admin-resources')
-                        window.location.reload(false);
+                        if (props.register) {
+                            let data = {
+                                affiliation: response.affiliation
+                            }
+                            fetch('/add-user-resource', {
+                                method: "POST", 
+                                body: JSON.stringify(data),
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    Authorization: 'bearer ' + token
+                                    }
+                                })
+                                .then(res => res.json())
+                                .then(response => {
+                                    if (response.msg === 'success') {
+                                        setLoading(false)
+                                        window.location.reload()
+                                    }
+                                })
+                        } else {
+                            alert('approved!');
+                            props.history.push('/admin-resources')
+                            window.location.reload(false);
+                        }
                     }
                 })
                 .catch(err => console.log(err))
@@ -111,6 +134,10 @@ const AddResource = (props) => {
     ];
 
     return(
+        loading ?
+        <React.Fragment>
+            <p>Loading....</p>
+        </React.Fragment> :
         <form className='add-resource' onSubmit={handleSubmit}>
             <Form 
                 title='title' 
