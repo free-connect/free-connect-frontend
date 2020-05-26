@@ -8,6 +8,11 @@ const Resource = (props) => {
 
     const handleClick = (e) => {
         e.preventDefault();
+        const token = localStorage.getItem('token');
+        if (!token) {
+            alert('You gotta sign in to review a resource!');
+            return;
+        }
         setReviewAct(true);    
     }
 
@@ -37,13 +42,18 @@ const Resource = (props) => {
         })
             .then(res => res.json())
             .then(response => {
-                console.log('res', response.msg)
                 if (response.msg === 'success') {
                     alert('thanks for reviewing!');
                     setReviewAct(false);
                     return;
-                } else {
-                    throw Error('something broke...')
+                } else if (response.msg === 'already reviewed') {
+                    alert('You already reviewed this resource!')
+                    setReviewAct(false);
+                    return
+                } else if (response.msg === 'your resource') {
+                    alert("Can't review your own resource!");
+                    setReviewAct(false);
+                    return
                 }
             })
             .catch(err => console.log(err))
@@ -104,8 +114,9 @@ const Resource = (props) => {
                         <span>  {a} </span> : 
                         <span>| {a} </span>)}
             </p>
-            <button onClick={handleClick}>Review</button>
-            <button>See All Reviews</button>
+            {!props.admin ? <button onClick={handleClick}>Review</button> : null}
+            {/* Review functionality is working! Now let's see if we can get the reviews. Let's work on this button... */}
+            {!props.admin ? <button>See All Reviews</button> : null}
             {props.admin ? 
             <div className='delete-resource'>
                 {!props.profile ?

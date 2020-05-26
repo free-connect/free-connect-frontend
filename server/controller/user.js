@@ -17,25 +17,51 @@ exports.getMyResource = (req, res, next) => {
 
 exports.postReview = (req, res, next) => {
     const { resourceId, review } = req.body;
-    const user = req.userId
-    Resource
+    const user = req.userId;
+    let resId='';
+    User
         .findOne({
-            _id: resourceId
+            _id: user
         })
-        .then(resource => {
-            resource.reviews.push({
-                userId: user,
-                review: review
-            })
-            return resource
-                    .save()
-                    .then(() => {
-                        console.log('hello')
+        .then(user => {
+            resId = user.affiliation;
+            if (resId.toString() === resourceId.toString()) {
+                res.json({
+                    msg: 'your resource'
+                })
+                throw Error('cannot review own resource')
+            }
+        })
+        .then(() => {
+            Resource
+                .findOne({
+                    _id: resourceId
+                })
+                .then(checkResource => {
+                    let test = checkResource.reviews.find(a=> a.userId.toString() === user.toString());
+                    if (test) {
                         res.json({
-                            msg: 'success'
+                            msg: 'already reviewed'
                         })
+                        throw Error('already reviewed')
+                    } else {
+                        return checkResource
+                    }
+                })
+                .then(resource => {
+                    resource.reviews.push({
+                        userId: user,
+                        review: review
                     })
-                    .catch(err => console.log(err))
+                    return resource
+                            .save()
+                            .then(() => {
+                                res.json({
+                                    msg: 'success'
+                                })
+                            })
+                            .catch(err => console.log(err))
+                })
         })
         .catch(err => console.log(err))
 }
