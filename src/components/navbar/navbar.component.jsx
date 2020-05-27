@@ -22,7 +22,13 @@ const NavBar = (props) => {
                 <br />
                 <Link to='/about'>About</Link>
                 <br />
-                <Link to='/admin-resources'>Admin Resources</Link>
+                {props.admin ? 
+                <React.Fragment>
+                    <Link to='/admin-resources'>Admin Resources</Link>
+                    <br />
+                </React.Fragment> : 
+                null}
+                <Link to='/profile'>Profile</Link>
                 <br />
                 <form onSubmit={handleLogout}>
                     <button type="submit">Logout</button>

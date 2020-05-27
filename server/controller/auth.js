@@ -33,7 +33,12 @@ exports.postRegister = (req, res, next) => {
                                     msg: true
                                 })
                             })
-                            .catch(err => console.log(err))
+                            .catch(err => {
+                                console.log(err)
+                                return res.json({
+                                    msg: false
+                                })
+                            })
                     })
             }
         })
@@ -68,28 +73,14 @@ exports.postLogin = (req, res, next) => {
                         userId: AuthedUser._id.toString()
                     }, 
                     process.env.secret,
-                    {
-                        expiresIn: '1hr'
-                    }
+                    { expiresIn: '1hr' }
                     );
                     res.json({
-                                token: token,
-                                userId: AuthedUser._id,
-                                msg: 'success'
-                            })
+                            token: token,
+                            userId: AuthedUser._id,
+                            msg: 'success'
+                        })
                 })
         })
         .catch(err => console.log(err))
-}
-
-exports.postLogout = (req, res, next) => {
-    console.log(req.body, req.user)
-    // console.log(req.session.user)
-    // req.session
-    // .destroy(err => {
-    //     console.log(err)
-    //     res.json({
-    //         msg: true
-    //     })
-    // })
 }

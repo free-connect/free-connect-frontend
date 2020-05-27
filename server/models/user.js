@@ -1,10 +1,12 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
+const uniqueValidator = require('mongoose-unique-validator')
 
 const userSchema = new Schema({
     username: {
         type:  String,
-        required: true
+        required: true,
+        unique: true
     },
     password: {
         type: String,
@@ -12,26 +14,27 @@ const userSchema = new Schema({
     },
     affiliation: {
         type: Schema.Types.ObjectId,
-        ref: 'Resource',
-        required: true
+        ref: 'Resource'
     },
     name: {
-        type:  String,
+        type: String,
         required: true
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
-    //same as checked in resource model
     likes: {
         type: [],
         required: true
     },
-    reviews: {
-        type: [],
-        required: true
+    admin: {
+        type: Boolean,
+        required: false
     }
 });
+
+userSchema.plugin(uniqueValidator);
 
 module.exports = mongoose.model('User', userSchema)

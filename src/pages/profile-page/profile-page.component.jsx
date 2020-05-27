@@ -1,6 +1,7 @@
 import React from 'react';
 import Resource from '../../components/resource/resource.component';
 import { withRouter } from 'react-router-dom';
+import AddResource from '../../components/add-resource-form/add-resource.component';
 
 const ProfilePage = (props) => {
 
@@ -8,13 +9,13 @@ const ProfilePage = (props) => {
     const [loaded, setLoaded] = React.useState(false)
 
     const loadMyResource = () => {
-        if (!props.location.state) {
+        const token = localStorage.getItem('token')
+        if (!token) {
             return
         }
-        console.log(props.location.state.token, 'token')
         fetch('/my-resource', {
             headers: {
-                Authorization: 'Bearer ' + props.location.state.token
+                Authorization: 'Bearer ' + token
             }
         })
             .then(res => res.json())
@@ -30,11 +31,14 @@ const ProfilePage = (props) => {
             {loaded && affiliation ? 
                 <React.Fragment>
                     <h1>Affiliated Resource</h1>
-                    <Resource data={affiliation}/>
+                    <Resource admin={true} profile={true} data={affiliation}/>
                </React.Fragment> : 
+               loaded ?
                <React.Fragment>
-                   <p>no data!</p>
-               </React.Fragment>
+                   <p>You haven't added a resource! Add one here...</p>
+                   <AddResource register={true}/>
+               </React.Fragment> : 
+               null
             }
         </div>
     )

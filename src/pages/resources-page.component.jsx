@@ -20,7 +20,6 @@ export const ResourcesPage = (props) => {
         window.location.reload(false);
     }
 
-    React.useEffect(() => console.log(props), [])
     return(
         <React.Fragment>
             <SelectCity setVal={ setVal } handleSubmit={handleSubmit}/>

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
+const deepPopulate = require('mongoose-deep-populate')(mongoose)
 
 const resourceSchema = new Schema({
     title: {
@@ -29,7 +30,22 @@ const resourceSchema = new Schema({
     city: {
         type: String,
         required: true
-    }
+    },
+    reviews:[
+            {
+            userId: {
+                type: Schema.Types.ObjectId,
+                ref: 'User',
+                required: true
+            }, 
+            review: {
+                type: String, 
+                required: true
+            }
+        }
+    ]
 });
+
+resourceSchema.plugin(deepPopulate)
 
 module.exports = mongoose.model('Resource', resourceSchema)
