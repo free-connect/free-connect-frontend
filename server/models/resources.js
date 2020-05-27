@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
+const deepPopulate = require('mongoose-deep-populate')(mongoose)
 
 const resourceSchema = new Schema({
     title: {
@@ -44,5 +45,7 @@ const resourceSchema = new Schema({
         }
     ]
 });
+
+resourceSchema.plugin(deepPopulate)
 
 module.exports = mongoose.model('Resource', resourceSchema)

@@ -15,6 +15,23 @@ exports.getMyResource = (req, res, next) => {
         .catch(err => console.log(err))
 };
 
+exports.getReviews = (req, res, next) => {
+    Resource
+        .find({
+            _id: req.query.resId
+        })
+        .deepPopulate('reviews.userId')
+        .then(rev => {
+            let data = rev[0]['reviews'].map(a => [a.userId.username, a.review])
+            res.json({
+                msg: 'success',
+                data: data
+
+            })
+        })
+        .catch(err => console.log(err))
+}
+
 exports.postReview = (req, res, next) => {
     const { resourceId, review } = req.body;
     const user = req.userId;
@@ -25,6 +42,9 @@ exports.postReview = (req, res, next) => {
         })
         .then(user => {
             resId = user.affiliation;
+            if (!resId) {
+                return;
+            }
             if (resId.toString() === resourceId.toString()) {
                 res.json({
                     msg: 'your resource'

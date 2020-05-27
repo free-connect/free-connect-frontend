@@ -63,7 +63,7 @@ function App(props) {
             }
         })
         .then(res => res.json())
-        .then(async (response) => {
+        .then((response) => {
             if (response.msg === 'no user') {
                 alert("You're not a user! That's all good, come register!")
                 props.history.push('/register');

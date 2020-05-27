@@ -17,7 +17,7 @@ const userSchema = new Schema({
         ref: 'Resource'
     },
     name: {
-        type:  String,
+        type: String,
         required: true
     },
     email: {
@@ -28,13 +28,6 @@ const userSchema = new Schema({
     likes: {
         type: [],
         required: true
-    },
-    reviews: {
-        allReviews: [{
-            type: Schema.Types.ObjectId,
-            ref: 'Resources',
-            required: true
-        }]
     },
     admin: {
         type: Boolean,

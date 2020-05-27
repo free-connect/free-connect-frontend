@@ -2,9 +2,12 @@ import React from 'react';
 import './resource.styles.css'
 import { Link, withRouter } from 'react-router-dom';
 import { Review } from '../review/review.component';
+import { ReviewList } from '../review-list/review-list.component';
 
 const Resource = (props) => {
     const [reviewAct, setReviewAct] = React.useState(false)
+    const [reviewList, setReviewList] = React.useState(false);
+    const [reviewData, setReviewData] = React.useState([])
 
     const handleClick = (e) => {
         e.preventDefault();
@@ -13,11 +16,39 @@ const Resource = (props) => {
             alert('You gotta sign in to review a resource!');
             return;
         }
+        if (reviewList) {
+            setReviewList(false)
+        }
         setReviewAct(true);    
     }
 
-    const handleClickOff = () => {
-        setReviewAct(false)
+    const handleClickList = (e) => {
+        e.preventDefault();
+        if (reviewAct) {
+            setReviewAct(false)
+        }
+        fetch(`/review-list?resId=${props.data._id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+                }
+        })
+            .then(res => res.json())
+            .then(response => {
+                if (response.msg === 'success') {
+                    setReviewData(response.data);
+                }
+            })
+            .then(() => setReviewList(true))
+            .catch(err => console.log(err))   
+    }
+
+    const handleClickOffAct = () => {
+        setReviewAct(false);
+    }
+
+    const handleClickOffList = () => {
+        setReviewList(false);
     }
 
     const handleSubmitReview = (e, review) => {
@@ -90,11 +121,16 @@ const Resource = (props) => {
 
     return(
         <div className="resource-box">
+            <ReviewList 
+                active={reviewList}
+                data={reviewData}
+                handleClickOff={handleClickOffList}
+                />
             <Review 
                 active={reviewAct} 
                 handleSubmitReview={handleSubmitReview} 
-                handleClickOff={handleClickOff}/> 
-            {reviewAct ? <div className="layer"></div> : null}
+                handleClickOff={handleClickOffAct}/> 
+            {reviewAct || reviewList ? <div className="layer"></div> : null}
             <h1>{props.data.title}</h1>
             <p>address: {props.data.address}</p>
             <p>city: {props.data.city ? props.data.city : 'none'}</p>
@@ -114,9 +150,8 @@ const Resource = (props) => {
                         <span>  {a} </span> : 
                         <span>| {a} </span>)}
             </p>
-            {!props.admin ? <button onClick={handleClick}>Review</button> : null}
-            {/* Review functionality is working! Now let's see if we can get the reviews. Let's work on this button... */}
-            {!props.admin ? <button>See All Reviews</button> : null}
+            {!props.admin ? <button disabled={reviewAct ? true : false} onClick={handleClick}>Review</button> : null}
+            {!props.admin ? <button disabled={reviewList ? true : false} onClick={handleClickList}>See All Reviews</button> : null}
             {props.admin ? 
             <div className='delete-resource'>
                 {!props.profile ?
