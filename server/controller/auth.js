@@ -73,15 +73,13 @@ exports.postLogin = (req, res, next) => {
                         userId: AuthedUser._id.toString()
                     }, 
                     process.env.secret,
-                    {
-                        expiresIn: '1hr'
-                    }
+                    { expiresIn: '1hr' }
                     );
                     res.json({
-                                token: token,
-                                userId: AuthedUser._id,
-                                msg: 'success'
-                            })
+                            token: token,
+                            userId: AuthedUser._id,
+                            msg: 'success'
+                        })
                 })
         })
         .catch(err => console.log(err))

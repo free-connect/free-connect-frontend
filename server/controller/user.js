@@ -26,7 +26,6 @@ exports.getReviews = (req, res, next) => {
             res.json({
                 msg: 'success',
                 data: data
-
             })
         })
         .catch(err => console.log(err))
@@ -43,7 +42,7 @@ exports.postReview = (req, res, next) => {
         .then(user => {
             resId = user.affiliation;
             if (!resId) {
-                return;
+                throw new Error('no affiliation')
             }
             if (resId.toString() === resourceId.toString()) {
                 res.json({
@@ -63,7 +62,6 @@ exports.postReview = (req, res, next) => {
                         res.json({
                             msg: 'already reviewed'
                         })
-                        throw Error('already reviewed')
                     } else {
                         return checkResource
                     }
@@ -83,7 +81,14 @@ exports.postReview = (req, res, next) => {
                             .catch(err => console.log(err))
                 })
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+            console.log('error', err);
+            if (err === 'no affiliation') {
+                res.json({
+                    msg: 'no affiliation'
+            })
+        }
+    })
 }
 
 exports.postUserResource = (req, res, next) => {

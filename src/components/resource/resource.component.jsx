@@ -1,8 +1,7 @@
 import React from 'react';
 import './resource.styles.css'
 import { Link, withRouter } from 'react-router-dom';
-import { Review } from '../review/review.component';
-import { ReviewList } from '../review-list/review-list.component';
+import { ReviewBox } from '../review/review-box/review-box.component';
 
 const Resource = (props) => {
     const [reviewAct, setReviewAct] = React.useState(false)
@@ -19,7 +18,7 @@ const Resource = (props) => {
         if (reviewList) {
             setReviewList(false)
         }
-        setReviewAct(true);    
+        setReviewAct(true);
     }
 
     const handleClickList = (e) => {
@@ -37,7 +36,7 @@ const Resource = (props) => {
             .then(response => {
                 if (response.msg === 'success') {
                     setReviewData(response.data);
-                }
+                } 
             })
             .then(() => setReviewList(true))
             .catch(err => console.log(err))   
@@ -85,9 +84,18 @@ const Resource = (props) => {
                     alert("Can't review your own resource!");
                     setReviewAct(false);
                     return
+                } else if (response.msg === 'no affiliation') {
+                    alert("You have to have an affiliation to review!");
+                    setReviewAct(false);
+                    return
                 }
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                console.log(err);
+                alert('hmm somthing went wrong. Please make sure you have a reistered affiliation before reviewing!')
+                setReviewAct(false);
+                return
+            })
     }
 
     const handleDelete = (e) => {
@@ -121,12 +129,14 @@ const Resource = (props) => {
 
     return(
         <div className="resource-box">
-            <ReviewList 
+            <ReviewBox 
+                type='list'
                 active={reviewList}
                 data={reviewData}
                 handleClickOff={handleClickOffList}
-                />
-            <Review 
+            />
+            <ReviewBox 
+                type='review'
                 active={reviewAct} 
                 handleSubmitReview={handleSubmitReview} 
                 handleClickOff={handleClickOffAct}/> 

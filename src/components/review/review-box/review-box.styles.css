@@ -1,4 +1,4 @@
-.review-list{
+.review-box{
     height: 0px;
     width: 0px;
     margin-left: 35%;
@@ -11,7 +11,7 @@
     font-size: 0px;
 }
 
-.review-list.active{
+.review-box.active{
     height: 350px;
     width: 300px;
     border-radius: 15%;

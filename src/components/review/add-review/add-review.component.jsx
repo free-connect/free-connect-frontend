@@ -1,15 +1,7 @@
 import React from 'react';
-import './review.styles.css';
 
-export const Review = (props) => {
+export const AddReview = (props) => {
     const [reviewIn, setReviewIn] = React.useState('')
-
-    React.useEffect(() => {
-        document.addEventListener("mousedown", handleClick);
-        return () => {
-            document.removeEventListener("mousedown", handleClick);
-        };
-    });
 
     const handleSubmit = async (e) => {
         let tempRev = reviewIn;
@@ -17,18 +9,8 @@ export const Review = (props) => {
         await setReviewIn('')
     }
 
-    const handleClick = (e) => {
-        if (!node.current.contains(e.target)) {
-            props.handleClickOff() 
-            }
-        };
-
-    const node = React.useRef(null)
-
     return(
-        <div 
-            ref={node}
-            className={`display-box ${!props.active ? '' : 'active'}`}>
+        <React.Fragment>
             <h1>Tell us what you think!</h1>
             <form method='POST' onSubmit={handleSubmit}>
                 <textarea 
@@ -45,6 +27,6 @@ export const Review = (props) => {
                     Submit
                 </button>
             </form>
-        </div>
+        </React.Fragment>
     )
 }
