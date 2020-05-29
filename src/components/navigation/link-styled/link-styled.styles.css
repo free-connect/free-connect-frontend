@@ -1,0 +1,15 @@
+.nav-active{
+    background-color: rgb(15, 15, 110)
+}
+
+.nav{
+    text-decoration: none;
+    color: white;
+    transition-duration: .5s;
+    padding-left: 1%;
+    padding-right: 1%;
+}
+
+.nav.active{
+    color: rgb(191, 194, 24)
+}

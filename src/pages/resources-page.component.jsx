@@ -1,29 +1,19 @@
 import React from 'react';
+import './resource-page.styles.css'
+import Filter from '../components/filter/filter.component'
 import { ResourceList } from '../components/resource-list/resource-list.component';
-import { SelectCity } from '../components/select-city/select-city.component';
 
 export const ResourcesPage = (props) => {
-    const [city, setCity] = React.useState('Boulder')
-
-    const setVal = (val) => {
-        setCity(val)
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        props.history.push({
-            pathname: '/resources',
-            state: {
-                city: city
-            }
-        })
-        window.location.reload(false);
-    }
+    const cityProp = props.location.state ? props.location.state.city : '';
+    const resources = props.location.state ? props.location.state.resources : '';
 
     return(
-        <React.Fragment>
-            <SelectCity setVal={ setVal } handleSubmit={handleSubmit}/>
-            <ResourceList city={props.location.state ? props.location.state.city : ''}/>
-        </React.Fragment>
+        <div className='resource-page'>
+            <br />
+            <br />
+            <br />
+            <Filter />
+            <ResourceList city={cityProp} services={resources}/>
+        </div>
     )
 }

@@ -1,0 +1,8 @@
+.register{
+    background-image: linear-gradient(rgb(109, 109, 233), white);
+    height: 100%;
+}
+
+.register-form{
+    margin-top: 5%
+}

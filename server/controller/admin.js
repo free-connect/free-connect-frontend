@@ -2,7 +2,7 @@ const Resource = require('../models/resources')
 
 exports.getResources = (req, res, next) => {
     if (req.query.city) {
-        const city = req.query.city
+        const city = req.query.city;
         return Resource
                 .find({city: city})
                 .then(resources => {

@@ -4,7 +4,7 @@ import AddResource from './components/add-resource-form/add-resource.component';
 import LoginPage from './pages/login-page/login-page.component'; 
 import RegisterPage from './pages/register-page/register-page.component';
 import ProfilePage from './pages/profile-page/profile-page.component';
-import NavBar from './components/navbar/navbar.component';
+import NavBar from './components/navigation/navbar/navbar.component';
 import { AdminResourcePage } from './pages/admin-resource-page.component';
 import { ResourcesPage } from './pages/resources-page.component';
 import { AboutPage } from './pages/about-page.component'
@@ -94,23 +94,29 @@ function App(props) {
   }
 
   return (
-    <div className="App">
-        {load ? 
-        <NavBar logout={handleSubmitLogout} admin={userId === process.env.REACT_APP_USER_ID ? true : false} isAuth={isAuth}/> : null}
-        <Switch>
-          <Route exact path='/' component={MainPage} />
-          <Route exact path='/login' render={props => <LoginPage handleLogin = {handleLogin}/>} />
-          <Route exact path='/register' component={RegisterPage} />
-          <Route exact path='/resources' component={ResourcesPage} />
-          <Route exact path='/about' component={AboutPage} />
-          {isAuth ? <Route exact path='/edit-resource' component={AddResource} /> : null}
-          {(isAuth && userId === process.env.REACT_APP_USER_ID) ? 
-            <Route exact path="/admin-resources" component={AdminResourcePage} /> : 
-            null}
-          {isAuth ? <Route exact path ="/profile" render={() => <ProfilePage token={token}/>} /> : null}
-          <Route path='*' render={() => <p>Sorry, there's nothing here!</p>} />
-        </Switch>
-    </div>
+    <React.Fragment>
+      {load ? 
+        <NavBar 
+          logout={handleSubmitLogout} 
+          admin={userId === process.env.REACT_APP_USER_ID ? true : false} 
+          isAuth={isAuth}/> : 
+          null}
+      <div className="App">
+          <Switch>
+            <Route exact path='/' component={MainPage} />
+            <Route exact path='/login' render={props => <LoginPage handleLogin = {handleLogin}/>} />
+            <Route exact path='/register' component={RegisterPage} />
+            <Route exact path='/resources' component={ResourcesPage} />
+            <Route exact path='/about' component={AboutPage} />
+            {isAuth ? <Route exact path='/edit-resource' component={AddResource} /> : null}
+            {(isAuth && userId === process.env.REACT_APP_USER_ID) ? 
+              <Route exact path="/admin-resources" component={AdminResourcePage} /> : 
+              null}
+            {isAuth ? <Route exact path ="/profile" render={() => <ProfilePage token={token}/>} /> : null}
+            <Route path='*' render={() => <p>Sorry, there's nothing here!</p>} />
+          </Switch>
+      </div>
+    </React.Fragment>
   );
 }
 

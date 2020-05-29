@@ -1,4 +1,5 @@
 import React from 'react';
+import './profile-page.styles.css'
 import Resource from '../../components/resource/resource.component';
 import { withRouter } from 'react-router-dom';
 import AddResource from '../../components/add-resource-form/add-resource.component';
@@ -27,17 +28,17 @@ const ProfilePage = (props) => {
     React.useEffect(() => loadMyResource(), [])
 
     return(
-        <div>
+        <div className='profile'>
             {loaded && affiliation ? 
-                <React.Fragment>
+                <div className='section'>
                     <h1>Affiliated Resource</h1>
                     <Resource admin={true} profile={true} data={affiliation}/>
-               </React.Fragment> : 
+               </div> : 
                loaded ?
-               <React.Fragment>
+               <div className='section'>
                    <p>You haven't added a resource! Add one here...</p>
                    <AddResource register={true}/>
-               </React.Fragment> : 
+               </div> : 
                null
             }
         </div>

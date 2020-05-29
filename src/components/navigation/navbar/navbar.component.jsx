@@ -1,5 +1,7 @@
 import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+import { LinkStyled } from '../link-styled/link-styled.component'
+import './navbar.styles.css'
 
 const NavBar = (props) => {
     const [auth, setAuth] = React.useState(false)
@@ -16,33 +18,24 @@ const NavBar = (props) => {
         <div className='nav-bar'>
             {auth ? 
             <React.Fragment>
-                <Link to='/'>Home</Link>
-                <br />
-                <Link to='/resources'>Resources</Link>
-                <br />
-                <Link to='/about'>About</Link>
-                <br />
+                <LinkStyled loc='/' name='Home' />
+                <LinkStyled loc='/resources' name='Resources' />
+                <LinkStyled loc='/about' name='About' />
                 {props.admin ? 
                 <React.Fragment>
-                    <Link to='/admin-resources'>Admin Resources</Link>
-                    <br />
+                    <LinkStyled loc='/admin-resources' name='Admin Resources' />
                 </React.Fragment> : 
                 null}
-                <Link to='/profile'>Profile</Link>
-                <br />
+                <LinkStyled loc='/profile' name='Profile' />
                 <form onSubmit={handleLogout}>
                     <button type="submit">Logout</button>
                 </form>
-                <br />
             </React.Fragment> :
             <React.Fragment>
-                <Link to='/'>Home</Link>
-                <br />
-                <Link to='/resources'>Resources</Link>
-                <br />
-                <Link to='/about'>About</Link>
-                <br />
-                <Link to='/login'>Login</Link>
+                <LinkStyled loc='/' name='Home' />
+                <LinkStyled loc='/resources' name='Resources' />
+                <LinkStyled loc='/about' name="About" />
+                <LinkStyled loc='/login' name='Login' />
             </React.Fragment>
             }
         </div>

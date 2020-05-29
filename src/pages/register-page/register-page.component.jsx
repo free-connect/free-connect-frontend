@@ -1,4 +1,5 @@
 import React from 'react';
+import './register-page.styles.css'
 import { withRouter } from 'react-router-dom';
 import { Form } from '../../components/form/form.component';
 
@@ -81,7 +82,7 @@ const RegisterPage = (props) => {
     }
 
     return(
-        <div>
+        <div className='register'>
             <form className='register-form' onSubmit={handleSubmit}>
                 <Form 
                     title="username" 

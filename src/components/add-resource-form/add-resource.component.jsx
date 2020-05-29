@@ -1,6 +1,8 @@
 import React from 'react';
+import './add-resource.styles.css'
 import { Form } from '../form/form.component';
 import { withRouter } from 'react-router-dom';
+import { Services } from '../services/services.component';
 
 const AddResource = (props) => {
     const [title, setTitle] = React.useState('');
@@ -123,16 +125,6 @@ const AddResource = (props) => {
 
     }
 
-    const servicesList = [
-        'Housing', 
-        'Medical Care', 
-        'Mental Health Care', 
-        'Benefits', 
-        'Veterans Services', 
-        'Shelter', 
-        'Food'
-    ];
-
     return(
         loading ?
         <React.Fragment>
@@ -176,20 +168,7 @@ const AddResource = (props) => {
                     <option >Denver</option>
                 </select>
             </p>
-            <div className='checks' onChange={handleChange}>
-                {servicesList.map((a,i) => {
-                    let truthy = false;
-                    if (services) {
-                        truthy = services.includes(a) ? true : false;
-                    }
-                    return(
-                    <React.Fragment key={i}>
-                        <input type='checkbox' checked={truthy} name={a}/>
-                            <label htmlFor={`Service${i+1}`}>{a}</label>
-                    </React.Fragment>
-                    )
-                })}
-            </div>
+            <Services handleChange={handleChange} services={services}/>
                 <button type="submit">Submit Information</button>
         </form>
     )

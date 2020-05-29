@@ -1,4 +1,5 @@
 import React from 'react';
+import './login-page.styles.css'
 import { withRouter, Link } from 'react-router-dom';
 import { Form } from '../../components/form/form.component';
 
@@ -12,7 +13,7 @@ const LoginPage = (props) => {
     }
 
     return(
-        <div>
+        <div className='login'>
             <form className='login-form' onSubmit={(e) => props.handleLogin(e, data)}>
                 <Form 
                     title="username"

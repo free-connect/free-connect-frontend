@@ -1,8 +1,8 @@
-.login{
+.about{
     background-image: linear-gradient(rgb(109, 109, 233), white);
     height: 100%;
 }
 
-.login-form{
+.about p{
     margin-top: 5%
 }
