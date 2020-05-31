@@ -1,5 +1,6 @@
 import React from 'react';
 import Resource from '../resource/resource.component';
+import './resource-list.styles.css';
 
 export const ResourceList = (props) => {
     const [data, setData] = React.useState([]);
@@ -18,9 +19,7 @@ export const ResourceList = (props) => {
       }
 
     const getData = () => {
-        console.log('props', props)
         let query = '?city='+props.city
-        console.log(props)
         fetch('/data/resources'+query)
                 .then(response => response.json())
                 .then(newData => {
@@ -38,19 +37,19 @@ export const ResourceList = (props) => {
     React.useEffect(() => getData(), [])
 
         return(
-            <React.Fragment>
+            <div className='resource-list'>
                 {data.length>0 && loaded ? 
                 data.map(a => {
                     return(
-                        <div>
+                        <React.Fragment>
                             <Resource data = {a} admin={props.admin}/>
-                        </div>
+                        </React.Fragment>
                     )
                 }) :
-                    <div>
+                    <React.Fragment>
                         <p>No data!</p>
-                    </div>
+                    </React.Fragment>
             }
-        </React.Fragment>
+        </div>
     )
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import { CityForm } from '../city-form/city-form.component'
 import './select-city.styles.css'
 
 export const SelectCity = (props) => {
@@ -6,14 +7,7 @@ export const SelectCity = (props) => {
         <form onSubmit={props.handleSubmit} className="city-select">
                 <fieldset>
                     <legend>Where are you?</legend>
-                    <p>
-                        <label>Cities</label>
-                        <select id = "myList" onChange={(e) => props.setVal(e.target.value)}>
-                            <option >Boulder</option>
-                            <option >Denver</option>
-                            <option>All</option>
-                        </select>
-                    </p>
+                    <CityForm handleChange={props.setVal}/>
                 </fieldset>
                 <button type="submit">Let's find some resources!</button>
             </form>

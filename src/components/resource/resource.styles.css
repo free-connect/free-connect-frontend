@@ -1,11 +1,16 @@
 .resource-box{
     border: solid black 1px;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    margin: 20px;
+    flex: 1 0 40vw;
+    padding: 3%
 }
 
 .layer{
-        height: 100%;
-        width: 98%;
-        position: absolute;
-        z-index: 10;
-        opacity: 0
+    height: 100%;
+    width: 98%;
+    position: absolute;
+    z-index: 10;
+    opacity: 0
 }

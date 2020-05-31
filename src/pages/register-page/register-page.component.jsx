@@ -1,14 +1,14 @@
 import React from 'react';
 import './register-page.styles.css'
+import { SelectResource } from '../../components/select-resource/select-resource.component'
 import { withRouter } from 'react-router-dom';
 import { Form } from '../../components/form/form.component';
 
 const RegisterPage = (props) => {
     const [username, setUsername] = React.useState('');
-    const [resources, setResources] = React.useState([]);
     const [email, setEmail] = React.useState('');
     const [name, setName] = React.useState('');
-    const [affiliation, setAffiliation] = React.useState('');
+    const [affiliation, setAffiliation] = React.useState(null);
     const [password, setPassword] = React.useState('');
     const [confirmPassword, setConfirmPassword] = React.useState('');
     const [warning, setWarning] = React.useState('')
@@ -21,26 +21,9 @@ const RegisterPage = (props) => {
         }
     }
 
-    const handleDropdown = (e) => {
-        e.preventDefault();
-        let resource = resources.find(a => a.title === e.target.value);
-        if (e.target.value === 'None') {
-            setAffiliation(null);
-            return;
-        }
-        setAffiliation(resource._id)
+    const handleResource = (val) => {
+        setAffiliation(val);
     }
-
-    const loadResources = () => {
-        fetch('/data/resources?register=true')
-                .then(response => response.json())
-                .then(newData => {
-                    setResources(newData)
-                })
-                .catch(err => console.log(err))
-    }
-
-    React.useEffect(() => loadResources(), [])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -116,19 +99,7 @@ const RegisterPage = (props) => {
                     changeFunction = {setConfirmPassword}/>
                     <p>
                         <label>Affiliation</label>
-                        <select 
-                            id = "resources" 
-                            onChange={handleDropdown}>
-                                <option disabled selected="selected">Select a Resource</option>
-                                {resources.map(a => {
-                                    return(
-                                        <React.Fragment>
-                                            <option>{a.title}</option>
-                                        </React.Fragment>
-                                    )
-                                })}
-                                <option>None</option>
-                        </select>
+                        <SelectResource handleResource={handleResource}/>
                     </p>
                 <button type='submit'>Submit</button>
             </form>

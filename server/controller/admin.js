@@ -44,7 +44,6 @@ exports.postAddResource = (req, res, next) => {
     resource
         .save()
         .then(data => {
-            console.log('data', data)
             res.json({
                 msg: true,
                 affiliation: data._id

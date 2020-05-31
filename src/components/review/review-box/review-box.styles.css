@@ -1,8 +1,6 @@
 .review-box{
     height: 0px;
     width: 0px;
-    margin-left: 35%;
-    margin-top: 10%;
     border: solid black 1px;
     transition-duration: .6s;
     border-radius: 0%;

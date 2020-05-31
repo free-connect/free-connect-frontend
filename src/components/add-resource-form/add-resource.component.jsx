@@ -1,6 +1,8 @@
 import React from 'react';
 import './add-resource.styles.css'
 import { Form } from '../form/form.component';
+import { CityForm } from '../city-form/city-form.component';
+import { SelectResource } from '../select-resource/select-resource.component'
 import { withRouter } from 'react-router-dom';
 import { Services } from '../services/services.component';
 
@@ -13,7 +15,12 @@ const AddResource = (props) => {
     const [services, setServices] = React.useState([]);
     const [city, setCity] = React.useState('Boulder')
     const [id, setId] = React.useState('');
-    const [loading, setLoading] = React.useState(false)
+    const [loading, setLoading] = React.useState(false);
+    const [affiliation, setAffiliation] = React.useState(null)
+
+    const handleResource = (val) => {
+        setAffiliation(val);
+    }
 
     const handleEdit = () => {
         const { title, phone, address, url, website, services, _id, city } = props.location.state.data;
@@ -35,6 +42,10 @@ const AddResource = (props) => {
         }
     }, [])
 
+    const handleCityChange = (val) => {
+        setCity(val)
+    }
+
     const handleChange = (e) => {
         let newChecked = [...services];
         let ind = newChecked.indexOf(e.target.name)
@@ -45,6 +56,28 @@ const AddResource = (props) => {
             setServices([...newChecked, e.target.name]);
         }
     }
+
+    const handleAddUserResource = (aff, tok) => {
+        let data = {
+            affiliation: aff
+        }
+        fetch('/add-user-resource', {
+            method: "POST", 
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'bearer ' + tok
+                }
+            })
+            .then(res => res.json())
+            .then(response => {
+                if (response.msg === 'success') {
+                    setLoading(false)
+                    window.location.reload()
+                }
+            })
+            .catch((err) => console.log(err, 'err'))
+        }
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -58,6 +91,10 @@ const AddResource = (props) => {
             city: city
         }
         const token = localStorage.getItem('token');
+        if (affiliation) {
+            handleAddUserResource(affiliation, token)
+            return;
+        }
         if (!props.location.state) {
             setLoading(true)
             fetch('/', {
@@ -72,24 +109,8 @@ const AddResource = (props) => {
                 .then(response => {
                     if (response.msg) {
                         if (props.register) {
-                            let data = {
-                                affiliation: response.affiliation
-                            }
-                            fetch('/add-user-resource', {
-                                method: "POST", 
-                                body: JSON.stringify(data),
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    Authorization: 'bearer ' + token
-                                    }
-                                })
-                                .then(res => res.json())
-                                .then(response => {
-                                    if (response.msg === 'success') {
-                                        setLoading(false)
-                                        window.location.reload()
-                                    }
-                                })
+                            handleAddUserResource(response.affiliation, token);
+                            return;
                         } else {
                             alert('approved!');
                             props.history.push('/admin-resources')
@@ -100,7 +121,6 @@ const AddResource = (props) => {
                 .catch(err => console.log(err))
         } else {
             data.id = id;
-            const token = localStorage.getItem('token');
             if (!token) {
                 alert('not authorized')
                 return;
@@ -161,15 +181,18 @@ const AddResource = (props) => {
                 value={url} 
                 type="text" 
                 changeFunction = {setUrl}/>
-            <p>
-                <label>Cities</label>
-                <select id = "myList" onChange={(e) => setCity(e.target.value)}>
-                    <option >Boulder</option>
-                    <option >Denver</option>
-                </select>
-            </p>
+            <CityForm handleChange={handleCityChange}/>
             <Services handleChange={handleChange} services={services}/>
-                <button type="submit">Submit Information</button>
+            <React.Fragment>
+            {props.register ? 
+                    <p>
+                        <label>Or select from existing....</label>
+                        <SelectResource handleResource={handleResource} /> 
+                    </p>
+                : null}
+            </React.Fragment>
+            <br/>
+            <button type="submit">Submit Information</button>
         </form>
     )
 }

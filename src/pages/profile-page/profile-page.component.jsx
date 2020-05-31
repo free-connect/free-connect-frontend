@@ -5,8 +5,7 @@ import { withRouter } from 'react-router-dom';
 import AddResource from '../../components/add-resource-form/add-resource.component';
 
 const ProfilePage = (props) => {
-
-    const [affiliation, setAffiliation] = React.useState(null)
+    const [initAffiliation, setInitAffiliation] = React.useState(null)
     const [loaded, setLoaded] = React.useState(false)
 
     const loadMyResource = () => {
@@ -20,7 +19,7 @@ const ProfilePage = (props) => {
             }
         })
             .then(res => res.json())
-            .then(response => setAffiliation(response))
+            .then(response => setInitAffiliation(response))
             .then(() => setTimeout(setLoaded(true), 1000))
             .catch(err => console.log(err))
     }
@@ -29,10 +28,10 @@ const ProfilePage = (props) => {
 
     return(
         <div className='profile'>
-            {loaded && affiliation ? 
+            {loaded && initAffiliation ? 
                 <div className='section'>
                     <h1>Affiliated Resource</h1>
-                    <Resource admin={true} profile={true} data={affiliation}/>
+                    <Resource admin={true} profile={true} data={initAffiliation}/>
                </div> : 
                loaded ?
                <div className='section'>

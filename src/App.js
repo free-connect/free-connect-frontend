@@ -5,9 +5,10 @@ import LoginPage from './pages/login-page/login-page.component';
 import RegisterPage from './pages/register-page/register-page.component';
 import ProfilePage from './pages/profile-page/profile-page.component';
 import NavBar from './components/navigation/navbar/navbar.component';
-import { AdminResourcePage } from './pages/admin-resource-page.component';
-import { ResourcesPage } from './pages/resources-page.component';
-import { AboutPage } from './pages/about-page.component'
+import { AdminResourcePage } from './pages/admin-resources/admin-resource-page.component';
+import { ResourcesPage } from './pages/resource-page/resources-page.component';
+import { AboutPage } from './pages/about-page/about-page.component'
+import  { ErrorPage } from './pages/error-page/error-page.component'
 import { Route, withRouter, Switch } from 'react-router-dom' 
 import './App.css';
 
@@ -114,6 +115,7 @@ function App(props) {
               null}
             {isAuth ? <Route exact path ="/profile" render={() => <ProfilePage token={token}/>} /> : null}
             <Route path='*' render={() => <p>Sorry, there's nothing here!</p>} />
+            <Route path='/' component={ErrorPage} />
           </Switch>
       </div>
     </React.Fragment>

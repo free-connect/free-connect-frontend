@@ -1,7 +1,8 @@
 import React from 'react';
-import './resource.styles.css'
-import { Link, withRouter } from 'react-router-dom';
+import './resource.styles.css';
 import { ReviewBox } from '../review/review-box/review-box.component';
+import { CustomButton } from '../button/button.component';
+import { Link, withRouter } from 'react-router-dom';
 
 const Resource = (props) => {
     const [reviewAct, setReviewAct] = React.useState(false)
@@ -74,21 +75,15 @@ const Resource = (props) => {
             .then(response => {
                 if (response.msg === 'success') {
                     alert('thanks for reviewing!');
-                    setReviewAct(false);
-                    return;
                 } else if (response.msg === 'already reviewed') {
                     alert('You already reviewed this resource!')
-                    setReviewAct(false);
-                    return
                 } else if (response.msg === 'your resource') {
                     alert("Can't review your own resource!");
-                    setReviewAct(false);
-                    return
                 } else if (response.msg === 'no affiliation') {
                     alert("You have to have an affiliation to review!");
-                    setReviewAct(false);
-                    return
-                }
+                };
+                setReviewAct(false);
+                return
             })
             .catch(err => {
                 console.log(err);
@@ -140,48 +135,65 @@ const Resource = (props) => {
                 active={reviewAct} 
                 handleSubmitReview={handleSubmitReview} 
                 handleClickOff={handleClickOffAct}/> 
-            {reviewAct || reviewList ? <div className="layer"></div> : null}
-            <h1>{props.data.title}</h1>
-            <p>address: {props.data.address}</p>
-            <p>city: {props.data.city ? props.data.city : 'none'}</p>
-            <p>phone: {props.data.phone}</p>
-            <a href={props.data.website}>Click to visit {props.data.name}</a>
-            <img 
-                src={props.data.url} 
-                alt={props.data.title}
-                height='350px'
-                width='350px'
+            <div className="resource-left">
+                <h1>{props.data.title}</h1>
+                <img 
+                    src={props.data.url} 
+                    alt={props.data.title}
+                    height='150px'
+                    width='150px'
                 />
-            <p>resources offered: {
-                props
-                    .data
-                    .services
-                    .map((a, i) => i === 0 ? 
-                        <span>  {a} </span> : 
-                        <span>| {a} </span>)}
-            </p>
-            {!props.admin ? <button disabled={reviewAct ? true : false} onClick={handleClick}>Review</button> : null}
-            {!props.admin ? <button disabled={reviewList ? true : false} onClick={handleClickList}>See All Reviews</button> : null}
-            {props.admin ? 
-            <div className='delete-resource'>
-                {!props.profile ?
-                <React.Fragment>
-                    <button onClick={handleDelete}>
-                        Delete
-                    </button>
-                </React.Fragment> : 
-                null
-                }
-                <Link to={{
-                    pathname: "/edit-resource",
-                    state: {
-                        data: props.data,
-                        edit: true
+                <br />
+                {!props.admin ? 
+                    <CustomButton 
+                        text='Review' 
+                        disabled={reviewAct ? true : false} 
+                        handleClick={handleClick}
+                    /> : 
+                    null}
+                {!props.admin ? 
+                    <CustomButton 
+                        text='See All Reviews' 
+                        disabled={reviewList ? true : false} 
+                        handleClick={handleClickList}
+                    /> : 
+                    null}
+            </div>
+            <div className="resource-right">
+                <p>Resources offered: {
+                    props
+                        .data
+                        .services
+                        .map((a, i) => i === 0 ? 
+                            <span>  {a} </span> : 
+                            <span>| {a} </span>)}
+                </p>
+                <p>address: {props.data.address}</p>
+                <p>city: {props.data.city ? props.data.city : 'none'}</p>
+                <p>phone: {props.data.phone}</p>
+                <a href={props.data.website}>Click to visit {props.data.name}</a>
+                {props.admin ? 
+                <div className='delete-resource'>
+                    {!props.profile ?
+                    <React.Fragment>
+                        <button onClick={handleDelete}>
+                            Delete
+                        </button>
+                    </React.Fragment> : 
+                    null
                     }
-                    }}>Edit</Link>
-            </div> :
-            null
-        }
+                    <Link to={{
+                        pathname: "/edit-resource",
+                        state: {
+                            data: props.data,
+                            edit: true
+                        }
+                        }}>Edit</Link>
+                </div> :
+                null
+            }
+            </div>
+            {reviewAct || reviewList ? <div className="layer"></div> : null}
         </div>
     )
 }

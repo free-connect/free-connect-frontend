@@ -1,0 +1,30 @@
+.custom-button{
+    width: 90px;
+    height: 28px;
+    cursor: pointer;
+    border: none;
+    transition-duration: .8s;
+    float: right;
+    color: white;
+    opacity: 1;
+    border-radius: 20px;
+    margin: 5%;
+    background-color: rgb(24, 24, 116);
+    margin-left: -2%
+}   
+
+
+.custom-button.active{
+    transform: scale(1.1);
+}
+
+.custom-button.disabled{
+    background-color: black;
+}
+
+.button_name{
+    font-size: 11px;
+    position: static;
+    margin-top: 6px;
+    left: 28px
+}
