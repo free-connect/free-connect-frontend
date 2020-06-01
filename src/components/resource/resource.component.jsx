@@ -122,6 +122,8 @@ const Resource = (props) => {
             .catch(err => console.log(err))
     }
 
+    React.useEffect(() => console.log('truthy vals', reviewList, reviewAct))
+
     return(
         <div className="resource-box">
             <ReviewBox 
@@ -136,12 +138,12 @@ const Resource = (props) => {
                 handleSubmitReview={handleSubmitReview} 
                 handleClickOff={handleClickOffAct}/> 
             <div className="resource-left">
-                <h1>{props.data.title}</h1>
+                <h3>{props.data.title}</h3>
                 <img 
                     src={props.data.url} 
                     alt={props.data.title}
-                    height='150px'
-                    width='150px'
+                    height='80vw'
+                    width='80vw'
                 />
                 <br />
                 {!props.admin ? 
@@ -160,17 +162,13 @@ const Resource = (props) => {
                     null}
             </div>
             <div className="resource-right">
-                <p>Resources offered: {
-                    props
-                        .data
-                        .services
-                        .map((a, i) => i === 0 ? 
-                            <span>  {a} </span> : 
-                            <span>| {a} </span>)}
-                </p>
-                <p>address: {props.data.address}</p>
-                <p>city: {props.data.city ? props.data.city : 'none'}</p>
-                <p>phone: {props.data.phone}</p>
+                <ul>
+                    {props.data.services.map(a => <li>{a}</li>)}
+                </ul>
+                <br />
+                <p>{props.data.address}</p>
+                <p>{props.data.city ? props.data.city : 'none'}, CO</p>
+                <p>{props.data.phone}</p>
                 <a href={props.data.website}>Click to visit {props.data.name}</a>
                 {props.admin ? 
                 <div className='delete-resource'>

@@ -1,6 +1,6 @@
 import React from 'react';
 import MainPage from './pages/main-page/main-page.component';
-import AddResource from './components/add-resource-form/add-resource.component';
+import EditResourcePage from './pages/edit-resource/edit-resource-page.component';
 import LoginPage from './pages/login-page/login-page.component'; 
 import RegisterPage from './pages/register-page/register-page.component';
 import ProfilePage from './pages/profile-page/profile-page.component';
@@ -109,7 +109,7 @@ function App(props) {
             <Route exact path='/register' component={RegisterPage} />
             <Route exact path='/resources' component={ResourcesPage} />
             <Route exact path='/about' component={AboutPage} />
-            {isAuth ? <Route exact path='/edit-resource' component={AddResource} /> : null}
+            {isAuth ? <Route exact path='/edit-resource' component={EditResourcePage} /> : null}
             {(isAuth && userId === process.env.REACT_APP_USER_ID) ? 
               <Route exact path="/admin-resources" component={AdminResourcePage} /> : 
               null}

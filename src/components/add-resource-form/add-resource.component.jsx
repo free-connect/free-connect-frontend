@@ -150,7 +150,7 @@ const AddResource = (props) => {
         <React.Fragment>
             <p>Loading....</p>
         </React.Fragment> :
-        <form className='add-resource' onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
             <Form 
                 title='title' 
                 label="Organization Name" 

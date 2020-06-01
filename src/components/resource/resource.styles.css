@@ -1,10 +1,18 @@
 .resource-box{
-    border: solid black 1px;
+    border: solid transparent 1px;
+    box-shadow: 0 15px 10px #777;
     display: grid;
     grid-template-columns: 50% 50%;
     margin: 20px;
-    flex: 1 0 40vw;
-    padding: 3%
+    flex: 1 0 38%;
+    padding: 3%;
+    cursor: pointer;
+    transition-duration: 1s;
+    min-width: auto;
+}
+
+.resource-box:hover{
+    background-color: rgb(117, 117, 207)
 }
 
 .layer{
@@ -13,4 +21,20 @@
     position: absolute;
     z-index: 10;
     opacity: 0
+}
+
+.resource-right ul{
+    text-align: justify;
+}
+
+.resource-left img{
+    border-radius: 50%;
+}
+
+.resource-left{
+    padding: 5%;
+}
+
+.resource-right{
+    padding: 5%;
 }

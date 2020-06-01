@@ -1,4 +1,4 @@
-.review-box{
+.flash-box{
     height: 0px;
     width: 0px;
     border: solid black 1px;
@@ -9,13 +9,12 @@
     font-size: 0px;
 }
 
-.review-box.active{
-    height: 275px;
-    width: 275px;
+.flash-box.active{
+    height: 350px;
+    width: 300px;
     border-radius: 15%;
     opacity: 1;
     font-size: 17px;
     background-color: white;
-    z-index: 20;
-    overflow: auto;
+    z-index: 20
 }
