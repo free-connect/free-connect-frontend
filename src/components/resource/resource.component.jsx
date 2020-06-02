@@ -168,7 +168,9 @@ const Resource = (props) => {
                 <br />
                 <p>{props.data.address}</p>
                 <p>{props.data.city ? props.data.city : 'none'}, CO</p>
-                <p>{props.data.phone}</p>
+                <br />
+                <p>({props.data.phone.substring(0, 3)}) {props.data.phone.substring(3, 6)}-{props.data.phone.substring(6, 10)}</p>
+                <br />
                 <a href={props.data.website}>Click to visit {props.data.name}</a>
                 {props.admin ? 
                 <div className='delete-resource'>

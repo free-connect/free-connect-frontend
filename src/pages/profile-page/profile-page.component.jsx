@@ -32,7 +32,7 @@ const ProfilePage = (props) => {
                 <div className='section'>
                     <h1>Affiliated Resource</h1>
                     <Resource admin={true} profile={true} data={initAffiliation}/>
-               </div> : 
+               </div> :
                loaded ?
                <div className='section'>
                    <p>You haven't added a resource! Add one here...</p>

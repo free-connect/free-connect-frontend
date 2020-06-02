@@ -1,0 +1,43 @@
+.custom-checks{
+    width: 13px;
+    height: 13px;
+    padding: 0;
+    margin:0;
+    vertical-align: bottom;
+    position: relative;
+    top: -1px;
+    overflow: hidden;
+}
+
+.custom-label{
+    display: block;
+    padding-left: 15px;
+    text-indent: -15px;
+}
+
+.custom-label .custom-checkbox:after{
+    left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.custom-checkbox{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+}
+
+.custom-checkbox:after{
+    content: "";
+    position: absolute;
+    display: none;
+}

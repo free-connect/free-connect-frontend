@@ -1,5 +1,5 @@
 import React from 'react';
-import { CityForm } from '../city-form/city-form.component'
+import { CityForm } from '../city-form/city-form.component';
 import './select-city.styles.css'
 
 export const SelectCity = (props) => {

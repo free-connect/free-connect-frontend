@@ -54,6 +54,10 @@ const RegisterPage = (props) => {
             .then(res => res.json())
             .then(response => {
                 if (response.msg) {
+                    if (response.errors) {
+                        alert(response.errors.map(a => a.msg).join(' '));
+                        return;
+                    }
                     alert('approved!');
                     props.history.push('/login')
                 } else {
@@ -69,13 +73,13 @@ const RegisterPage = (props) => {
             <form className='register-form' onSubmit={handleSubmit}>
                 <Form 
                     title="username" 
-                    label="username" 
+                    label="Username" 
                     value={username} 
                     type="text" 
                     changeFunction = {setUsername}/>
                 <Form 
                     title="name" 
-                    label="name" 
+                    label="Name" 
                     value={name} 
                     type="text" 
                     changeFunction = {setName}/>
@@ -87,7 +91,7 @@ const RegisterPage = (props) => {
                     changeFunction = {setEmail}/>
                 <Form 
                     title="password"
-                    label="password" 
+                    label="Password" 
                     value={password} 
                     type="password" 
                     changeFunction = {setPassword}/>
@@ -97,10 +101,12 @@ const RegisterPage = (props) => {
                     value={confirmPassword} 
                     type="password" 
                     changeFunction = {setConfirmPassword}/>
+                    <br />
                     <p>
                         <label>Affiliation</label>
                         <SelectResource handleResource={handleResource}/>
                     </p>
+                    <br />
                 <button type='submit'>Submit</button>
             </form>
         <p>{warning}</p>

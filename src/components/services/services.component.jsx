@@ -1,4 +1,5 @@
 import React from 'react';
+import './services.styles.css'
 
 export const Services = (props) => {
 
@@ -13,7 +14,7 @@ export const Services = (props) => {
     ];
 
     return(
-        <div className='checks' onChange={e => props.handleChange(e)}>
+        <React.Fragment>
             {servicesList.map((a,i) => {
                 let truthy = false;
                 if (props.services) {
@@ -21,11 +22,20 @@ export const Services = (props) => {
                 }
                 return(
                 <React.Fragment key={i}>
-                    <input type='checkbox' checked={truthy} name={a}/>
-                        <label htmlFor={`Service${i+1}`}>{a}</label>
+                    <label 
+                            className='custom-label'
+                            htmlFor={`Service${i+1}`}>{a}
+                    <input 
+                        onChange={e => props.handleChange(e)} 
+                        type='checkbox' 
+                        className='custom-checks' 
+                        checked={truthy} 
+                        name={a}/>
+                    <span className='custom-checkbox'></span>
+                    </label>
                 </React.Fragment>
                 )
             })}
-        </div>
+        </React.Fragment>
     )
 }

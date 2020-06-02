@@ -27,6 +27,7 @@ const LoginPage = (props) => {
                     value={password} 
                     type="password" 
                     changeFunction = {setPassword}/>
+                    <br />
                 <button type='submit'>Submit</button>
             </form>
             <Link to='/register'>Not a member? Register here!</Link>

@@ -6,8 +6,6 @@
     text-decoration: none;
     color: white;
     transition-duration: .5s;
-    padding-left: 1%;
-    padding-right: 1%;
 }
 
 .nav.active{

@@ -22,6 +22,11 @@ const AddResource = (props) => {
         setAffiliation(val);
     }
 
+    const siftPhone = (val) => {
+        val = val.split(/[^\d]/gi).join('');
+        return val
+      };
+
     const handleEdit = () => {
         const { title, phone, address, url, website, services, _id, city } = props.location.state.data;
         setTitle(title);
@@ -81,10 +86,15 @@ const AddResource = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        let checkTelephone = siftPhone(phone);
+        if (checkTelephone.length !== 10) {
+            alert('number must be 10 digits long. Please include area code!');
+            return
+        }
         const data = {
             title: title,
             address: address,
-            phone: phone,
+            phone: checkTelephone,
             url: url,
             services: services,
             website: website,
@@ -150,7 +160,7 @@ const AddResource = (props) => {
         <React.Fragment>
             <p>Loading....</p>
         </React.Fragment> :
-        <form onSubmit={handleSubmit}>
+        <form className='add-resource-form' onSubmit={handleSubmit}>
             <Form 
                 title='title' 
                 label="Organization Name" 
@@ -181,7 +191,9 @@ const AddResource = (props) => {
                 value={url} 
                 type="text" 
                 changeFunction = {setUrl}/>
+                <br />
             <CityForm handleChange={handleCityChange}/>
+            <br />
             <Services handleChange={handleChange} services={services}/>
             <React.Fragment>
             {props.register ? 

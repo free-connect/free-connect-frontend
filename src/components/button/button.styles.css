@@ -1,5 +1,5 @@
 .custom-button{
-    width: 100%;
+    width: 60%;
     height: 28px;
     cursor: pointer;
     border: none;
@@ -7,9 +7,10 @@
     color: white;
     opacity: 1;
     border-radius: 20px;
-    margin: 5%;
+    margin: auto;
     float: center;
     background-color: rgb(24, 24, 116);
+    font-size: 1em;
 }   
 
 
@@ -22,8 +23,9 @@
 }
 
 .button_name{
-    font-size: 11px;
+    font-size: .6em;
     position: static;
+    padding-top: .7em;
     margin-top: 26px;
-    left: 28px
+    left: 28px;
 }

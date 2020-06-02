@@ -1,10 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const AuthController = require('../controller/auth')
-//work on setting up validation
-const expValidator = require('express-validator')
+const { check } = require('express-validator')
 
-router.post('/register', AuthController.postRegister);
+router.post(
+    '/register', 
+    check('email')
+        .isEmail()
+        .withMessage('please enter valid email'), 
+    AuthController.postRegister
+);
 router.post('/login', AuthController.postLogin);
 
 
