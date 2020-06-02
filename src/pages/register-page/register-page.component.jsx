@@ -27,19 +27,20 @@ const RegisterPage = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        let equal = checkEqual(password, confirmPassword)
-        if (!equal && password.length>0 && confirmPassword.length>0) {
-            setWarning('passwords not equal');
-            setPassword('');
-            setConfirmPassword('');
-            return;
-        } else if (!equal) {
-            setWarning('must enter a value');
-            return;
-        }
+        // let equal = checkEqual(password, confirmPassword)
+        // if (!equal && password.length>0 && confirmPassword.length>0) {
+        //     setWarning('passwords not equal');
+        //     setPassword('');
+        //     setConfirmPassword('');
+        //     return;
+        // } else if (!equal) {
+        //     setWarning('must enter a value');
+        //     return;
+        // }
         const data = {
             username: username,
             password: password,
+            confirmPassword: confirmPassword,
             affiliation: affiliation,
             email: email,
             name: name
@@ -53,11 +54,12 @@ const RegisterPage = (props) => {
             })
             .then(res => res.json())
             .then(response => {
+                console.log(response)
+                if (response.errors) {
+                    alert(response.errors.map(a => a.msg).join(' '));
+                    return;
+                }
                 if (response.msg) {
-                    if (response.errors) {
-                        alert(response.errors.map(a => a.msg).join(' '));
-                        return;
-                    }
                     alert('approved!');
                     props.history.push('/login')
                 } else {

@@ -6,7 +6,6 @@ const { validationResult } = require('express-validator')
 exports.postRegister = (req, res, next) => {
     const {username, password, affiliation, name, email} = req.body;
     const errors = validationResult(req);
-    console.log(errors.array())
     if (!errors.isEmpty()) {
         return res.json({
             errors: errors.array()
