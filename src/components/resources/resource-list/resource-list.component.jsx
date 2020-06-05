@@ -19,19 +19,25 @@ export const ResourceList = (props) => {
       }
 
     const getData = () => {
-        let query = '?city='+props.city
-        fetch('/data/resources'+query)
+        console.log(data, props)
+        let query = props.city ? '/data/resources?city='+props.city : '/data/resources';
+        console.log('query', query)
+        fetch(query)
                 .then(response => response.json())
                 .then(newData => {
+                    let sorted = [];
                     if (props.services) {
-                        newData = newData.sort((a,b) => compare(props.services, b.services)-compare(props.services, a.services))
+                        sorted = newData.sort((a,b) => compare(props.services, b.services)-compare(props.services, a.services))
+                    } else {
+                        sorted = newData
                     }
-                    setData([...data, ...newData])
+                    setData([...sorted])
                 })
                 .then(() => {
-                    setLoaded(true)
+                    setLoaded(true);
+                    console.log('data', data.length)
                 })
-                .catch(err => console.log(err))
+                .catch(err => console.log('errorrrrr', err))
     }
 
     React.useEffect(() => getData(), [])

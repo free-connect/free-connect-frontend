@@ -5,75 +5,69 @@ const { validationResult } = require('express-validator')
 
 exports.postRegister = (req, res, next) => {
     const {username, password, affiliation, name, email} = req.body;
+    //handles validation errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.json({
             errors: errors.array()
         })
     }
-    User
-        .findOne({
-            email: email
-        })
-        .then(userCheck => {
-            if (userCheck) {
-                return res.json({
-                    msg: false
-                })
-            } else {
-                return bcrypt
-                    .hash(password, 12)
-                    .then(hashedPw => {
-                        const user = new User({
-                            username: username,
-                            password: hashedPw,
-                            affiliation: affiliation,
-                            name: name,
-                            email: email,
-                            likes: [],
-                            reviews: []
+    //encrypt password with a secure salt of 12
+    bcrypt
+        .hash(password, 12)
+        .then(hashedPw => {
+            const user = new User({
+                username: username,
+                password: hashedPw,
+                affiliation: affiliation,
+                name: name,
+                email: email,
+                likes: [],
+                reviews: []
+            })    
+            return user
+                    .save()
+                    .then(() => {
+                        res.json({
+                            success: true
                         })
-                        user
-                            .save()
-                            .then(() => {
-                                res.json({
-                                    msg: true
-                                })
-                            })
-                            .catch(err => {
-                                console.log(err)
-                                return res.json({
-                                    msg: false
-                                })
-                            })
                     })
+                    .catch(err => {
+                        if (!err.statusCode) {
+                            err.statusCode = 500
+                        }
+                        next(err)
+                    })
+            })
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500
             }
-        })
-        .catch(err => console.log(err))
+            next(err)
+        })         
 };
 
 exports.postLogin = (req, res, next) => {
     const { password, username } = req.body;
     let AuthedUser;
-    User
+    return User
         .findOne({
             username: username
         })
         .then(user => {
             if (!user) {
-                return res.json({
-                    msg: 'no user'
-                })
+                const error = new Error("User doesn't exist");
+                error.statusCode = 401;
+                throw error
             }
             AuthedUser = user;
             return bcrypt
                 .compare(password, user.password)
                 .then(match => {
                     if (!match) {
-                        res.json({
-                            msg: 'no match'
-                        })
-                        return;
+                        const error = new Error("Username and Password don't match");
+                        error.statusCode = 401;
+                        throw error
                     };
                     const token = jwt.sign({
                         email: AuthedUser.email,
@@ -85,9 +79,21 @@ exports.postLogin = (req, res, next) => {
                     res.json({
                             token: token,
                             userId: AuthedUser._id,
-                            msg: 'success'
+                            name: AuthedUser.username,
+                            success: true
                         })
                 })
+                .catch(err => {
+                    if (!err.statusCode) {
+                        err.statusCode = 500
+                    }
+                    next(err)
+                })
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500
+            }
+            next(err)
+        })
 }

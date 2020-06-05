@@ -1,25 +1,30 @@
 import React from 'react';
 import './add-resource.styles.css'
-import { Form } from '../form/form.component';
-import { CityForm } from '../city-form/city-form.component';
-import { SelectResource } from '../select-resource/select-resource.component'
+import { Form } from '../../form/form.component';
+import { CityForm } from '../../city-form/city-form.component';
+import { SelectResource } from '../../select-resource/select-resource.component'
 import { withRouter } from 'react-router-dom';
-import { Services } from '../services/services.component';
+import { Services } from '../../services/services.component';
 
 const AddResource = (props) => {
     const [title, setTitle] = React.useState('');
     const [address, setAddress] = React.useState('');
     const [phone, setPhone] = React.useState('');
-    const [url, setUrl] = React.useState('');
+    const [url, setUrl] = React.useState([]);
     const [website, setWebsite] = React.useState('');
     const [services, setServices] = React.useState([]);
     const [city, setCity] = React.useState('Boulder')
     const [id, setId] = React.useState('');
-    const [loading, setLoading] = React.useState(false);
     const [affiliation, setAffiliation] = React.useState(null)
 
     const handleResource = (val) => {
         setAffiliation(val);
+    }
+
+    const handleImage = async (e) => {
+        e.preventDefault();
+        setUrl([...url, e.target.files[0]])
+        return
     }
 
     const siftPhone = (val) => {
@@ -60,24 +65,29 @@ const AddResource = (props) => {
         } else {
             setServices([...newChecked, e.target.name]);
         }
+        console.log(services)
     }
 
     const handleAddUserResource = (aff, tok) => {
         let data = {
-            affiliation: aff
+            affiliation: aff.toString()
         }
+        console.log('aff', aff)
         fetch('/add-user-resource', {
             method: "POST", 
             body: JSON.stringify(data),
             headers: {
-                'Content-Type': 'application/json',
-                Authorization: 'bearer ' + tok
+                Authorization: 'bearer ' + tok,
+                'Content-Type': 'application/json'
                 }
             })
             .then(res => res.json())
             .then(response => {
-                if (response.msg === 'success') {
-                    setLoading(false)
+                if (response.errors) {
+                    alert(response.errors.map(a => a.msg).join(' '));
+                    return;
+                }
+                if (response.success) {
                     window.location.reload()
                 }
             })
@@ -87,40 +97,40 @@ const AddResource = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault()
         let checkTelephone = siftPhone(phone);
-        if (checkTelephone.length !== 10) {
+        if (checkTelephone.length !== 10 && phone) {
             alert('number must be 10 digits long. Please include area code!');
             return
         }
-        const data = {
-            title: title,
-            address: address,
-            phone: checkTelephone,
-            url: url,
-            services: services,
-            website: website,
-            city: city
-        }
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('address', address);
+        formData.append('phone', checkTelephone);
+        formData.append('image', url[0]);
+        formData.append('services', services);
+        formData.append('website', website);
+        formData.append('city', city);
         const token = localStorage.getItem('token');
         if (affiliation) {
             handleAddUserResource(affiliation, token)
             return;
         }
         if (!props.location.state) {
-            setLoading(true)
             fetch('/', {
                 method: "POST", 
-                body: JSON.stringify(data),
+                body: formData,
                 headers: {
-                    'Content-Type': 'application/json',
                     Authorization: 'bearer ' + token
                     }
                 })
                 .then(res => res.json())
                 .then(response => {
-                    if (response.msg) {
+                    if (response.errors) {
+                        alert(response.errors);
+                        return;
+                    }
+                    if (response.success) {
                         if (props.register) {
                             handleAddUserResource(response.affiliation, token);
-                            return;
                         } else {
                             alert('approved!');
                             props.history.push('/admin-resources')
@@ -128,38 +138,36 @@ const AddResource = (props) => {
                         }
                     }
                 })
-                .catch(err => console.log(err))
+                .catch(err => console.log(err));
         } else {
-            data.id = id;
+            formData.append('id', id)
             if (!token) {
                 alert('not authorized')
                 return;
             }
             fetch('/edit-resource', {
                 method: "POST", 
-                body: JSON.stringify(data),
+                body: formData,
                 headers: {
-                    'Content-Type': 'application/json',
                     Authorization: 'bearer '+ token
                     }
                 })
                 .then(res => res.json())
                 .then(response => {
-                    if (response.msg) {
+                    if (response.errors) {
+                        alert(response.errors.map(a => a.msg).join(' '));
+                        return;
+                    }
+                    if (response.success) {
                         alert('approved!');
-                        props.history.push('/admin-resources')
+                        props.history.push('/profile')
                     }
                 })
                 .catch(err => console.log(err))
         }
-
     }
 
     return(
-        loading ?
-        <React.Fragment>
-            <p>Loading....</p>
-        </React.Fragment> :
         <form className='add-resource-form' onSubmit={handleSubmit}>
             <Form 
                 title='title' 
@@ -185,13 +193,14 @@ const AddResource = (props) => {
                 value={website} 
                 type="text" 
                 changeFunction = {setWebsite}/>
-            <Form 
-                title='picture' 
-                label="Organization Picture URL" 
-                value={url} 
-                type="text" 
-                changeFunction = {setUrl}/>
                 <br />
+            <label htmlFor='picture' >Picture</label>
+                <input 
+                    className='custom-form'
+                    type='file'
+                    name='picture' 
+                    onChange={handleImage}/>
+            <br />
             <CityForm handleChange={handleCityChange}/>
             <br />
             <Services handleChange={handleChange} services={services}/>

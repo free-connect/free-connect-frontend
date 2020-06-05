@@ -27,16 +27,16 @@ const RegisterPage = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // let equal = checkEqual(password, confirmPassword)
-        // if (!equal && password.length>0 && confirmPassword.length>0) {
-        //     setWarning('passwords not equal');
-        //     setPassword('');
-        //     setConfirmPassword('');
-        //     return;
-        // } else if (!equal) {
-        //     setWarning('must enter a value');
-        //     return;
-        // }
+        let equal = checkEqual(password, confirmPassword)
+        if (!equal && password.length>0 && confirmPassword.length>0) {
+            setWarning('passwords not equal');
+            setPassword('');
+            setConfirmPassword('');
+            return;
+        } else if (!equal) {
+            setWarning('must enter a value');
+            return;
+        }
         const data = {
             username: username,
             password: password,
@@ -54,17 +54,16 @@ const RegisterPage = (props) => {
             })
             .then(res => res.json())
             .then(response => {
-                console.log(response)
                 if (response.errors) {
                     alert(response.errors.map(a => a.msg).join(' '));
                     return;
                 }
-                if (response.msg) {
+                if (response.success) {
                     alert('approved!');
                     props.history.push('/login')
                 } else {
                     alert('email/username already exists! Go to Login Page, idiot. Or, you can try a different username/email :)');
-                    props.history.push('/login')
+                    return;
                 }
             })
             .catch(err => console.log(err))

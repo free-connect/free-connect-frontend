@@ -46,6 +46,7 @@ function App(props) {
     localStorage.removeItem('token');
     localStorage.removeItem('expiryDate');
     localStorage.removeItem('userId');
+    localStorage.removeItem('name');
     props.history.push('/login')
     window.location.reload(false);
 }
@@ -65,14 +66,12 @@ function App(props) {
         })
         .then(res => res.json())
         .then((response) => {
-            if (response.msg === 'no user') {
-                alert("You're not a user! That's all good, come register!")
-                props.history.push('/register');
+            console.log(response)
+            if (response.message) {
+                setIsAuth(false)
+                alert(response.message)
                 return;
-            } else if (response.msg === 'no match') {
-                alert("Username and Password didn't match. Try again!")
-                return;
-            } else if (response.msg === 'success') {
+            } else if (response.success) {
                 setToken(response.token);
                 setUserId(response.userId);
                 setIsAuth(true);
@@ -80,6 +79,7 @@ function App(props) {
             }
             localStorage.setItem('token', response.token);
             localStorage.setItem('userId', response.userId);
+            localStorage.setItem('name', response.name);
             const remainingMilliseconds = 60 * 60 * 1000;
             const expiryDate = new Date(
               new Date().getTime() + remainingMilliseconds
@@ -114,8 +114,8 @@ function App(props) {
               <Route exact path="/admin-resources" component={AdminResourcePage} /> : 
               null}
             {isAuth ? <Route exact path ="/profile" render={() => <ProfilePage token={token}/>} /> : null}
-            <Route path='*' render={() => <p>Sorry, there's nothing here!</p>} />
-            <Route path='/' component={ErrorPage} />
+            {/* <Route path='*' render={() => <p>Sorry, there's nothing here!</p>} /> */}
+            <Route path='*' component={ErrorPage} />
           </Switch>
       </div>
     </React.Fragment>

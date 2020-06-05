@@ -1,6 +1,8 @@
-const Resource = require('../models/resources')
+const Resource = require('../models/resources');
+const { validationResult } = require('express-validator')
 
 exports.getResources = (req, res, next) => {
+    //first check confirms a search was initiated to narrow down the city
     if (req.query.city) {
         const city = req.query.city;
         return Resource
@@ -8,7 +10,14 @@ exports.getResources = (req, res, next) => {
                 .then(resources => {
                     res.json(resources)
                 })
-                .catch(err => res.status(500))
+                .catch(err => {
+                    if (!err.statusCode) {
+                        err.statusCode = 500
+                    }
+                    next(err)
+                })
+    //second check confirms that if someone is registering, 
+    //we don't need to send back all the data, just a list of names and id
     } else if (req.query.register) {
         return Resource
             .find()
@@ -21,57 +30,112 @@ exports.getResources = (req, res, next) => {
                 })
                 res.json(newResource)
             })
-    }           
+            .catch(err => {
+                if (!err.statusCode) {
+                    err.statusCode = 500
+                }
+                next(err)
+            })
+    }  
+    //if those conditions aren't met, we'll gather every resource and send it back         
     return Resource
         .find()
         .then(resources => {
             res.json(resources)
         })
-        .catch(err => res.status(500))
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500
+            }
+            next(err)
+        })
 }
 
 exports.postAddResource = (req, res, next) => {
-    const {title, address, phone, url, services, website, city} = req.body;
+    const {title, address, phone, services, website, city} = req.body;
+    //arrays are sent as strings, this section encodes data as an array
+    const newServices = services.split(',');
+    const errors = validationResult(req);
+    //this section handles the image file. If there is none, it sends this error
+    if (!req.file) {
+        return res.json({
+            errors: 'No image provided or did not load properly! Try again'
+        })
+    }
+    //this handles the validation errors
+    if (!errors.isEmpty()) {
+        return res.json({
+            errors: errors.array()
+        })
+    }
+    //this section sanitizes some data
+    const imageUrl = req.file.path.replace('\\', '/');
+    let newTitle = title.split(/\s+/).map(a => a[0].toUpperCase()+a.substring(1)).join(' ');
+    let newPhone = phone.split(/\D+/gi).join('').trim()
     const resource = new Resource({
-        title: title,
+        title: newTitle,
         address: address,
-        phone: phone.split(/\D+/gi).join('').trim(),
-        url: url,
+        phone: newPhone,
+        url: imageUrl,
         website: website,
-        services: services,
+        services: newServices,
         city: city
     })
     resource
         .save()
         .then(data => {
             res.json({
-                msg: true,
+                success: true,
                 affiliation: data._id
             })
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500
+            }
+            next(err)
+        })
 } 
 
 exports.postEditResource = (req, res, next) => {
-    const {title, address, phone, url, services, website, id, city} = req.body;
+    const {title, address, phone, services, website, id, city} = req.body;
+    //arrays are sent as strings in multiform data (will troubleshoot later), this section encodes data as an array
+    const newServices = services.split(',');
+    const errors = validationResult(req);
+    const url = req.file;
+    if (!errors.isEmpty()) {
+        return res.json({
+            errors: errors.array()
+        })
+    }
+    let newTitle = title.split(/\s+/).map(a => a[0].toUpperCase()+a.substring(1)).join(' ');
+    let newPhone = phone.split(/\D+/gi).join('').trim()
     Resource
         .findById(id)
         .then(resource => {
-            resource.title = title;
+            resource.title = newTitle;
             resource.address = address;
-            resource.url = url;
-            resource.services = services;
-            resource.phone = phone;
+            //only edits the image if a new file was sent
+            if (url) {
+                resource.url = url.path;
+            }
+            resource.services = newServices;
+            resource.phone = newPhone;
             resource.website = website;
             resource.city = city;
             return resource.save()
         })
         .then(() => {
             res.json({
-                msg: true
+                success: true
             })
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500
+            }
+            next(err)
+        })
 } 
 
 exports.postDeleteResource = (req, res, next) => {
@@ -80,8 +144,13 @@ exports.postDeleteResource = (req, res, next) => {
         .findByIdAndRemove(idToDelete)
         .then(() => {
             res.json({
-                msg: true
+                success: true
             })
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500
+            }
+            next(err)
+        })
 }

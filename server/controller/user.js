@@ -1,6 +1,6 @@
 const User = require('../models/user');
 const Resource = require('../models/resources')
-const ObjectId = require('mongodb').ObjectID
+const ObjectId = require('mongodb').ObjectID;
 
 exports.getMyResource = (req, res, next) => {
     User
@@ -12,7 +12,7 @@ exports.getMyResource = (req, res, next) => {
             const myResource = user.affiliation;
             res.json(myResource)
         })
-        .catch(err => console.log(err))
+        .catch(err => next(err))
 };
 
 exports.getReviews = (req, res, next) => {
@@ -24,11 +24,16 @@ exports.getReviews = (req, res, next) => {
         .then(rev => {
             let data = rev[0]['reviews'].map(a => [a.userId.username, a.review])
             res.json({
-                msg: 'success',
+                success: true,
                 data: data
             })
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500
+            }
+            next(err)
+        })
 }
 
 exports.postReview = (req, res, next) => {
@@ -42,13 +47,14 @@ exports.postReview = (req, res, next) => {
         .then(user => {
             resId = user.affiliation;
             if (!resId) {
-                throw new Error('no affiliation')
+                const error = new Error('no affiliation');
+                error.statusCode = 401;
+                throw error
             }
             if (resId.toString() === resourceId.toString()) {
-                res.json({
-                    msg: 'your resource'
-                })
-                throw Error('cannot review own resource')
+                const error = new Error("Can't review your own resource!");
+                error.statusCode = 401;
+                throw error
             }
         })
         .then(() => {
@@ -59,9 +65,9 @@ exports.postReview = (req, res, next) => {
                 .then(checkResource => {
                     let test = checkResource.reviews.find(a=> a.userId.toString() === user.toString());
                     if (test) {
-                        res.json({
-                            msg: 'already reviewed'
-                        })
+                        const error = new Error("Resource already reviewed!");
+                        error.statusCode = 401;
+                        throw error
                     } else {
                         return checkResource
                     }
@@ -75,24 +81,25 @@ exports.postReview = (req, res, next) => {
                             .save()
                             .then(() => {
                                 res.json({
-                                    msg: 'success'
+                                    success: true
                                 })
                             })
-                            .catch(err => console.log(err))
+                            .catch(err => next(err))
+                })
+                .catch(err => {
+                    next(err)
                 })
         })
         .catch(err => {
-            console.log('error', err);
-            if (err === 'no affiliation') {
-                res.json({
-                    msg: 'no affiliation'
-            })
-        }
+            if (!err.statusCode) {
+                err.statusCode = 500
+            }
+            next(err)
     })
 }
 
 exports.postUserResource = (req, res, next) => {
-    const affiliation = ObjectId(req.body.affiliation)
+    const affiliation = ObjectId(req.body.affiliation);
     User
         .findOneAndUpdate(
             {_id: req.userId}, 
@@ -101,8 +108,13 @@ exports.postUserResource = (req, res, next) => {
         )
         .then(() => {
             res.json({
-                msg: 'success'
+                success: true
                 })
             })
-        .catch(err => console.log(err))
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500
+            }
+            next(err)
+        })
 }

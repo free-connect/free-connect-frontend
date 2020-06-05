@@ -4,7 +4,8 @@ import './form.styles.css';
 export const Form = (props) => {
     return(
         <React.Fragment>
-            <label htmlFor={props.title}>{props.label}</label>
+            <br />
+            <label htmlFor={props.title} >{props.label}</label>
                 <input 
                     className='custom-form'
                     type={props.type} 

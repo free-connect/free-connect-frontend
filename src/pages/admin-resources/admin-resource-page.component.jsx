@@ -1,7 +1,7 @@
 import React from 'react';
 import './admin-resource.styles.css'
-import { ResourceList } from '../../components/resource-list/resource-list.component';
-import AddResource from '../../components/add-resource-form/add-resource.component';
+import { ResourceList } from '../../components/resources/resource-list/resource-list.component';
+import AddResource from '../../components/resources/add-resource-form/add-resource.component';
 
 export const AdminResourcePage = (props) => {
     return(

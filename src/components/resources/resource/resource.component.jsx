@@ -1,13 +1,15 @@
 import React from 'react';
 import './resource.styles.css';
-import { ReviewBox } from '../review/review-box/review-box.component';
-import { CustomButton } from '../button/button.component';
+import { ReviewBox } from '../../review/review-box/review-box.component';
+import { CustomButton } from '../../button/button.component';
 import { Link, withRouter } from 'react-router-dom';
 
 const Resource = (props) => {
     const [reviewAct, setReviewAct] = React.useState(false)
     const [reviewList, setReviewList] = React.useState(false);
     const [reviewData, setReviewData] = React.useState([])
+
+    React.useState(() => console.log(props.data))
 
     const handleClick = (e) => {
         e.preventDefault();
@@ -35,7 +37,7 @@ const Resource = (props) => {
         })
             .then(res => res.json())
             .then(response => {
-                if (response.msg === 'success') {
+                if (response.success) {
                     setReviewData(response.data);
                 } 
             })
@@ -60,7 +62,6 @@ const Resource = (props) => {
         const token = localStorage.getItem('token')
         if (!token) {
             alert("Oh No! You're not a user! come register :)")
-            props.location.push('/register');
             return;
         };
         fetch('/review', {
@@ -73,14 +74,10 @@ const Resource = (props) => {
         })
             .then(res => res.json())
             .then(response => {
-                if (response.msg === 'success') {
+                if (response.success) {
                     alert('thanks for reviewing!');
-                } else if (response.msg === 'already reviewed') {
-                    alert('You already reviewed this resource!')
-                } else if (response.msg === 'your resource') {
-                    alert("Can't review your own resource!");
-                } else if (response.msg === 'no affiliation') {
-                    alert("You have to have an affiliation to review!");
+                } else {
+                    alert(response.message)
                 };
                 setReviewAct(false);
                 return
@@ -113,7 +110,7 @@ const Resource = (props) => {
             })
             .then(res => res.json())
             .then(response => {
-                if (response.msg) {
+                if (response.success) {
                     alert('Successfully Deleted!');
                     props.history.push('/admin-resources');
                     window.location.reload(false);
@@ -126,17 +123,22 @@ const Resource = (props) => {
 
     return(
         <div className="resource-box">
-            <ReviewBox 
-                type='list'
-                active={reviewList}
-                data={reviewData}
-                handleClickOff={handleClickOffList}
-            />
-            <ReviewBox 
-                type='review'
-                active={reviewAct} 
-                handleSubmitReview={handleSubmitReview} 
-                handleClickOff={handleClickOffAct}/> 
+            {!props.profile ? 
+            <React.Fragment>
+                <ReviewBox 
+                    type='list'
+                    active={reviewList}
+                    data={reviewData}
+                    handleClickOff={handleClickOffList}
+                />
+                <ReviewBox 
+                    type='review'
+                    active={reviewAct} 
+                    handleSubmitReview={handleSubmitReview} 
+                    handleClickOff={handleClickOffAct}
+                />
+            </React.Fragment> : 
+            null } 
             <div className="resource-left">
                 <h3>{props.data.title}</h3>
                 <img 

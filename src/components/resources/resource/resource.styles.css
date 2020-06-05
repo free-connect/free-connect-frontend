@@ -4,7 +4,8 @@
     display: grid;
     grid-template-columns: 50% 50%;
     margin: 20px;
-    flex: 1 0 38%;
+    flex: 1 1 38%;
+    max-width: 38%;
     padding: 3%;
     cursor: pointer;
     transition-duration: 1s;
