@@ -6,36 +6,17 @@ export const ResourceList = (props) => {
     const [data, setData] = React.useState([]);
     const [loaded, setLoaded] = React.useState(false);
 
-    function compare(check, arrs) {
-        check = [...check]
-        let count = 0;
-        while(check[0]) {
-          if (arrs.includes(check[check.length-1])) {
-            count++
-          }
-          check.pop()
-        };
-        return count
-      }
-
     const getData = () => {
-        console.log(data, props)
-        let query = props.city ? '/data/resources?city='+props.city : '/data/resources';
-        console.log('query', query)
+        let query = `/data/resources?city=${props.city ? props.city : ''}&services=${props.services ? props.services : ''}`
         fetch(query)
                 .then(response => response.json())
                 .then(newData => {
-                    let sorted = [];
-                    if (props.services) {
-                        sorted = newData.sort((a,b) => compare(props.services, b.services)-compare(props.services, a.services))
-                    } else {
-                        sorted = newData
-                    }
-                    setData([...sorted])
+                    console.log('newData', newData)
+                    setData([...newData.resources])
                 })
                 .then(() => {
+                    props.handleLoad(true)
                     setLoaded(true);
-                    console.log('data', data.length)
                 })
                 .catch(err => console.log('errorrrrr', err))
     }
@@ -45,10 +26,13 @@ export const ResourceList = (props) => {
         return(
             <div className='resource-list'>
                 {data.length>0 && loaded ? 
-                data.map(a => {
+                data.map((a, i) => {
                     return(
                         <React.Fragment>
-                            <Resource data = {a} admin={props.admin}/>
+                            <Resource 
+                                id={i+1 === data.length ? 0 : i+1} 
+                                data = {a} 
+                                admin={props.admin}/>
                         </React.Fragment>
                     )
                 }) :

@@ -1,12 +1,14 @@
 import React from 'react';
 import './profile-page.styles.css'
 import Resource from '../../components/resources/resource/resource.component';
+import { Loading } from '../../components/loading-icon/loading.component' 
 import { withRouter } from 'react-router-dom';
 import AddResource from '../../components/resources/add-resource-form/add-resource.component';
 
 const ProfilePage = (props) => {
     const [initAffiliation, setInitAffiliation] = React.useState(null)
-    const [loaded, setLoaded] = React.useState(false)
+    const [loaded, setLoaded] = React.useState(false);
+    const [pageLoaded, setPageLoaded] = React.useState(false)
 
     const loadMyResource = () => {
         const token = localStorage.getItem('token');
@@ -21,14 +23,19 @@ const ProfilePage = (props) => {
         })
             .then(res => res.json())
             .then(response => setInitAffiliation(response))
-            .then(() => setTimeout(setLoaded(true), 1000))
+            .then(() => {
+                setLoaded(true);
+                setPageLoaded(true)
+            })
             .catch(err => console.log(err))
     }
 
     React.useEffect(() => loadMyResource(), [])
 
     return(
-        <div className='profile'>
+        <div className='profile' >
+            {pageLoaded ? null : <Loading />}
+            <React.Fragment hidden={pageLoaded ? false : true}>
             {loaded && initAffiliation ? 
                 <React.Fragment>
                     <h1>Welcome back {localStorage.getItem('name')}!</h1>
@@ -49,6 +56,7 @@ const ProfilePage = (props) => {
                 </React.Fragment> : 
                null
             }
+            </React.Fragment>
         </div>
     )
 }

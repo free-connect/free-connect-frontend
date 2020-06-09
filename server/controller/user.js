@@ -12,8 +12,31 @@ exports.getMyResource = (req, res, next) => {
             const myResource = user.affiliation;
             res.json(myResource)
         })
-        .catch(err => next(err))
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500
+            }
+            next(err)
+        })
 };
+
+exports.getDetails = (req, res, next) => {
+    return Resource
+        .findOne({
+            _id: ObjectId(req.query.id)
+        })
+        .then(resource => {
+            res.json({
+                data: resource.title
+            })
+        })
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500
+            }
+            next(err)
+        })
+}
 
 exports.getReviews = (req, res, next) => {
     Resource

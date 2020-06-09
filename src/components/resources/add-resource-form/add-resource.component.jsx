@@ -21,9 +21,9 @@ const AddResource = (props) => {
         setAffiliation(val);
     }
 
-    const handleImage = async (e) => {
+    const handleImage = (e) => {
         e.preventDefault();
-        setUrl([...url, e.target.files[0]])
+        setUrl([e.target.files[0]])
         return
     }
 
@@ -65,14 +65,12 @@ const AddResource = (props) => {
         } else {
             setServices([...newChecked, e.target.name]);
         }
-        console.log(services)
     }
 
     const handleAddUserResource = (aff, tok) => {
         let data = {
             affiliation: aff.toString()
         }
-        console.log('aff', aff)
         fetch('/add-user-resource', {
             method: "POST", 
             body: JSON.stringify(data),

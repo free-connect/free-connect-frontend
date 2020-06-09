@@ -15,7 +15,7 @@ export const SelectResource = (props) => {
     }
 
     const loadResources = () => {
-        fetch('/data/resources?register=true')
+        fetch('/data/register')
                 .then(response => response.json())
                 .then(newData => {
                     setResources(newData);

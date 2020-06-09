@@ -1,47 +1,73 @@
 const Resource = require('../models/resources');
-const { validationResult } = require('express-validator')
+const { validationResult } = require('express-validator');
+const fileHelper = require('../util/file')
+
+function compare(check, arrs) {
+    check = [...check]
+    let count = 0;
+    while(check[0]) {
+      if (arrs.includes(check[check.length-1])) {
+        count++
+      }
+      check.pop()
+    };
+    return count
+  }
 
 exports.getResources = (req, res, next) => {
-    //first check confirms a search was initiated to narrow down the city
-    if (req.query.city) {
-        const city = req.query.city;
-        return Resource
-                .find({city: city})
+    //finish pagination! Lecture 384
+    const currentPage = req.query.page || 1;
+    let totalRes;
+    const perPage = 2;
+    Resource
+        .find()
+        .countDocuments()
+        .then(count => {
+            totalRes = count;
+            const city = req.query.city || '';
+            const services = req.query.services.split(',') || [];
+            return Resource
+                .find(city ? { city: city } : null)
                 .then(resources => {
-                    res.json(resources)
-                })
-                .catch(err => {
-                    if (!err.statusCode) {
-                        err.statusCode = 500
+                    let sorted = [];
+                    if (services[0]) {
+                        sorted = resources.sort((a, b) => compare(services, b.services) - compare(services, a.services))
+                    } else {
+                        sorted = resources
                     }
-                    next(err)
+                    console.log(sorted, (currentPage-1)*perPage, perPage)
+                    sorted = sorted.splice((currentPage -1)*perPage, perPage)
+                    return sorted
                 })
-    //second check confirms that if someone is registering, 
+        })
+        .then(sortedResources => {
+            console.log(sortedResources)
+            res.json({
+                resources : sortedResources, 
+                totalRes: totalRes
+            })
+        })
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500
+            }
+            next(err)
+        })
+}
+
+exports.getRegisterResources = (req, res, next) => {
+    //this 'GET' ensures that if someone is registering, 
     //we don't need to send back all the data, just a list of names and id
-    } else if (req.query.register) {
-        return Resource
-            .find()
-            .then((resource) => {
-                let newResource = resource.map(a => {
-                    return {
-                    title: a.title, 
-                    _id: a._id
-                    }
-                })
-                res.json(newResource)
-            })
-            .catch(err => {
-                if (!err.statusCode) {
-                    err.statusCode = 500
-                }
-                next(err)
-            })
-    }  
-    //if those conditions aren't met, we'll gather every resource and send it back         
     return Resource
         .find()
-        .then(resources => {
-            res.json(resources)
+        .then((resource) => {
+            let newResource = resource.map(a => {
+                return {
+                    title: a.title,
+                    _id: a._id
+                }
+            })
+            res.json(newResource)
         })
         .catch(err => {
             if (!err.statusCode) {
@@ -117,6 +143,7 @@ exports.postEditResource = (req, res, next) => {
             resource.address = address;
             //only edits the image if a new file was sent
             if (url) {
+                fileHelper.deleteFile(resource.url)
                 resource.url = url.path;
             }
             resource.services = newServices;
@@ -139,8 +166,21 @@ exports.postEditResource = (req, res, next) => {
 } 
 
 exports.postDeleteResource = (req, res, next) => {
-    const idToDelete = req.body.id
+    const idToDelete = req.body.id;
+    //delete local image file
     Resource
+        .findById(idToDelete)
+        .then(resource => {
+            fileHelper.deleteFile(resource.url)
+        })
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500
+            }
+            next(err)
+        })
+    //delete resource itself
+    return Resource
         .findByIdAndRemove(idToDelete)
         .then(() => {
             res.json({

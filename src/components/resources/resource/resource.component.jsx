@@ -7,9 +7,20 @@ import { Link, withRouter } from 'react-router-dom';
 const Resource = (props) => {
     const [reviewAct, setReviewAct] = React.useState(false)
     const [reviewList, setReviewList] = React.useState(false);
-    const [reviewData, setReviewData] = React.useState([])
+    const [reviewData, setReviewData] = React.useState([]);
 
-    React.useState(() => console.log(props.data))
+    React.useEffect(() => console.log('props', props), [])
+
+    const handleDetail = (e) => {
+        e.preventDefault();
+        props.history.push({
+            pathname: '/detail',
+            state: {
+                data: props.data
+            }
+        })
+        return;
+    }
 
     const handleClick = (e) => {
         e.preventDefault();
@@ -119,10 +130,8 @@ const Resource = (props) => {
             .catch(err => console.log(err))
     }
 
-    React.useEffect(() => console.log('truthy vals', reviewList, reviewAct))
-
     return(
-        <div className="resource-box">
+        <div className='resource-box' onClick={handleDetail}>
             {!props.profile ? 
             <React.Fragment>
                 <ReviewBox 

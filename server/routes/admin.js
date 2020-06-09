@@ -12,6 +12,7 @@ router.post('/',
     isAuth, 
     adminController.postAddResource);
 router.get('/data/resources', adminController.getResources);
+router.get('/data/register', adminController.getRegisterResources)
 router.post('/edit-resource', 
     body('title',
         'title is too short! Needs to be at least three characters')

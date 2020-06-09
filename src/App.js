@@ -5,6 +5,8 @@ import LoginPage from './pages/login-page/login-page.component';
 import RegisterPage from './pages/register-page/register-page.component';
 import ProfilePage from './pages/profile-page/profile-page.component';
 import NavBar from './components/navigation/navbar/navbar.component';
+import Detail from './components/detail/detail.component';
+import { Loading } from './components/loading-icon/loading.component';
 import { AdminResourcePage } from './pages/admin-resources/admin-resource-page.component';
 import { ResourcesPage } from './pages/resource-page/resources-page.component';
 import { AboutPage } from './pages/about-page/about-page.component'
@@ -66,7 +68,6 @@ function App(props) {
         })
         .then(res => res.json())
         .then((response) => {
-            console.log(response)
             if (response.message) {
                 setIsAuth(false)
                 alert(response.message)
@@ -109,6 +110,8 @@ function App(props) {
             <Route exact path='/register' component={RegisterPage} />
             <Route exact path='/resources' component={ResourcesPage} />
             <Route exact path='/about' component={AboutPage} />
+            <Route exact path='/detail' component={Detail} />
+            <Route exact path='/loading' component={Loading} />
             {isAuth ? <Route exact path='/edit-resource' component={EditResourcePage} /> : null}
             {(isAuth && userId === process.env.REACT_APP_USER_ID) ? 
               <Route exact path="/admin-resources" component={AdminResourcePage} /> : 
