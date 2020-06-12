@@ -1,7 +1,7 @@
 import React from 'react';
 import './profile-page.styles.css'
 import Resource from '../../components/resources/resource/resource.component';
-import { Loading } from '../../components/loading-icon/loading.component' 
+import { Loading } from '../../components/loading-icon/loading.component'
 import { withRouter } from 'react-router-dom';
 import AddResource from '../../components/resources/add-resource-form/add-resource.component';
 
@@ -32,30 +32,30 @@ const ProfilePage = (props) => {
 
     React.useEffect(() => loadMyResource(), [])
 
-    return(
+    return (
         <div className='profile' >
             {pageLoaded ? null : <Loading />}
             <React.Fragment hidden={pageLoaded ? false : true}>
-            {loaded && initAffiliation ? 
-                <React.Fragment>
-                    <h1>Welcome back {localStorage.getItem('name')}!</h1>
-                    <br />
-                    <h2>Affiliated Resource</h2>
-                    <div className='section'>
-                        <Resource admin={true} profile={true} data={initAffiliation}/>
-                    </div>
-               </React.Fragment> :
-               loaded ?
-               <React.Fragment>
-                    <h1>Welcome back {localStorage.getItem('name')}!</h1>
-                    <br />
-                    <p>You haven't added a resource! Add one here...</p>
-                    <div className='section'>
-                        <AddResource register={true}/>
-                    </div>
-                </React.Fragment> : 
-               null
-            }
+                {loaded && initAffiliation ?
+                    <React.Fragment>
+                        <h1>Welcome back {localStorage.getItem('name')}!</h1>
+                        <br />
+                        <h2>Affiliated Resource</h2>
+                        <div className='section'>
+                            <Resource admin={true} profile={true} data={initAffiliation} />
+                        </div>
+                    </React.Fragment> :
+                    loaded ?
+                        <React.Fragment>
+                            <h1>Welcome back {localStorage.getItem('name')}!</h1>
+                            <br />
+                            <p>You haven't added a resource! Add one here...</p>
+                            <div className='section'>
+                                <AddResource register={true} />
+                            </div>
+                        </React.Fragment> :
+                        null
+                }
             </React.Fragment>
         </div>
     )

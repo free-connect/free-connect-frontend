@@ -10,8 +10,8 @@ export const ResourcesPage = (props) => {
     const cityProp = props.location.state ? props.location.state.city : '';
     const resources = props.location.state ? props.location.state.resources : '';
 
-    return(
-        <React.Fragment> 
+    return (
+        <React.Fragment>
             <div className={pageLoaded ? '' : 'resource-page'}>
                 <br />
                 <br />
@@ -19,7 +19,10 @@ export const ResourcesPage = (props) => {
                 {pageLoaded ? null : <Loading />}
                 <div hidden={pageLoaded ? false : true}>
                     <Filter />
-                    <ResourceList handleLoad = {setPageLoaded} city={cityProp} services={resources}/>
+                    <ResourceList
+                        handleLoad={setPageLoaded}
+                        city={cityProp}
+                        services={resources} />
                 </div>
             </div>
         </React.Fragment>

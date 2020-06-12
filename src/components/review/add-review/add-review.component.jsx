@@ -9,24 +9,24 @@ export const AddReview = (props) => {
         await setReviewIn('')
     }
 
-    return(
+    return (
         <React.Fragment>
             <br />
             <h2>Tell us what you think!</h2>
             <form method='POST' onSubmit={handleSubmit}>
-                <textarea 
+                <textarea
                     style={{
                         transitionDuration: '.6s',
                         width: !props.active ? '0px' : '200px',
                         height: !props.active ? '0px' : '140px'
-                    }} 
+                    }}
                     onChange={(e) => setReviewIn(e.target.value)}
                     value={reviewIn}
-                    >
+                >
                 </textarea>
                 <br />
                 <br />
-                <button 
+                <button
                     type="submit"
                     style={{
                         transitionDuration: '.2s',

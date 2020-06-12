@@ -1,17 +1,17 @@
 import React from 'react';
 import MainPage from './pages/main-page/main-page.component';
 import EditResourcePage from './pages/edit-resource/edit-resource-page.component';
-import LoginPage from './pages/login-page/login-page.component'; 
+import LoginPage from './pages/login-page/login-page.component';
 import RegisterPage from './pages/register-page/register-page.component';
 import ProfilePage from './pages/profile-page/profile-page.component';
 import NavBar from './components/navigation/navbar/navbar.component';
 import Detail from './components/detail/detail.component';
-import { Loading } from './components/loading-icon/loading.component';
+import { ResetPage } from './pages/reset-page/reset-page.component';
 import { AdminResourcePage } from './pages/admin-resources/admin-resource-page.component';
 import { ResourcesPage } from './pages/resource-page/resources-page.component';
 import { AboutPage } from './pages/about-page/about-page.component'
-import  { ErrorPage } from './pages/error-page/error-page.component'
-import { Route, withRouter, Switch } from 'react-router-dom' 
+import { ErrorPage } from './pages/error-page/error-page.component'
+import { Route, withRouter, Switch } from 'react-router-dom'
 import './App.css';
 
 function App(props) {
@@ -39,7 +39,7 @@ function App(props) {
   React.useEffect(() => {
     handleLoad()
     setLoad(true)
-    }, [])
+  }, [])
 
   const handleSubmitLogout = () => {
     setIsAuth(false);
@@ -51,75 +51,75 @@ function App(props) {
     localStorage.removeItem('name');
     props.history.push('/login')
     window.location.reload(false);
-}
+  }
 
   const handleLogin = (e, authData) => {
     e.preventDefault()
     const data = {
       username: authData.username,
       password: authData.password
-  }
+    }
     fetch('/login', {
-        method: "POST", 
-        body: JSON.stringify(data),
-        headers: {
-            'Content-Type': 'application/json',
-            }
-        })
-        .then(res => res.json())
-        .then((response) => {
-            if (response.message) {
-                setIsAuth(false)
-                alert(response.message)
-                return;
-            } else if (response.success) {
-                setToken(response.token);
-                setUserId(response.userId);
-                setIsAuth(true);
-                alert('logged in successfully!')
-            }
-            localStorage.setItem('token', response.token);
-            localStorage.setItem('userId', response.userId);
-            localStorage.setItem('name', response.name);
-            const remainingMilliseconds = 60 * 60 * 1000;
-            const expiryDate = new Date(
-              new Date().getTime() + remainingMilliseconds
-            );
-            localStorage.setItem('expiryDate', expiryDate.toISOString());
-            props.history.push('/profile');
-            window.location.reload(false);
-        })
-        .catch(err => {
-          console.log(err);
-          setIsAuth(false);
-        })
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+      .then(res => res.json())
+      .then((response) => {
+        if (response.message) {
+          setIsAuth(false)
+          alert(response.message)
+          return;
+        } else if (response.success) {
+          setToken(response.token);
+          setUserId(response.userId);
+          setIsAuth(true);
+          alert('logged in successfully!')
+        }
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('userId', response.userId);
+        localStorage.setItem('name', response.name);
+        const remainingMilliseconds = 60 * 60 * 1000;
+        const expiryDate = new Date(
+          new Date().getTime() + remainingMilliseconds
+        );
+        localStorage.setItem('expiryDate', expiryDate.toISOString());
+        props.history.push('/profile');
+        window.location.reload(false);
+      })
+      .catch(err => {
+        console.log(err);
+        setIsAuth(false);
+      })
   }
 
   return (
     <React.Fragment>
-      {load ? 
-        <NavBar 
-          logout={handleSubmitLogout} 
-          admin={userId === process.env.REACT_APP_USER_ID ? true : false} 
-          isAuth={isAuth}/> : 
-          null}
+      {load ?
+        <NavBar
+          logout={handleSubmitLogout}
+          admin={userId === process.env.REACT_APP_USER_ID ? true : false}
+          isAuth={isAuth} /> :
+        null}
       <div className="App">
-          <Switch>
-            <Route exact path='/' component={MainPage} />
-            <Route exact path='/login' render={props => <LoginPage handleLogin = {handleLogin}/>} />
-            <Route exact path='/register' component={RegisterPage} />
-            <Route exact path='/resources' component={ResourcesPage} />
-            <Route exact path='/about' component={AboutPage} />
-            <Route exact path='/detail' component={Detail} />
-            <Route exact path='/loading' component={Loading} />
-            {isAuth ? <Route exact path='/edit-resource' component={EditResourcePage} /> : null}
-            {(isAuth && userId === process.env.REACT_APP_USER_ID) ? 
-              <Route exact path="/admin-resources" component={AdminResourcePage} /> : 
-              null}
-            {isAuth ? <Route exact path ="/profile" render={() => <ProfilePage token={token}/>} /> : null}
-            {/* <Route path='*' render={() => <p>Sorry, there's nothing here!</p>} /> */}
-            <Route path='*' component={ErrorPage} />
-          </Switch>
+        <Switch>
+          <Route exact path='/' component={MainPage} />
+          <Route exact path='/login' render={props => <LoginPage handleLogin={handleLogin} />} />
+          <Route exact path='/register' component={RegisterPage} />
+          <Route exact path='/resources' component={ResourcesPage} />
+          <Route exact path='/about' component={AboutPage} />
+          <Route exact path='/detail' component={Detail} />
+          <Route exact path='/reset' component={ResetPage} />
+          {isAuth ? <Route exact path='/edit-resource' component={EditResourcePage} /> : null}
+          {(isAuth && userId === process.env.REACT_APP_USER_ID) ?
+            <Route exact path="/admin-resources" component={AdminResourcePage} /> :
+            null}
+          {isAuth ? <Route exact path="/profile" render={() => <ProfilePage token={token} />} /> : null}
+          {/* <Route path='*' render={() => <p>Sorry, there's nothing here!</p>} /> */}
+          <Route path='*' component={ErrorPage} />
+        </Switch>
       </div>
     </React.Fragment>
   );

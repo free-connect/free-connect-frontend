@@ -30,7 +30,7 @@ const AddResource = (props) => {
     const siftPhone = (val) => {
         val = val.split(/[^\d]/gi).join('');
         return val
-      };
+    };
 
     const handleEdit = () => {
         const { title, phone, address, url, website, services, _id, city } = props.location.state.data;
@@ -72,13 +72,13 @@ const AddResource = (props) => {
             affiliation: aff.toString()
         }
         fetch('/add-user-resource', {
-            method: "POST", 
+            method: "POST",
             body: JSON.stringify(data),
             headers: {
                 Authorization: 'bearer ' + tok,
                 'Content-Type': 'application/json'
-                }
-            })
+            }
+        })
             .then(res => res.json())
             .then(response => {
                 if (response.errors) {
@@ -90,7 +90,7 @@ const AddResource = (props) => {
                 }
             })
             .catch((err) => console.log(err, 'err'))
-        }
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -114,12 +114,12 @@ const AddResource = (props) => {
         }
         if (!props.location.state) {
             fetch('/', {
-                method: "POST", 
+                method: "POST",
                 body: formData,
                 headers: {
                     Authorization: 'bearer ' + token
-                    }
-                })
+                }
+            })
                 .then(res => res.json())
                 .then(response => {
                     if (response.errors) {
@@ -144,12 +144,12 @@ const AddResource = (props) => {
                 return;
             }
             fetch('/edit-resource', {
-                method: "POST", 
+                method: "POST",
                 body: formData,
                 headers: {
-                    Authorization: 'bearer '+ token
-                    }
-                })
+                    Authorization: 'bearer ' + token
+                }
+            })
                 .then(res => res.json())
                 .then(response => {
                     if (response.errors) {
@@ -165,52 +165,52 @@ const AddResource = (props) => {
         }
     }
 
-    return(
+    return (
         <form className='add-resource-form' onSubmit={handleSubmit}>
-            <Form 
-                title='title' 
-                label="Organization Name" 
-                value={title} 
-                type="text" 
-                changeFunction = {setTitle}/>
-            <Form 
-                title='address' 
-                label="Address" 
-                value={address} 
-                type="text" 
-                changeFunction = {setAddress}/>
-            <Form 
-                title='phone' 
-                label="Phone" 
-                value={phone} 
-                type="text" 
-                changeFunction = {setPhone}/>
-            <Form 
-                title='website' 
-                label="Website" 
-                value={website} 
-                type="text" 
-                changeFunction = {setWebsite}/>
-                <br />
+            <Form
+                title='title'
+                label="Organization Name"
+                value={title}
+                type="text"
+                changeFunction={setTitle} />
+            <Form
+                title='address'
+                label="Address"
+                value={address}
+                type="text"
+                changeFunction={setAddress} />
+            <Form
+                title='phone'
+                label="Phone"
+                value={phone}
+                type="text"
+                changeFunction={setPhone} />
+            <Form
+                title='website'
+                label="Website"
+                value={website}
+                type="text"
+                changeFunction={setWebsite} />
+            <br />
             <label htmlFor='picture' >Picture</label>
-                <input 
-                    className='custom-form'
-                    type='file'
-                    name='picture' 
-                    onChange={handleImage}/>
+            <input
+                className='custom-form'
+                type='file'
+                name='picture'
+                onChange={handleImage} />
             <br />
-            <CityForm handleChange={handleCityChange}/>
+            <CityForm handleChange={handleCityChange} />
             <br />
-            <Services handleChange={handleChange} services={services}/>
+            <Services handleChange={handleChange} services={services} />
             <React.Fragment>
-            {props.register ? 
+                {props.register ?
                     <p>
                         <label>Or select from existing....</label>
-                        <SelectResource handleResource={handleResource} /> 
+                        <SelectResource handleResource={handleResource} />
                     </p>
-                : null}
+                    : null}
             </React.Fragment>
-            <br/>
+            <br />
             <button type="submit">Submit Information</button>
         </form>
     )

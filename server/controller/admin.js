@@ -15,10 +15,9 @@ function compare(check, arrs) {
   }
 
 exports.getResources = (req, res, next) => {
-    //finish pagination! Lecture 384
-    const currentPage = req.query.page || 1;
+    const currentPage = parseInt(req.query.page) || 1;
     let totalRes;
-    const perPage = 2;
+    const perPage = 4;
     Resource
         .find()
         .countDocuments()
@@ -31,17 +30,17 @@ exports.getResources = (req, res, next) => {
                 .then(resources => {
                     let sorted = [];
                     if (services[0]) {
-                        sorted = resources.sort((a, b) => compare(services, b.services) - compare(services, a.services))
+                        sorted = resources.sort((a, b) => {
+                            return compare(services, b.services) - compare(services, a.services)
+                        })
                     } else {
                         sorted = resources
                     }
-                    console.log(sorted, (currentPage-1)*perPage, perPage)
                     sorted = sorted.splice((currentPage -1)*perPage, perPage)
                     return sorted
                 })
         })
         .then(sortedResources => {
-            console.log(sortedResources)
             res.json({
                 resources : sortedResources, 
                 totalRes: totalRes

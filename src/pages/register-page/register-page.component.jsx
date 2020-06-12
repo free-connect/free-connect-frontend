@@ -14,7 +14,7 @@ const RegisterPage = (props) => {
     const [warning, setWarning] = React.useState('')
 
     const checkEqual = (pw, pwConf) => {
-        if (pw === pwConf && pw.length>0 && pwConf.length>0) {
+        if (pw === pwConf && pw.length > 0 && pwConf.length > 0) {
             return true
         } else {
             return false
@@ -28,7 +28,7 @@ const RegisterPage = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         let equal = checkEqual(password, confirmPassword)
-        if (!equal && password.length>0 && confirmPassword.length>0) {
+        if (!equal && password.length > 0 && confirmPassword.length > 0) {
             setWarning('passwords not equal');
             setPassword('');
             setConfirmPassword('');
@@ -46,12 +46,12 @@ const RegisterPage = (props) => {
             name: name
         }
         fetch('/register', {
-            method: "POST", 
+            method: "POST",
             body: JSON.stringify(data),
             headers: {
                 'Content-Type': 'application/json',
-                }
-            })
+            }
+        })
             .then(res => res.json())
             .then(response => {
                 if (response.errors) {
@@ -69,48 +69,48 @@ const RegisterPage = (props) => {
             .catch(err => console.log(err))
     }
 
-    return(
+    return (
         <div className='register'>
             <form className='register-form' onSubmit={handleSubmit}>
-                <Form 
-                    title="username" 
-                    label="Username" 
-                    value={username} 
-                    type="text" 
-                    changeFunction = {setUsername}/>
-                <Form 
-                    title="name" 
-                    label="Name" 
-                    value={name} 
-                    type="text" 
-                    changeFunction = {setName}/>
-                <Form 
-                    title="email" 
-                    label="Email" 
-                    value={email} 
-                    type="email" 
-                    changeFunction = {setEmail}/>
-                <Form 
+                <Form
+                    title="username"
+                    label="Username"
+                    value={username}
+                    type="text"
+                    changeFunction={setUsername} />
+                <Form
+                    title="name"
+                    label="Name"
+                    value={name}
+                    type="text"
+                    changeFunction={setName} />
+                <Form
+                    title="email"
+                    label="Email"
+                    value={email}
+                    type="email"
+                    changeFunction={setEmail} />
+                <Form
                     title="password"
-                    label="Password" 
-                    value={password} 
-                    type="password" 
-                    changeFunction = {setPassword}/>
-                <Form 
-                    title="confirm-password" 
-                    label="Confirm Password" 
-                    value={confirmPassword} 
-                    type="password" 
-                    changeFunction = {setConfirmPassword}/>
-                    <br />
-                    <p>
-                        <label>Affiliation</label>
-                        <SelectResource handleResource={handleResource}/>
-                    </p>
-                    <br />
+                    label="Password"
+                    value={password}
+                    type="password"
+                    changeFunction={setPassword} />
+                <Form
+                    title="confirm-password"
+                    label="Confirm Password"
+                    value={confirmPassword}
+                    type="password"
+                    changeFunction={setConfirmPassword} />
+                <br />
+                <p>
+                    <label>Affiliation</label>
+                    <SelectResource handleResource={handleResource} />
+                </p>
+                <br />
                 <button type='submit'>Submit</button>
             </form>
-        <p>{warning}</p>
+            <p>{warning}</p>
         </div>
     )
 }

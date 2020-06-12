@@ -9,6 +9,7 @@
     cursor: pointer;
     transition-duration: 1s;
     min-width: auto;
+    max-width: 550px;
     font-family: 'Prata', serif;
     position: none;
 }

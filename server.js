@@ -17,26 +17,26 @@ const dataBasePassword = process.env.dataBasePassword
 const dataBaseUser = process.env.dataBaseUser
 const cluster = process.env.cluster
 
-const DB_URI = 'mongodb+srv://'+dataBaseUser+':'+dataBasePassword+'@'+cluster;
+const DB_URI = 'mongodb+srv://' + dataBaseUser + ':' + dataBasePassword + '@' + cluster;
 
 const app = express();
 const port = process.env.PORT || 3000
 
 const fileStorage = multer.diskStorage({
-    destination: (req, file, cb) =>  {
+    destination: (req, file, cb) => {
         cb(null, './images')
     },
     filename: (req, file, cb) => {
         const extension = file.originalname.split('.').pop();
-        cb(null, uuidv4()+'.'+extension)
+        cb(null, uuidv4() + '.' + extension)
     }
 })
 
 const fileFilter = (req, file, cb) => {
     console.log('file', file)
     if (
-        file.mimetype === 'image/png' || 
-        file.mimetype === 'image/jpg' || 
+        file.mimetype === 'image/png' ||
+        file.mimetype === 'image/jpg' ||
         file.mimetype === 'image/jpeg'
     ) {
         cb(null, true)
@@ -75,14 +75,14 @@ app.use((error, req, res, next) => {
     console.log(error);
     const status = error.statusCode || 500;
     const message = error.message;
-    res.status(status).json({message: message})
+    res.status(status).json({ message: message })
 })
 
 mongoose
     .connect(
         DB_URI,
         {
-            useNewUrlParser: true, 
+            useNewUrlParser: true,
             useUnifiedTopology: true
         })
     .then(() => app.listen(port))

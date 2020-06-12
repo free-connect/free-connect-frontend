@@ -52,11 +52,14 @@ exports.postLogin = (req, res, next) => {
     let AuthedUser;
     return User
         .findOne({
-            username: username
+            $or:[
+                {username: username},
+                {email: username}
+            ]
         })
         .then(user => {
             if (!user) {
-                const error = new Error("User doesn't exist");
+                const error = new Error("User doesn't exist. Please double check username/email!");
                 error.statusCode = 401;
                 throw error
             }
@@ -65,7 +68,7 @@ exports.postLogin = (req, res, next) => {
                 .compare(password, user.password)
                 .then(match => {
                     if (!match) {
-                        const error = new Error("Username and Password don't match");
+                        const error = new Error("Username/email and password don't match");
                         error.statusCode = 401;
                         throw error
                     };
@@ -96,4 +99,8 @@ exports.postLogin = (req, res, next) => {
             }
             next(err)
         })
+}
+
+exports.postReset = (req, res, next) => {
+    //some logic for emailing new password
 }

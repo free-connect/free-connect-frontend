@@ -16,31 +16,31 @@ export const SelectResource = (props) => {
 
     const loadResources = () => {
         fetch('/data/register')
-                .then(response => response.json())
-                .then(newData => {
-                    setResources(newData);
-                })
-                .then(() => setLoaded(true))
-                .catch(err => console.log(err))
+            .then(response => response.json())
+            .then(newData => {
+                setResources(newData);
+            })
+            .then(() => setLoaded(true))
+            .catch(err => console.log(err))
     }
 
     React.useEffect(() => loadResources(), [])
 
-    return(
+    return (
         <React.Fragment>
-            {loaded ? 
-            <select onChange={handleDropdown}>
-                <option disabled selected="selected">Select a Resource</option>
-                {resources.map(a => {
-                    return(
-                        <React.Fragment>
-                            <option>{a.title}</option>
-                        </React.Fragment>
-                    )
-                })}
-                <option>None</option>
-            </select> : 
-            null
+            {loaded ?
+                <select onChange={handleDropdown}>
+                    <option disabled selected="selected">Select a Resource</option>
+                    {resources.map(a => {
+                        return (
+                            <React.Fragment>
+                                <option>{a.title}</option>
+                            </React.Fragment>
+                        )
+                    })}
+                    <option>None</option>
+                </select> :
+                null
             }
         </React.Fragment>
     )

@@ -14,29 +14,29 @@ const NavBar = (props) => {
 
     React.useEffect(() => setAuth(props.isAuth), [])
 
-    return(
+    return (
         <div className='nav-bar'>
-            {auth ? 
-            <React.Fragment>
-                <LinkStyled loc='/' name='Home' />
-                <LinkStyled loc='/resources' name='Resources' />
-                <LinkStyled loc='/about' name='About' />
-                {props.admin ? 
+            {auth ?
                 <React.Fragment>
-                    <LinkStyled loc='/admin-resources' name='Admin Resources' />
-                </React.Fragment> : 
-                null}
-                <LinkStyled loc='/profile' name='Profile' />
-                <form onSubmit={handleLogout}>
-                    <button type="submit">Logout</button>
-                </form>
-            </React.Fragment> :
-            <React.Fragment>
-                <LinkStyled loc='/' name='Home' />
-                <LinkStyled loc='/resources' name='Resources' />
-                <LinkStyled loc='/about' name="About" />
-                <LinkStyled loc='/login' name='Login' />
-            </React.Fragment>
+                    <LinkStyled loc='/' name='Home' />
+                    <LinkStyled loc='/resources' name='Resources' />
+                    <LinkStyled loc='/about' name='About' />
+                    {props.admin ?
+                        <React.Fragment>
+                            <LinkStyled loc='/admin-resources' name='Admin Resources' />
+                        </React.Fragment> :
+                        null}
+                    <LinkStyled loc='/profile' name='Profile' />
+                    <form onSubmit={handleLogout}>
+                        <button type="submit">Logout</button>
+                    </form>
+                </React.Fragment> :
+                <React.Fragment>
+                    <LinkStyled loc='/' name='Home' />
+                    <LinkStyled loc='/resources' name='Resources' />
+                    <LinkStyled loc='/about' name="About" />
+                    <LinkStyled loc='/login' name='Login' />
+                </React.Fragment>
             }
         </div>
     )

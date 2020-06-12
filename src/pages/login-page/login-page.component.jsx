@@ -8,28 +8,30 @@ const LoginPage = (props) => {
     const [password, setPassword] = React.useState('');
 
     const data = {
-        username: username, 
+        username: username,
         password: password
     }
 
-    return(
+    return (
         <div className='login'>
             <form className='login-form' onSubmit={(e) => props.handleLogin(e, data)}>
-                <Form 
+                <Form
                     title="username"
-                    label="username" 
-                    value={username} 
-                    type="text" 
-                    changeFunction = {setUsername}/>
-                <Form 
+                    label="username/email"
+                    value={username}
+                    type="text"
+                    changeFunction={setUsername} />
+                <Form
                     title="password"
-                    label="password" 
-                    value={password} 
-                    type="password" 
-                    changeFunction = {setPassword}/>
-                    <br />
+                    label="password"
+                    value={password}
+                    type="password"
+                    changeFunction={setPassword} />
+                <br />
                 <button type='submit'>Submit</button>
             </form>
+            <Link to='/reset'>Forgot password? No problem, reset here.</Link>
+            <br />
             <Link to='/register'>Not a member? Register here!</Link>
         </div>
     )
