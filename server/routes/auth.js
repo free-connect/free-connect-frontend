@@ -5,7 +5,7 @@ const { body } = require('express-validator');
 const User = require('../models/user');
 
 router.post(
-    '/register', 
+    '/register',
     body('email')
         .isEmail()
         .withMessage('please enter valid email')
@@ -13,17 +13,17 @@ router.post(
             return User.findOne({
                 email: val
             })
-            .then(userCheck => {
-                if (userCheck) {
-                    return Promise.reject('email already exists!')
-                }
-            })
+                .then(userCheck => {
+                    if (userCheck) {
+                        return Promise.reject('email already exists!')
+                    }
+                })
         })
-        .normalizeEmail(), 
+        .normalizeEmail(),
     body(
-        'password', 
+        'password',
         'Use a passphrase! Passphrases must be at lease 12 characters long.')
-        .isLength({min: 12})
+        .isLength({ min: 12 })
         .trim(),
     body('confirmPassword')
         .trim()
@@ -33,7 +33,7 @@ router.post(
             } else {
                 return true
             }
-        }),    
+        }),
     AuthController.postRegister
 );
 router.post('/login', AuthController.postLogin);

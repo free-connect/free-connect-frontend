@@ -6,7 +6,7 @@ export const ResetPage = () => {
     const [email, setEmail] = React.useState('')
 
     const handleReset = () => {
-
+        return;
     }
 
     return (

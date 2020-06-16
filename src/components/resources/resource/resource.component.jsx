@@ -1,7 +1,7 @@
 import React from 'react';
 import './resource.styles.css';
 import { ReviewBox } from '../../review/review-box/review-box.component';
-import { CustomButton } from '../../button/button.component';
+import { ReviewButton } from '../../review-button/review-button.component';
 import { Link, withRouter } from 'react-router-dom';
 
 const Resource = (props) => {
@@ -10,11 +10,10 @@ const Resource = (props) => {
     const [reviewData, setReviewData] = React.useState([]);
     const [disabled, setDisabled] = React.useState(false);
 
-    const handleDetail = (e) => {
+    const handleDetail = () => {
         if (disabled) {
             return;
         }
-        e.preventDefault();
         props.history.push({
             pathname: '/detail',
             state: {
@@ -133,7 +132,7 @@ const Resource = (props) => {
     }
 
     return (
-        <div className='resource-box' onClick={handleDetail}>
+        <div className='resource-box' onClick={() => reviewAct || reviewList ? null : handleDetail()}>
             {!props.profile ?
                 <React.Fragment>
                     <ReviewBox
@@ -160,15 +159,17 @@ const Resource = (props) => {
                 />
                 <br />
                 {!props.admin ?
-                    <CustomButton
+                    <ReviewButton
+                        handleHover={setDisabled}
                         text='Review'
                         disabled={reviewAct ? true : false}
                         handleClick={handleClick}
                     /> :
                     null}
                 {!props.admin ?
-                    <CustomButton
+                    <ReviewButton
                         text='See All Reviews'
+                        handleHover={setDisabled}
                         disabled={reviewList ? true : false}
                         handleClick={handleClickList}
                     /> :
@@ -176,13 +177,13 @@ const Resource = (props) => {
             </div>
             <div className="resource-right">
                 <ul>
-                    {props.data.services.map(a => <li>{a}</li>)}
+                    {Object.keys(props.data.services).map(a => <li>{a}</li>)}
                 </ul>
                 <br />
                 <p>{props.data.address}</p>
                 <p>{props.data.city ? props.data.city : 'none'}, CO</p>
                 <br />
-                <p>({props.data.phone.substring(0, 3)}) {props.data.phone.substring(3, 6)}-{props.data.phone.substring(6, 10)}</p>
+                <p>{props.data.phone}</p>
                 <br />
                 <a
                     onMouseOver={() => setDisabled(true)}
@@ -215,7 +216,7 @@ const Resource = (props) => {
                     null
                 }
             </div>
-            {reviewAct || reviewList ? <div className="layer"></div> : null}
+            {reviewAct || reviewList ? <div className="resource-layer"></div> : null}
         </div>
     )
 }

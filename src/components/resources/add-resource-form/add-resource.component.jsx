@@ -13,6 +13,7 @@ const AddResource = (props) => {
     const [url, setUrl] = React.useState([]);
     const [website, setWebsite] = React.useState('');
     const [services, setServices] = React.useState([]);
+    const [serviceDetail, setServiceDetail] = React.useState({})
     const [city, setCity] = React.useState('Boulder')
     const [id, setId] = React.useState('');
     const [affiliation, setAffiliation] = React.useState(null)
@@ -27,6 +28,21 @@ const AddResource = (props) => {
         return
     }
 
+    //work on this section later. We're trying to change the service state to an object
+    //don't forget to change where services are accessed as we're changing the data type
+    //
+    const addDetail = (arr, del = false) => {
+        console.log(serviceDetail)
+        let name = Object.keys(arr)[0];
+        let deets = { ...serviceDetail }
+        if (del) {
+            delete deets[name]
+        } else {
+            deets[name] = arr[name];
+        }
+        setServiceDetail(deets);
+    }
+
     const siftPhone = (val) => {
         val = val.split(/[^\d]/gi).join('');
         return val
@@ -39,7 +55,8 @@ const AddResource = (props) => {
         setPhone(phone);
         setUrl(url);
         setWebsite(website);
-        setServices(services);
+        setServices(Object.keys(services));
+        setServiceDetail(services)
         setId(_id);
         setCity(city)
     }
@@ -93,18 +110,19 @@ const AddResource = (props) => {
     }
 
     const handleSubmit = (e) => {
-        e.preventDefault()
+        e.preventDefault();
         let checkTelephone = siftPhone(phone);
         if (checkTelephone.length !== 10 && phone) {
             alert('number must be 10 digits long. Please include area code!');
             return
         }
         const formData = new FormData();
+        console.log('url', url, url[0], 'serve detail', serviceDetail, typeof formData)
         formData.append('title', title);
         formData.append('address', address);
         formData.append('phone', checkTelephone);
         formData.append('image', url[0]);
-        formData.append('services', services);
+        formData.append('services', JSON.stringify(serviceDetail));
         formData.append('website', website);
         formData.append('city', city);
         const token = localStorage.getItem('token');
@@ -201,7 +219,12 @@ const AddResource = (props) => {
             <br />
             <CityForm handleChange={handleCityChange} />
             <br />
-            <Services handleChange={handleChange} services={services} />
+            <Services
+                handleChange={handleChange}
+                services={services}
+                addDetail={addDetail}
+                detail={serviceDetail}
+                {...props} />
             <React.Fragment>
                 {props.register ?
                     <p>

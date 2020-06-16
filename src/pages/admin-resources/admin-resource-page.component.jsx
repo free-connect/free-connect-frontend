@@ -4,12 +4,12 @@ import { ResourceList } from '../../components/resources/resource-list/resource-
 import AddResource from '../../components/resources/add-resource-form/add-resource.component';
 
 export const AdminResourcePage = (props) => {
-    return(
+    return (
         <div className='admin'>
-            <AddResource/>
-            <ResourceList 
-                admin={true} 
-                city={props.location.state ? props.location.state.city : ''}/>
+            <AddResource />
+            <ResourceList
+                admin={true}
+                city={props.location.state ? props.location.state.city : ''} />
         </div>
     )
 }

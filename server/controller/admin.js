@@ -5,14 +5,14 @@ const fileHelper = require('../util/file')
 function compare(check, arrs) {
     check = [...check]
     let count = 0;
-    while(check[0]) {
-      if (arrs.includes(check[check.length-1])) {
-        count++
-      }
-      check.pop()
+    while (check[0]) {
+        if (arrs.includes(check[check.length - 1])) {
+            count++
+        }
+        check.pop()
     };
     return count
-  }
+}
 
 exports.getResources = (req, res, next) => {
     const currentPage = parseInt(req.query.page) || 1;
@@ -30,19 +30,20 @@ exports.getResources = (req, res, next) => {
                 .then(resources => {
                     let sorted = [];
                     if (services[0]) {
+                        //see the above compare function. Services are stored in db as an object
                         sorted = resources.sort((a, b) => {
-                            return compare(services, b.services) - compare(services, a.services)
+                            return compare(services, Object.keys(b.services)) - compare(services, Object.keys(a.services))
                         })
                     } else {
                         sorted = resources
                     }
-                    sorted = sorted.splice((currentPage -1)*perPage, perPage)
+                    sorted = sorted.splice((currentPage - 1) * perPage, perPage)
                     return sorted
                 })
         })
         .then(sortedResources => {
             res.json({
-                resources : sortedResources, 
+                resources: sortedResources,
                 totalRes: totalRes
             })
         })
@@ -77,9 +78,8 @@ exports.getRegisterResources = (req, res, next) => {
 }
 
 exports.postAddResource = (req, res, next) => {
-    const {title, address, phone, services, website, city} = req.body;
-    //arrays are sent as strings, this section encodes data as an array
-    const newServices = services.split(',');
+    const { title, address, phone, website, city } = req.body;
+    const services = JSON.parse(req.body.services)
     const errors = validationResult(req);
     //this section handles the image file. If there is none, it sends this error
     if (!req.file) {
@@ -95,15 +95,16 @@ exports.postAddResource = (req, res, next) => {
     }
     //this section sanitizes some data
     const imageUrl = req.file.path.replace('\\', '/');
-    let newTitle = title.split(/\s+/).map(a => a[0].toUpperCase()+a.substring(1)).join(' ');
-    let newPhone = phone.split(/\D+/gi).join('').trim()
+    let newTitle = title.split(/\s+/).map(a => a[0].toUpperCase() + a.substring(1)).join(' ');
+    let newPhone = phone.split(/\D+/gi).join('').trim();
+    newPhone = `(${newPhone.substring(0, 3)}) ${newPhone.substring(3, 6)}-${newPhone.substring(6, 10)}`
     const resource = new Resource({
         title: newTitle,
         address: address,
         phone: newPhone,
         url: imageUrl,
         website: website,
-        services: newServices,
+        services: services,
         city: city
     })
     resource
@@ -120,12 +121,12 @@ exports.postAddResource = (req, res, next) => {
             }
             next(err)
         })
-} 
+}
 
 exports.postEditResource = (req, res, next) => {
-    const {title, address, phone, services, website, id, city} = req.body;
+    const { title, address, phone, website, id, city } = req.body;
     //arrays are sent as strings in multiform data (will troubleshoot later), this section encodes data as an array
-    const newServices = services.split(',');
+    const services = JSON.parse(req.body.services)
     const errors = validationResult(req);
     const url = req.file;
     if (!errors.isEmpty()) {
@@ -133,8 +134,9 @@ exports.postEditResource = (req, res, next) => {
             errors: errors.array()
         })
     }
-    let newTitle = title.split(/\s+/).map(a => a[0].toUpperCase()+a.substring(1)).join(' ');
-    let newPhone = phone.split(/\D+/gi).join('').trim()
+    let newTitle = title.split(/\s+/).map(a => a[0].toUpperCase() + a.substring(1)).join(' ');
+    let newPhone = phone.split(/\D+/gi).join('').trim();
+    newPhone = `(${newPhone.substring(0, 3)}) ${newPhone.substring(3, 6)}-${newPhone.substring(6, 10)}`
     Resource
         .findById(id)
         .then(resource => {
@@ -145,7 +147,7 @@ exports.postEditResource = (req, res, next) => {
                 fileHelper.deleteFile(resource.url)
                 resource.url = url.path;
             }
-            resource.services = newServices;
+            resource.services = services;
             resource.phone = newPhone;
             resource.website = website;
             resource.city = city;
@@ -162,7 +164,7 @@ exports.postEditResource = (req, res, next) => {
             }
             next(err)
         })
-} 
+}
 
 exports.postDeleteResource = (req, res, next) => {
     const idToDelete = req.body.id;

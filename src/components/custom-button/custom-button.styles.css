@@ -1,9 +1,9 @@
 .custom-button{
     width: 60%;
-    height: 28px;
+    height: auto;
     cursor: pointer;
     border: none;
-    transition-duration: .8s;
+    transition-duration: .3s;
     color: white;
     opacity: 1;
     border-radius: 20px;
@@ -15,14 +15,15 @@
 
 
 .custom-button.active{
-    transform: scale(1.1);
+    background-color: white;
+    color: rgb(24, 24, 116)
 }
 
 .custom-button.disabled{
     background-color: black;
 }
 
-.button_name{
+.custom-button-name{
     font-size: .6em;
     position: static;
     padding-top: .7em;

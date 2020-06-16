@@ -15,7 +15,7 @@ const Filter = (props) => {
         setCity(val)
     }
 
-    const handleChange = (e) => {
+    const handleChangeFilter = (e) => {
         let newChecked = [...services];
         let ind = newChecked.indexOf(e.target.name)
         if (!e.target.checked) {
@@ -38,12 +38,12 @@ const Filter = (props) => {
         window.location.reload(false)
     }
 
-    return(
+    return (
         <React.Fragment>
-            <Services handleChange={handleChange} services={services}/>
-            <SelectCity setVal = {setVal} handleSubmit={ handleSubmit }/>
+            <Services handleChange={handleChangeFilter} services={services} />
+            <SelectCity setVal={setVal} handleSubmit={handleSubmit} />
         </React.Fragment>
     )
-} 
+}
 
 export default withRouter(Filter)

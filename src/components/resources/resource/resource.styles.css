@@ -18,16 +18,17 @@
     background-color: rgb(117, 117, 207)
 }
 
-.layer{
+.resource-layer{
     height: 100%;
     width: 98%;
     position: absolute;
     z-index: 10;
-    opacity: 0
+    opacity: 0;
+    cursor: pointer;
 }
 
 .resource-right ul{
-    text-align: justify;
+    text-align: left;
     list-style-type: square;
 }
 

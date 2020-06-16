@@ -1,5 +1,6 @@
 import React from 'react';
 import Resource from '../resource/resource.component';
+import { CustomButton } from '../../custom-button/custom-button.component';
 import './resource-list.styles.css';
 
 export const ResourceList = (props) => {
@@ -7,6 +8,7 @@ export const ResourceList = (props) => {
     const [loaded, setLoaded] = React.useState(false);
     const [page, setPage] = React.useState(1);
     const [count, setCount] = React.useState(0);
+    const [buttonActive, setButtonActive] = React.useState(false)
 
     const handleClick = (name) => {
         const newPage = name === 'next' ? page + 1 : page - 1;
@@ -16,7 +18,7 @@ export const ResourceList = (props) => {
 
     const getData = (pageVal) => {
         pageVal = pageVal || 1;
-        let query = `/data/resources?page=${pageVal}city=${props.city ? props.city : ''}&services=${props.services ? props.services : ''}`
+        let query = `/data/resources?page=${pageVal}&city=${props.city ? props.city : ''}&services=${props.services ? props.services : ''}`
         fetch(query)
             .then(response => response.json())
             .then(newData => {
@@ -54,8 +56,40 @@ export const ResourceList = (props) => {
                 }
             </div>
             <div className='button'>
-                {page > 1 ? <button name='prev' onClick={(e) => handleClick(e.target.name)}>prev</button> : null}
-                {page < (count / 4) ? <button name='next' onClick={(e) => handleClick(e.target.name)}>next</button> : null}
+                {page > 1 ?
+                    <div
+                        style={{
+                            marginLeft: '30%',
+                            marginRight: '30%'
+                        }}
+                        name='prev'
+                        onClick={(e) => handleClick('prev')}
+                        onMouseEnter={() => setButtonActive(true)}
+                        onMouseLeave={() => setButtonActive(false)}
+                    >
+                        <CustomButton
+                            active={buttonActive}
+                            text="previous"
+                        />
+                    </div> :
+                    null}
+                {page < (count / 4) ?
+                    <div
+                        style={{
+                            marginLeft: '30%',
+                            marginRight: '30%'
+                        }}
+                        name='next'
+                        onClick={(e) => handleClick('next')}
+                        onMouseEnter={() => setButtonActive(true)}
+                        onMouseLeave={() => setButtonActive(false)}
+                    >
+                        <CustomButton
+                            active={buttonActive}
+                            text="next"
+                        />
+                    </div> :
+                    null}
             </div>
         </React.Fragment>
     )

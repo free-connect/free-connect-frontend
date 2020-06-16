@@ -62,7 +62,7 @@ exports.getReviews = (req, res, next) => {
 exports.postReview = (req, res, next) => {
     const { resourceId, review } = req.body;
     const user = req.userId;
-    let resId='';
+    let resId = '';
     User
         .findOne({
             _id: user
@@ -86,7 +86,7 @@ exports.postReview = (req, res, next) => {
                     _id: resourceId
                 })
                 .then(checkResource => {
-                    let test = checkResource.reviews.find(a=> a.userId.toString() === user.toString());
+                    let test = checkResource.reviews.find(a => a.userId.toString() === user.toString());
                     if (test) {
                         const error = new Error("Resource already reviewed!");
                         error.statusCode = 401;
@@ -101,13 +101,13 @@ exports.postReview = (req, res, next) => {
                         review: review
                     })
                     return resource
-                            .save()
-                            .then(() => {
-                                res.json({
-                                    success: true
-                                })
+                        .save()
+                        .then(() => {
+                            res.json({
+                                success: true
                             })
-                            .catch(err => next(err))
+                        })
+                        .catch(err => next(err))
                 })
                 .catch(err => {
                     next(err)
@@ -118,22 +118,22 @@ exports.postReview = (req, res, next) => {
                 err.statusCode = 500
             }
             next(err)
-    })
+        })
 }
 
 exports.postUserResource = (req, res, next) => {
     const affiliation = ObjectId(req.body.affiliation);
     User
         .findOneAndUpdate(
-            {_id: req.userId}, 
-            {affiliation: affiliation},
-            {new: true}
+            { _id: req.userId },
+            { affiliation: affiliation },
+            { new: true }
         )
         .then(() => {
             res.json({
                 success: true
-                })
             })
+        })
         .catch(err => {
             if (!err.statusCode) {
                 err.statusCode = 500

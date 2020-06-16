@@ -13,16 +13,16 @@ export const LinkStyled = (props) => {
         setActive(false)
     }
 
-    return(
+    return (
         <React.Fragment>
-            <NavLink 
+            <NavLink
                 onMouseOver={handleOver}
                 onMouseOut={handleOut}
                 className={`nav ${!active ? '' : 'active'}`}
-                activeClassName='nav-active' 
-                exact={props.loc === '/' ? true : false} 
-                to = {props.loc}>
-                    {props.name}
+                activeClassName='nav-active'
+                exact={props.loc === '/' ? true : false}
+                to={props.loc}>
+                {props.name}
             </NavLink>
         </React.Fragment>
     )

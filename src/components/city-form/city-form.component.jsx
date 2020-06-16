@@ -1,7 +1,7 @@
 import React from 'react';
 
 export const CityForm = (props) => {
-    return(
+    return (
         <React.Fragment>
             <p>
                 <label>Cities</label>
