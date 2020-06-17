@@ -1,0 +1,12 @@
+.nav-bar{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    width: 100%;
+    position: fixed;
+    z-index: 50;
+    background-color: #064109;
+    height: 5%;
+    margin: 0;
+}

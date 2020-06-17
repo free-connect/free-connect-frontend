@@ -4,7 +4,7 @@ const uniqueValidator = require('mongoose-unique-validator')
 
 const userSchema = new Schema({
     username: {
-        type:  String,
+        type: String,
         required: true,
         unique: true
     },
@@ -25,10 +25,13 @@ const userSchema = new Schema({
         required: true,
         unique: true
     },
-    likes: {
-        type: [],
-        required: true
-    },
+    likes: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Resource',
+            required: true
+        }
+    ],
     admin: {
         type: Boolean,
         required: false

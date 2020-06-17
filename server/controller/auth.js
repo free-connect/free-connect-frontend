@@ -1,86 +1,106 @@
 const User = require('../models/user');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const { validationResult } = require('express-validator')
 
 exports.postRegister = (req, res, next) => {
-    const {username, password, affiliation, name, email} = req.body;
-    User
-        .findOne({
-            email: email
+    const { username, password, affiliation, name, email } = req.body;
+    //handles validation errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.json({
+            errors: errors.array()
         })
-        .then(userCheck => {
-            if (userCheck) {
-                return res.json({
-                    msg: false
-                })
-            } else {
-                return bcrypt
-                    .hash(password, 12)
-                    .then(hashedPw => {
-                        const user = new User({
-                            username: username,
-                            password: hashedPw,
-                            affiliation: affiliation,
-                            name: name,
-                            email: email,
-                            likes: [],
-                            reviews: []
-                        })
-                        user
-                            .save()
-                            .then(() => {
-                                res.json({
-                                    msg: true
-                                })
-                            })
-                            .catch(err => {
-                                console.log(err)
-                                return res.json({
-                                    msg: false
-                                })
-                            })
+    }
+    //encrypt password with a secure salt of 12
+    bcrypt
+        .hash(password, 12)
+        .then(hashedPw => {
+            const user = new User({
+                username: username,
+                password: hashedPw,
+                affiliation: affiliation,
+                name: name,
+                email: email,
+                likes: [],
+                reviews: []
+            })
+            return user
+                .save()
+                .then(() => {
+                    res.json({
+                        success: true
                     })
-            }
+                })
+                .catch(err => {
+                    if (!err.statusCode) {
+                        err.statusCode = 500
+                    }
+                    next(err)
+                })
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500
+            }
+            next(err)
+        })
 };
 
 exports.postLogin = (req, res, next) => {
     const { password, username } = req.body;
     let AuthedUser;
-    User
+    return User
         .findOne({
-            username: username
+            $or: [
+                { username: username },
+                { email: username }
+            ]
         })
         .then(user => {
             if (!user) {
-                return res.json({
-                    msg: 'no user'
-                })
+                const error = new Error("User doesn't exist. Please double check username/email!");
+                error.statusCode = 401;
+                throw error
             }
             AuthedUser = user;
             return bcrypt
                 .compare(password, user.password)
                 .then(match => {
                     if (!match) {
-                        res.json({
-                            msg: 'no match'
-                        })
-                        return;
+                        const error = new Error("Username/email and password don't match");
+                        error.statusCode = 401;
+                        throw error
                     };
                     const token = jwt.sign({
                         email: AuthedUser.email,
                         userId: AuthedUser._id.toString()
-                    }, 
-                    process.env.secret,
-                    { expiresIn: '1hr' }
+                    },
+                        process.env.secret,
+                        { expiresIn: '1hr' }
                     );
                     res.json({
-                            token: token,
-                            userId: AuthedUser._id,
-                            msg: 'success'
-                        })
+                        token: token,
+                        userId: AuthedUser._id,
+                        name: AuthedUser.username,
+                        success: true
+                    })
+                })
+                .catch(err => {
+                    if (!err.statusCode) {
+                        err.statusCode = 500
+                    }
+                    next(err)
                 })
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500
+            }
+            next(err)
+        })
+}
+
+exports.postReset = (req, res, next) => {
+    //some logic for emailing new password, still working on this!
 }

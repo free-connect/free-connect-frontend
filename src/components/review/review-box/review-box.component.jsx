@@ -13,18 +13,18 @@ export const ReviewBox = (props) => {
 
     const handleClickList = (e) => {
         if (!node.current.contains(e.target)) {
-            props.handleClickOff() 
-            }
-        };
+            props.handleClickOff()
+        }
+    };
 
     const node = React.useRef(null)
-    
-    return(
+
+    return (
         <div ref={node} className={`review-box ${!props.active ? '' : 'active'}`}>
-            {props.type === 'list' ? 
-            <ReviewList {...props} /> : 
-            <AddReview {...props}/>
-        }
+            {props.type === 'list' ?
+                <ReviewList {...props} /> :
+                <AddReview {...props} />
+            }
         </div>
     )
 }

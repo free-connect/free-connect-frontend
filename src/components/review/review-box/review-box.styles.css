@@ -1,8 +1,6 @@
 .review-box{
     height: 0px;
     width: 0px;
-    margin-left: 35%;
-    margin-top: 10%;
     border: solid black 1px;
     transition-duration: .6s;
     border-radius: 0%;
@@ -12,11 +10,11 @@
 }
 
 .review-box.active{
-    height: 350px;
-    width: 300px;
+    height: 275px;
+    width: 275px;
     border-radius: 15%;
     opacity: 1;
     font-size: 17px;
     background-color: white;
-    z-index: 20
+    z-index: 20;
 }

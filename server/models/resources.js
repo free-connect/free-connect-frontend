@@ -4,7 +4,7 @@ const deepPopulate = require('mongoose-deep-populate')(mongoose)
 
 const resourceSchema = new Schema({
     title: {
-        type:  String,
+        type: String,
         required: true
     },
     address: {
@@ -24,22 +24,22 @@ const resourceSchema = new Schema({
         required: true
     },
     services: {
-        type: Array,
+        type: Object,
         required: true
     },
     city: {
         type: String,
         required: true
     },
-    reviews:[
-            {
+    reviews: [
+        {
             userId: {
                 type: Schema.Types.ObjectId,
                 ref: 'User',
                 required: true
-            }, 
+            },
             review: {
-                type: String, 
+                type: String,
                 required: true
             }
         }

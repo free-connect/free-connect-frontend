@@ -5,8 +5,11 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const adminRoutes = require('./server/routes/admin')
 const authRoutes = require('./server/routes/auth');
-const userRoutes = require('./server/routes/user')
-const path = require('path')
+const userRoutes = require('./server/routes/user');
+const multer = require('multer')
+const path = require('path');
+const { v4: uuidv4 } = require('uuid')
+
 
 mongoose.set('useFindAndModify', false);
 
@@ -14,12 +17,41 @@ const dataBasePassword = process.env.dataBasePassword
 const dataBaseUser = process.env.dataBaseUser
 const cluster = process.env.cluster
 
-const DB_URI = 'mongodb+srv://'+dataBaseUser+':'+dataBasePassword+'@'+cluster;
+const DB_URI = 'mongodb+srv://' + dataBaseUser + ':' + dataBasePassword + '@' + cluster;
 
 const app = express();
 const port = process.env.PORT || 3000
 
+const fileStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, './images')
+    },
+    filename: (req, file, cb) => {
+        const extension = file.originalname.split('.').pop();
+        cb(null, uuidv4() + '.' + extension)
+    }
+})
+
+const fileFilter = (req, file, cb) => {
+    console.log('file', file)
+    if (
+        file.mimetype === 'image/png' ||
+        file.mimetype === 'image/jpg' ||
+        file.mimetype === 'image/jpeg'
+    ) {
+        cb(null, true)
+    } else {
+        cb(null, false)
+    }
+}
+
+app.use(multer({
+    storage: fileStorage,
+    fileFilter: fileFilter
+}).single('image'))
+
 app.use(express.static(path.join(__dirname, 'build')))
+app.use('/images', express.static(path.join(__dirname, 'images')))
 
 app.use(bodyParser.json())
 
@@ -39,11 +71,18 @@ app.get('*', (req, res, next) => {
     res.sendFile(path.join(__dirname, 'build', 'index.html'))
 })
 
+app.use((error, req, res, next) => {
+    console.log(error);
+    const status = error.statusCode || 500;
+    const message = error.message;
+    res.status(status).json({ message: message })
+})
+
 mongoose
     .connect(
         DB_URI,
         {
-            useNewUrlParser: true, 
+            useNewUrlParser: true,
             useUnifiedTopology: true
         })
     .then(() => app.listen(port))

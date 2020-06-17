@@ -1,0 +1,57 @@
+@keyframes slideOver {
+    0% {
+        height: 10%;
+        width: 10%;
+    }
+    50%{
+        height: 13%;
+        width: 13%;
+        background-color: rgb(109, 109, 233)
+    }
+    100% {
+        height: 10%;
+        width: 10%;
+        margin-left: 70%;
+        background-color: rgb(20, 110, 88)
+    }
+  }
+
+  @keyframes slideBack {
+    0% {
+        margin-left: 70%;
+        background-color: rgb(20, 110, 88);
+        height: 10%;
+        width: 10%;
+    }
+    50%{
+        height: 13%;
+        width: 13%;
+        background-color: rgb(109, 109, 233);
+    }
+    100% {
+        background-color: rgb(20, 110, 88);
+        height: 10%;
+        width: 10%;
+    }
+  }
+
+.loading{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 80px;
+    height: 80px;
+    transform: translate(-50%, -50%);
+    overflow: visible;
+}
+
+.ball{
+    border: solid transparent 1px;
+    height: 10%;
+    width: 10%;
+    background-color: transparent;
+    border-radius: 100%;
+    animation-duration: .8s;
+    animation-name: slideOver;
+    animation-timing-function: cubic-bezier(0.331, 0.441, 0.444, 1.649);
+}
