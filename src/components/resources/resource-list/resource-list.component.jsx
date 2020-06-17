@@ -8,7 +8,37 @@ export const ResourceList = (props) => {
     const [loaded, setLoaded] = React.useState(false);
     const [page, setPage] = React.useState(1);
     const [count, setCount] = React.useState(0);
-    const [buttonActive, setButtonActive] = React.useState(false)
+    const [buttonActive, setButtonActive] = React.useState(false);
+    const [userLikes, setUserLikes] = React.useState([])
+
+    const updateLikes = (val) => {
+        const newLikes = [...userLikes, val];
+        setUserLikes(newLikes)
+    }
+
+    const handleResourceLoad = () => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            return;
+        }
+        fetch('/myLikes', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'bearer ' + token
+            }
+        })
+            .then(res => res.json())
+            .then(response => {
+                if (response.likes) {
+                    console.log(response.likes)
+                    setUserLikes(response.likes)
+                } else {
+                    return
+                }
+            })
+            .catch(err => console.log(err))
+    }
 
     const handleClick = (name) => {
         const newPage = name === 'next' ? page + 1 : page - 1;
@@ -34,7 +64,11 @@ export const ResourceList = (props) => {
             .catch(err => console.log('errorrrrr', err))
     }
 
-    React.useEffect(() => getData(), [])
+    React.useEffect(() => {
+        getData();
+        handleResourceLoad();
+        return;
+    }, [])
 
     return (
         <React.Fragment>
@@ -44,9 +78,12 @@ export const ResourceList = (props) => {
                         return (
                             <React.Fragment>
                                 <Resource
+                                    updateLikes={updateLikes}
+                                    liked={userLikes.includes(a._id)}
                                     id={i + 1 === data.length ? 0 : i + 1}
                                     data={a}
-                                    admin={props.admin} />
+                                    admin={props.admin} 
+                                    />
                             </React.Fragment>
                         )
                     }) :

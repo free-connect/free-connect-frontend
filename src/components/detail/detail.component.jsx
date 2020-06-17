@@ -7,6 +7,7 @@ const Detail = (props) => {
     const [loaded, setLoaded] = React.useState(false)
 
     const getDetails = (pushedData) => {
+        console.log('data', pushedData)
         if (!pushedData) {
             return;
         }
@@ -44,9 +45,16 @@ const Detail = (props) => {
                         <br />
                     </div>
                     <div className='right-detail'>
-                        <ul>
-                            {Object.keys(data.services).map(a => <li>{a}</li>)}
-                        </ul>
+                        {Object.keys(data.services).map(a => {
+                            return (
+                                <React.Fragment>
+                                    <h3>{a}</h3>
+                                    <ul>
+                                        {data.services[a].map(b => <li>{b}</li>)}
+                                    </ul>
+                                </React.Fragment>
+                            )
+                        })}
                         <br />
                         <p>{data.address}</p>
                         <p>{data.city ? data.city : 'none'}, CO</p>

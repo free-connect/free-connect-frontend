@@ -9,6 +9,41 @@ const Resource = (props) => {
     const [reviewList, setReviewList] = React.useState(false);
     const [reviewData, setReviewData] = React.useState([]);
     const [disabled, setDisabled] = React.useState(false);
+    const [token, setToken] = React.useState('')
+
+    const handleResourceLoad = () => {
+        const token = localStorage.getItem('token');
+        setToken(token)
+    }
+
+    const handleLike = () => {
+        if (!token) {
+            alert('You gotta be signed in to like a resource!');
+            return;
+        }
+        const data = {
+            likedId: props.data._id
+        }
+        fetch('/like',
+            {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'bearer ' + token
+                }
+            })
+            .then(res => res.json())
+            .then(response => {
+                if (response.success) {
+                    props.updateLikes(props.data._id)
+                    alert('success!')
+                } else {
+                    alert(response.message)
+                }
+            })
+            .catch(err => console.log(err))
+    }
 
     const handleDetail = () => {
         if (disabled) {
@@ -25,7 +60,6 @@ const Resource = (props) => {
 
     const handleClick = (e) => {
         e.preventDefault();
-        const token = localStorage.getItem('token');
         if (!token) {
             alert('You gotta sign in to review a resource!');
             return;
@@ -71,7 +105,6 @@ const Resource = (props) => {
             resourceId: props.data._id,
             review: review
         };
-        const token = localStorage.getItem('token')
         if (!token) {
             alert("Oh No! You're not a user! come register :)")
             return;
@@ -131,6 +164,8 @@ const Resource = (props) => {
             .catch(err => console.log(err))
     }
 
+    React.useEffect(() => handleResourceLoad(), [])
+
     return (
         <div className='resource-box' onClick={() => reviewAct || reviewList ? null : handleDetail()}>
             {!props.profile ?
@@ -189,6 +224,14 @@ const Resource = (props) => {
                     onMouseOver={() => setDisabled(true)}
                     onMouseOut={() => setDisabled(false)}
                     href={props.data.website}>Click to visit {props.data.name}</a>
+                <img
+                    onClick={handleLike}
+                    onMouseOver={() => setDisabled(true)}
+                    onMouseOut={() => setDisabled(false)}
+                    src={require('../../../logos/thumbs-up.jpg')}
+                    alt='thumbs up'
+                />
+                {props.liked ? <p>LIKED!!!!</p> : null}
                 {props.admin ?
                     <div className='delete-resource'>
                         {!props.profile ?

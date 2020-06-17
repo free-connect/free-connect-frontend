@@ -141,3 +141,53 @@ exports.postUserResource = (req, res, next) => {
             next(err)
         })
 }
+
+exports.postLike = (req, res, next) => {
+    let newLikedRes = req.body.likedId
+    User
+        .findOne({
+            _id: req.userId
+        })
+        .then(user => {
+            if (user.likes.includes(newLikedRes)) {
+                const error = new Error("Resource already liked!");
+                error.statusCode = 401;
+                throw error
+            } else if (user.affiliation.toString() === newLikedRes.toString()) {
+                const error = new Error("Can't like your own resource!");
+                error.statusCode = 401;
+                throw error
+            }
+            user.likes.push(newLikedRes)
+            return user.save()
+        })
+        .then(() => {
+            res.json({
+                success: true
+            })
+        })
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500
+            }
+            next(err)
+        })
+}
+
+exports.getLikes = (req, res, next) => {
+    User
+        .findOne({
+            _id: req.userId
+        })
+        .then(user => {
+            res.json({
+                likes: user.likes
+            })
+        })
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500
+            }
+            next(err)
+        })
+}

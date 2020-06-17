@@ -26,7 +26,9 @@ exports.getResources = (req, res, next) => {
             const city = req.query.city || '';
             const services = req.query.services.split(',') || [];
             return Resource
-                .find(city ? { city: city } : null)
+                .find(city ?
+                    { city: city } :
+                    null)
                 .then(resources => {
                     let sorted = [];
                     if (services[0]) {

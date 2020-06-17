@@ -25,10 +25,13 @@ const userSchema = new Schema({
         required: true,
         unique: true
     },
-    likes: {
-        type: [],
-        required: true
-    },
+    likes: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Resource',
+            required: true
+        }
+    ],
     admin: {
         type: Boolean,
         required: false
