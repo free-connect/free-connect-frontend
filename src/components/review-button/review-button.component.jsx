@@ -16,7 +16,7 @@ export const ReviewButton = (props) => {
                 props.handleHover(false)
             }}
         >
-            <CustomButton {...props}/>
+            <CustomButton {...props} />
         </div>
     )
 }

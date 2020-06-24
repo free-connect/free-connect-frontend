@@ -80,7 +80,7 @@ export const ResourceList = (props) => {
                                     id={i + 1 === data.length ? 0 : i + 1}
                                     data={a}
                                     admin={props.admin}
-                                    />
+                                />
                             </React.Fragment>
                         )
                     }) :

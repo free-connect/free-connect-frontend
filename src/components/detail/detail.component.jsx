@@ -7,7 +7,6 @@ const Detail = (props) => {
     const [loaded, setLoaded] = React.useState(false)
 
     const getDetails = (pushedData) => {
-        console.log('data', pushedData)
         if (!pushedData) {
             return;
         }
@@ -44,8 +43,8 @@ const Detail = (props) => {
                         </a>
                         <br />
                         {data.dynamicData.map(a => {
-                            return(
-                                <React.Fragment style={{display: 'flex'}}>
+                            return (
+                                <React.Fragment style={{ display: 'flex' }}>
                                     <p>{a.name}</p>
                                     <p>{a.value}</p>
                                     <p>{a.timestamp}</p>
@@ -57,7 +56,7 @@ const Detail = (props) => {
                         <br />
                         <p>{data.address}</p>
                         <br />
-                        <p>{data.city ? data.city : 'none'}, CO</p>
+                        <p>{data.city ? `${data.city}, CO` : 'none specified'}</p>
                         <br />
                         <p>{data.phone}</p>
                         <br />

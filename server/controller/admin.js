@@ -78,7 +78,6 @@ exports.postAddResource = (req, res, next) => {
     const { title, address, phone, website, city } = req.body;
     const services = JSON.parse(req.body.services);
     const dynamicData = JSON.parse(req.body.dynamicData);
-    console.log('dynamic', dynamicData)
     const errors = validationResult(req);
     //this section handles the image file. If there is none, it sends this error
     if (!req.file) {
@@ -126,8 +125,6 @@ exports.postAddResource = (req, res, next) => {
 exports.postEditResource = (req, res, next) => {
     const { title, address, phone, website, id, city } = req.body;
     const dynamicData = JSON.parse(req.body.dynamicData);
-    console.log('dynamic', dynamicData);
-    //arrays are sent as strings in multiform data (will troubleshoot later), this section encodes data as an array
     const services = JSON.parse(req.body.services)
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -174,7 +171,6 @@ exports.postDeleteResource = (req, res, next) => {
     Resource
         .findById(idToDelete)
         .then(resource => {
-            console.log('url', resource.url)
             fileHelper.deleteFile(resource.url)
         })
         .catch(err => {

@@ -4,21 +4,16 @@ import './services.styles.css'
 
 export const Services = (props) => {
 
-    //we need to consolidate the 'service detail' and 'service' states in the add resource
-    //component. 
-
     const handleChange = (e) => {
-        console.log('services: ', props.services, 'detail', props.detail)
-        if (props.services.includes(e.target.name)) {
+        if (Object.keys(props.services).includes(e.target.name)) {
             props.addDetail({ [e.target.name]: '' }, true)
         }
-        let newChecked = [...props.services];
-        let ind = newChecked.indexOf(e.target.name)
+        let newChecked = { ...props.services };
         if (!e.target.checked) {
-            newChecked.splice(ind, 1)
+            delete newChecked[e.target.name]
             props.setServices(newChecked)
         } else {
-            props.setServices([...newChecked, e.target.name]);
+            props.setServices({ ...newChecked, [e.target.name]: [] });
         }
     }
 
@@ -38,7 +33,7 @@ export const Services = (props) => {
             {servicesList.map((a, i) => {
                 let truthy = false;
                 if (props.services) {
-                    truthy = props.services.includes(a) ? true : false;
+                    truthy = Object.keys(props.services).includes(a) ? true : false;
                 }
                 return (
                     <React.Fragment key={i}>
@@ -55,7 +50,7 @@ export const Services = (props) => {
                         </label>
                         {truthy && props.add ?
                             <DetailText
-                                name={a} 
+                                name={a}
                                 addDetail={props.addDetail}
                                 {...props}
                             /> :

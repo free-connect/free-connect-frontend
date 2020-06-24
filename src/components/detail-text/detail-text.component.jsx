@@ -2,13 +2,15 @@ import React from 'react';
 import { DeleteDetail } from '../delete-detail/delete-detail.component';
 import './detail-text.styles.css'
 
+//start
+
 export const DetailText = (props) => {
     const [detailArray, setDetailArray] = React.useState([]);
     const [description, setDescription] = React.useState('');
 
     const onLoad = () => {
-        if (Object.keys(props.detail).includes(props.name)) {
-            setDetailArray(props.detail[props.name])
+        if (Object.keys(props.services).includes(props.name)) {
+            setDetailArray(props.services[props.name])
         }
     }
 

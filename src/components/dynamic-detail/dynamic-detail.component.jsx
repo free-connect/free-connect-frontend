@@ -4,7 +4,6 @@ export const DynamicDetail = (props) => {
 
     const handleSubmitDesc = (e, i) => {
         e.preventDefault()
-        console.log('here')
         const date = new Date();
         const val = {
             name: props.tempName,

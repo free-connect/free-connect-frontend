@@ -8,14 +8,15 @@ import { SelectResource } from '../../select-resource/select-resource.component'
 import { withRouter } from 'react-router-dom';
 import { Services } from '../../services/services.component';
 
+//start
+
 const AddResource = (props) => {
     const [title, setTitle] = React.useState('');
     const [address, setAddress] = React.useState('');
     const [phone, setPhone] = React.useState('');
     const [url, setUrl] = React.useState([]);
     const [website, setWebsite] = React.useState('');
-    const [services, setServices] = React.useState([]);
-    const [serviceDetail, setServiceDetail] = React.useState({})
+    const [services, setServices] = React.useState({})
     const [city, setCity] = React.useState('Boulder')
     const [dynamicData, setDynamicData] = React.useState([]);
     const [id, setId] = React.useState('');
@@ -27,19 +28,15 @@ const AddResource = (props) => {
         return
     }
 
-    const handleDynamic = (value) => {
-        setDynamicData(value)
-    }
-
     const addDetail = (arr, del = false) => {
         let name = Object.keys(arr)[0];
-        let detail = { ...serviceDetail }
+        let detail = { ...services }
         if (del) {
             delete detail[name]
         } else {
             detail[name] = arr[name];
         }
-        setServiceDetail(detail);
+        setServices(detail);
     }
 
     const handleEdit = () => {
@@ -50,8 +47,7 @@ const AddResource = (props) => {
         setDynamicData(dynamicData);
         setUrl(url);
         setWebsite(website);
-        setServices(Object.keys(services));
-        setServiceDetail(services)
+        setServices(services)
         setId(_id);
         setCity(city);
         return
@@ -95,7 +91,7 @@ const AddResource = (props) => {
         formData.append('phone', checkTelephone);
         formData.append('image', url[0]);
         formData.append('dynamicData', JSON.stringify(dynamicData));
-        formData.append('services', JSON.stringify(serviceDetail));
+        formData.append('services', JSON.stringify(services));
         formData.append('website', website);
         formData.append('city', city);
         const token = localStorage.getItem('token');
@@ -157,7 +153,6 @@ const AddResource = (props) => {
     }
 
     React.useEffect(() => {
-        console.log('props', props)
         if (!props.location.state) {
             return;
         } else {
@@ -205,13 +200,12 @@ const AddResource = (props) => {
                 setServices={setServices}
                 services={services}
                 addDetail={addDetail}
-                detail={serviceDetail}
                 add={true}
                 {...props} />
             <br />
             <br />
             <Dynamic
-                handleDynamic={handleDynamic}
+                handleDynamic={setDynamicData}
                 dynamicData={dynamicData}
             />
             <React.Fragment>

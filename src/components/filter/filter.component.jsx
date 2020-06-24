@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 
 const Filter = (props) => {
     const [city, setCity] = React.useState('Boulder');
-    const [services, setServices] = React.useState([]);
+    const [services, setServices] = React.useState({});
 
     const setVal = (val) => {
         if (val === 'All') {
@@ -21,7 +21,7 @@ const Filter = (props) => {
             pathname: '/resources',
             state: {
                 city: city,
-                resources: services
+                resources: Object.keys(services)
             }
         })
         window.location.reload(false)
@@ -29,9 +29,9 @@ const Filter = (props) => {
 
     return (
         <React.Fragment>
-            <Services 
-                setServices={setServices} 
-                services={services} 
+            <Services
+                setServices={setServices}
+                services={services}
             />
             <SelectCity setVal={setVal} handleSubmit={handleSubmit} />
         </React.Fragment>

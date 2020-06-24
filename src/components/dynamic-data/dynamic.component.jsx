@@ -21,21 +21,21 @@ export const Dynamic = (props) => {
     return (
         <React.Fragment>
             {props.dynamicData[0] ?
-            [...props.dynamicData].map((a, i) => {
-                return (
-                    <React.Fragment>
-                        <DeleteDetail 
-                            detailArray={props.dynamicData}
-                            index={i}
-                            handleDelete={handleDelete}
-                        />
-                        <p>{a.name}</p>
-                        <p>{a.value}</p>
-                        <p>{a.timestamp}</p>
-                    </React.Fragment>
-                )
-            }) : 
-            null}
+                [...props.dynamicData].map((a, i) => {
+                    return (
+                        <React.Fragment>
+                            <DeleteDetail
+                                detailArray={props.dynamicData}
+                                index={i}
+                                handleDelete={handleDelete}
+                            />
+                            <p>{a.name}</p>
+                            <p>{a.value}</p>
+                            <p>{a.timestamp}</p>
+                        </React.Fragment>
+                    )
+                }) :
+                null}
             <DynamicDetail
                 handleSubmit={handleSubmit}
                 data={props.dynamicData}
