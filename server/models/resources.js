@@ -27,6 +27,22 @@ const resourceSchema = new Schema({
         type: Object,
         required: true
     },
+    dynamicData: [
+        {
+            name: {
+                type: String,
+                required: true
+            },
+            value: {
+                type: String,
+                required: true
+            },
+            timestamp: {
+                type: String,
+                required: true
+            }
+        }
+    ],
     city: {
         type: String,
         required: true

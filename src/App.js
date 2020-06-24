@@ -1,4 +1,7 @@
 import React from 'react';
+import { Route, withRouter, Switch } from 'react-router-dom';
+import './App.css';
+
 import MainPage from './pages/main-page/main-page.component';
 import EditResourcePage from './pages/edit-resource/edit-resource-page.component';
 import LoginPage from './pages/login-page/login-page.component';
@@ -9,16 +12,15 @@ import Detail from './components/detail/detail.component';
 import { ResetPage } from './pages/reset-page/reset-page.component';
 import { AdminResourcePage } from './pages/admin-resources/admin-resource-page.component';
 import { ResourcesPage } from './pages/resource-page/resources-page.component';
-import { AboutPage } from './pages/about-page/about-page.component'
-import { ErrorPage } from './pages/error-page/error-page.component'
-import { Route, withRouter, Switch } from 'react-router-dom'
-import './App.css';
+import { AboutPage } from './pages/about-page/about-page.component';
+import { ErrorPage } from './pages/error-page/error-page.component';
+
 
 function App(props) {
   const [isAuth, setIsAuth] = React.useState(false);
   const [token, setToken] = React.useState(null);
   const [userId, setUserId] = React.useState(null);
-  const [load, setLoad] = React.useState(false)
+  const [load, setLoad] = React.useState(false);
 
   const handleLoad = () => {
     const token = localStorage.getItem('token');
@@ -49,7 +51,7 @@ function App(props) {
     localStorage.removeItem('expiryDate');
     localStorage.removeItem('userId');
     localStorage.removeItem('name');
-    props.history.push('/login')
+    props.history.push('/')
     window.location.reload(false);
   }
 
@@ -117,7 +119,6 @@ function App(props) {
             <Route exact path="/admin-resources" component={AdminResourcePage} /> :
             null}
           {isAuth ? <Route exact path="/profile" render={() => <ProfilePage token={token} />} /> : null}
-          {/* <Route path='*' render={() => <p>Sorry, there's nothing here!</p>} /> */}
           <Route path='*' component={ErrorPage} />
         </Switch>
       </div>

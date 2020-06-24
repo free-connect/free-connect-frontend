@@ -15,17 +15,6 @@ const Filter = (props) => {
         setCity(val)
     }
 
-    const handleChangeFilter = (e) => {
-        let newChecked = [...services];
-        let ind = newChecked.indexOf(e.target.name)
-        if (!e.target.checked) {
-            newChecked.splice(ind, 1)
-            setServices(newChecked)
-        } else {
-            setServices([...newChecked, e.target.name]);
-        }
-    }
-
     const handleSubmit = (e) => {
         e.preventDefault()
         props.history.push({
@@ -40,7 +29,10 @@ const Filter = (props) => {
 
     return (
         <React.Fragment>
-            <Services handleChange={handleChangeFilter} services={services} />
+            <Services 
+                setServices={setServices} 
+                services={services} 
+            />
             <SelectCity setVal={setVal} handleSubmit={handleSubmit} />
         </React.Fragment>
     )

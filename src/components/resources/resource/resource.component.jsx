@@ -9,14 +9,9 @@ const Resource = (props) => {
     const [reviewList, setReviewList] = React.useState(false);
     const [reviewData, setReviewData] = React.useState([]);
     const [disabled, setDisabled] = React.useState(false);
-    const [token, setToken] = React.useState('')
-
-    const handleResourceLoad = () => {
-        const token = localStorage.getItem('token');
-        setToken(token)
-    }
 
     const handleLike = () => {
+        const token = localStorage.getItem('token')
         if (!token) {
             alert('You gotta be signed in to like a resource!');
             return;
@@ -58,8 +53,9 @@ const Resource = (props) => {
         return;
     }
 
-    const handleClick = (e) => {
+    const handleClickReview = (e) => {
         e.preventDefault();
+        const token = localStorage.getItem('token')
         if (!token) {
             alert('You gotta sign in to review a resource!');
             return;
@@ -101,6 +97,7 @@ const Resource = (props) => {
 
     const handleSubmitReview = (e, review) => {
         e.preventDefault();
+        const token = localStorage.getItem('token')
         let data = {
             resourceId: props.data._id,
             review: review
@@ -164,8 +161,6 @@ const Resource = (props) => {
             .catch(err => console.log(err))
     }
 
-    React.useEffect(() => handleResourceLoad(), [])
-
     return (
         <div className='resource-box' onClick={() => reviewAct || reviewList ? null : handleDetail()}>
             {!props.profile ?
@@ -198,7 +193,7 @@ const Resource = (props) => {
                         handleHover={setDisabled}
                         text='Review'
                         disabled={reviewAct ? true : false}
-                        handleClick={handleClick}
+                        handleClick={handleClickReview}
                     /> :
                     null}
                 {!props.admin ?
@@ -224,13 +219,16 @@ const Resource = (props) => {
                     onMouseOver={() => setDisabled(true)}
                     onMouseOut={() => setDisabled(false)}
                     href={props.data.website}>Click to visit {props.data.name}</a>
-                <img
-                    onClick={handleLike}
-                    onMouseOver={() => setDisabled(true)}
-                    onMouseOut={() => setDisabled(false)}
-                    src={require('../../../logos/thumbs-up.jpg')}
-                    alt='thumbs up'
-                />
+                {props.profile || props.admin ?
+                    null :
+                    <img
+                        onClick={handleLike}
+                        onMouseOver={() => setDisabled(true)}
+                        onMouseOut={() => setDisabled(false)}
+                        src={require('../../../logos/thumbs-up.jpg')}
+                        alt='thumbs up'
+                    />
+                }
                 {props.liked ? <p>LIKED!!!!</p> : null}
                 {props.admin ?
                     <div className='delete-resource'>

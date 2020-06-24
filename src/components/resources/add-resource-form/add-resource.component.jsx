@@ -1,5 +1,7 @@
 import React from 'react';
 import './add-resource.styles.css'
+import { siftPhone } from '../../../util/functions'
+import { Dynamic } from '../../dynamic-data/dynamic.component';
 import { Form } from '../../form/form.component';
 import { CityForm } from '../../city-form/city-form.component';
 import { SelectResource } from '../../select-resource/select-resource.component'
@@ -15,12 +17,9 @@ const AddResource = (props) => {
     const [services, setServices] = React.useState([]);
     const [serviceDetail, setServiceDetail] = React.useState({})
     const [city, setCity] = React.useState('Boulder')
+    const [dynamicData, setDynamicData] = React.useState([]);
     const [id, setId] = React.useState('');
     const [affiliation, setAffiliation] = React.useState(null)
-
-    const handleResource = (val) => {
-        setAffiliation(val);
-    }
 
     const handleImage = (e) => {
         e.preventDefault();
@@ -28,60 +27,34 @@ const AddResource = (props) => {
         return
     }
 
-    //work on this section later. We're trying to change the service state to an object
-    //don't forget to change where services are accessed as we're changing the data type
-    //
-    const addDetail = (arr, del = false) => {
-        console.log(serviceDetail)
-        let name = Object.keys(arr)[0];
-        let deets = { ...serviceDetail }
-        if (del) {
-            delete deets[name]
-        } else {
-            deets[name] = arr[name];
-        }
-        setServiceDetail(deets);
+    const handleDynamic = (value) => {
+        setDynamicData(value)
     }
 
-    const siftPhone = (val) => {
-        val = val.split(/[^\d]/gi).join('');
-        return val
-    };
+    const addDetail = (arr, del = false) => {
+        let name = Object.keys(arr)[0];
+        let detail = { ...serviceDetail }
+        if (del) {
+            delete detail[name]
+        } else {
+            detail[name] = arr[name];
+        }
+        setServiceDetail(detail);
+    }
 
     const handleEdit = () => {
-        const { title, phone, address, url, website, services, _id, city } = props.location.state.data;
+        const { title, dynamicData, phone, address, url, website, services, _id, city } = props.location.state.data;
         setTitle(title);
         setAddress(address);
         setPhone(phone);
+        setDynamicData(dynamicData);
         setUrl(url);
         setWebsite(website);
         setServices(Object.keys(services));
         setServiceDetail(services)
         setId(_id);
-        setCity(city)
-    }
-
-    React.useEffect(() => {
-        if (!props.location.state) {
-            return;
-        } else {
-            handleEdit()
-        }
-    }, [])
-
-    const handleCityChange = (val) => {
-        setCity(val)
-    }
-
-    const handleChange = (e) => {
-        let newChecked = [...services];
-        let ind = newChecked.indexOf(e.target.name)
-        if (!e.target.checked) {
-            newChecked.splice(ind, 1)
-            setServices(newChecked)
-        } else {
-            setServices([...newChecked, e.target.name]);
-        }
+        setCity(city);
+        return
     }
 
     const handleAddUserResource = (aff, tok) => {
@@ -117,11 +90,11 @@ const AddResource = (props) => {
             return
         }
         const formData = new FormData();
-        console.log('url', url, url[0], 'serve detail', serviceDetail, typeof formData)
         formData.append('title', title);
         formData.append('address', address);
         formData.append('phone', checkTelephone);
         formData.append('image', url[0]);
+        formData.append('dynamicData', JSON.stringify(dynamicData));
         formData.append('services', JSON.stringify(serviceDetail));
         formData.append('website', website);
         formData.append('city', city);
@@ -183,6 +156,15 @@ const AddResource = (props) => {
         }
     }
 
+    React.useEffect(() => {
+        console.log('props', props)
+        if (!props.location.state) {
+            return;
+        } else {
+            handleEdit()
+        }
+    }, [])
+
     return (
         <form className='add-resource-form' onSubmit={handleSubmit}>
             <Form
@@ -217,19 +199,26 @@ const AddResource = (props) => {
                 name='picture'
                 onChange={handleImage} />
             <br />
-            <CityForm handleChange={handleCityChange} />
+            <CityForm handleChange={setCity} />
             <br />
             <Services
-                handleChange={handleChange}
+                setServices={setServices}
                 services={services}
                 addDetail={addDetail}
                 detail={serviceDetail}
+                add={true}
                 {...props} />
+            <br />
+            <br />
+            <Dynamic
+                handleDynamic={handleDynamic}
+                dynamicData={dynamicData}
+            />
             <React.Fragment>
                 {props.register ?
                     <p>
                         <label>Or select from existing....</label>
-                        <SelectResource handleResource={handleResource} />
+                        <SelectResource handleResource={setAffiliation} />
                     </p>
                     : null}
             </React.Fragment>

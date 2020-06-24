@@ -8,7 +8,6 @@ export const ResourceList = (props) => {
     const [loaded, setLoaded] = React.useState(false);
     const [page, setPage] = React.useState(1);
     const [count, setCount] = React.useState(0);
-    const [buttonActive, setButtonActive] = React.useState(false);
     const [userLikes, setUserLikes] = React.useState([])
 
     const updateLikes = (val) => {
@@ -31,7 +30,6 @@ export const ResourceList = (props) => {
             .then(res => res.json())
             .then(response => {
                 if (response.likes) {
-                    console.log(response.likes)
                     setUserLikes(response.likes)
                 } else {
                     return
@@ -46,8 +44,7 @@ export const ResourceList = (props) => {
         return getData(newPage)
     }
 
-    const getData = (pageVal) => {
-        pageVal = pageVal || 1;
+    const getData = (pageVal = 1) => {
         let query = `/data/resources?page=${pageVal}&city=${props.city ? props.city : ''}&services=${props.services ? props.services : ''}`
         fetch(query)
             .then(response => response.json())
@@ -82,7 +79,7 @@ export const ResourceList = (props) => {
                                     liked={userLikes.includes(a._id)}
                                     id={i + 1 === data.length ? 0 : i + 1}
                                     data={a}
-                                    admin={props.admin} 
+                                    admin={props.admin}
                                     />
                             </React.Fragment>
                         )
@@ -101,11 +98,8 @@ export const ResourceList = (props) => {
                         }}
                         name='prev'
                         onClick={(e) => handleClick('prev')}
-                        onMouseEnter={() => setButtonActive(true)}
-                        onMouseLeave={() => setButtonActive(false)}
                     >
                         <CustomButton
-                            active={buttonActive}
                             text="previous"
                         />
                     </div> :
@@ -118,11 +112,8 @@ export const ResourceList = (props) => {
                         }}
                         name='next'
                         onClick={(e) => handleClick('next')}
-                        onMouseEnter={() => setButtonActive(true)}
-                        onMouseLeave={() => setButtonActive(false)}
                     >
                         <CustomButton
-                            active={buttonActive}
                             text="next"
                         />
                     </div> :

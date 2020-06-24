@@ -1,4 +1,5 @@
 import React from 'react';
+import { DeleteDetail } from '../delete-detail/delete-detail.component';
 import './detail-text.styles.css'
 
 export const DetailText = (props) => {
@@ -6,10 +7,14 @@ export const DetailText = (props) => {
     const [description, setDescription] = React.useState('');
 
     const onLoad = () => {
-        console.log(props.name, props.detail, 'in detail')
         if (Object.keys(props.detail).includes(props.name)) {
             setDetailArray(props.detail[props.name])
         }
+    }
+
+    const handleDelete = (val) => {
+        setDetailArray(val);
+        props.addDetail({ [props.name]: val })
     }
 
     React.useEffect(() => onLoad(), [])
@@ -25,13 +30,6 @@ export const DetailText = (props) => {
         return;
     }
 
-    const handleDeleteDesc = (index) => {
-        const newArr = [...detailArray];
-        newArr.splice(index, 1);
-        setDetailArray(newArr);
-        props.addDetail({ [props.name]: newArr })
-    }
-
     return (
         <React.Fragment>
             {detailArray[0] ?
@@ -42,31 +40,26 @@ export const DetailText = (props) => {
                                 <React.Fragment style={{
                                     display: 'flex'
                                 }}>
-                                    <p
-                                        style={{
-                                            cursor: 'pointer',
-                                            color: 'red'
-                                        }}
-                                        onClick={() => handleDeleteDesc(i)}>X</p>
+                                    <DeleteDetail
+                                        detailArray={detailArray}
+                                        handleDelete={handleDelete}
+                                        index={i}
+                                    />
                                     <li key={i}>{a}</li>
                                 </React.Fragment>
                             )
                         })}
                     </ul>
-                    <input
-                        type="text"
-                        onChange={(e) => setDescription(e.target.value)}>
-                    </input>
-                    <button onClick={handleSubmitDesc}>add</button>
                 </React.Fragment> :
-                <React.Fragment>
-                    <input
-                        type="text"
-                        onChange={(e) => setDescription(e.target.value)}>
-                    </input>
-                    <button onClick={handleSubmitDesc}>add</button>
-                </React.Fragment>
+                null
             }
+            <input
+                type="text"
+                onChange={(e) => setDescription(e.target.value)}
+                value={description}
+            >
+            </input>
+            <button onClick={handleSubmitDesc}>add</button>
         </React.Fragment>
     )
 }

@@ -4,12 +4,21 @@ import './services.styles.css'
 
 export const Services = (props) => {
 
+    //we need to consolidate the 'service detail' and 'service' states in the add resource
+    //component. 
+
     const handleChange = (e) => {
+        console.log('services: ', props.services, 'detail', props.detail)
         if (props.services.includes(e.target.name)) {
             props.addDetail({ [e.target.name]: '' }, true)
-            props.handleChange(e)
+        }
+        let newChecked = [...props.services];
+        let ind = newChecked.indexOf(e.target.name)
+        if (!e.target.checked) {
+            newChecked.splice(ind, 1)
+            props.setServices(newChecked)
         } else {
-            props.handleChange(e)
+            props.setServices([...newChecked, e.target.name]);
         }
     }
 
@@ -20,10 +29,9 @@ export const Services = (props) => {
         'Benefits',
         'Veterans Services',
         'Shelter',
-        'Food'
+        'Food',
+        'Legal'
     ];
-
-    const path = props.location ? props.location.pathname : null
 
     return (
         <React.Fragment>
@@ -45,12 +53,9 @@ export const Services = (props) => {
                                 name={a} />
                             <span className='custom-checkbox'></span>
                         </label>
-                        {truthy &&
-                            (path === '/admin-resources' ||
-                                path === '/edit-resource' ||
-                                path === '/profile') ?
+                        {truthy && props.add ?
                             <DetailText
-                                name={a}
+                                name={a} 
                                 addDetail={props.addDetail}
                                 {...props}
                             /> :

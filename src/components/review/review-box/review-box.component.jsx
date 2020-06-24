@@ -13,7 +13,7 @@ export const ReviewBox = (props) => {
 
     const handleClickList = (e) => {
         if (!node.current.contains(e.target)) {
-            props.handleClickOff()
+            props.handleClickOff();
         }
     };
 

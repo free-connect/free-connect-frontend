@@ -10,6 +10,12 @@ const ProfilePage = (props) => {
     const [loaded, setLoaded] = React.useState(false);
     const [pageLoaded, setPageLoaded] = React.useState(false)
 
+    const welcome = () =>
+        <React.Fragment>
+            <h1>Welcome back {localStorage.getItem('name')}!</h1>
+            <br />
+        </React.Fragment>
+
     const loadMyResource = () => {
         const token = localStorage.getItem('token');
         if (!token) {
@@ -38,17 +44,19 @@ const ProfilePage = (props) => {
             <React.Fragment hidden={pageLoaded ? false : true}>
                 {loaded && initAffiliation ?
                     <React.Fragment>
-                        <h1>Welcome back {localStorage.getItem('name')}!</h1>
-                        <br />
+                        {welcome}
                         <h2>Affiliated Resource</h2>
                         <div className='section'>
-                            <Resource admin={true} profile={true} data={initAffiliation} />
+                            <Resource
+                                admin={true}
+                                profile={true}
+                                data={initAffiliation}
+                            />
                         </div>
                     </React.Fragment> :
                     loaded ?
                         <React.Fragment>
-                            <h1>Welcome back {localStorage.getItem('name')}!</h1>
-                            <br />
+                            {welcome}
                             <p>You haven't added a resource! Add one here...</p>
                             <div className='section'>
                                 <AddResource register={true} />

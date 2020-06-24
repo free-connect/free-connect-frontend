@@ -18,55 +18,64 @@ const Detail = (props) => {
             }
         })
             .then(res => res.json())
-            //this section is going to be used to load details, which need to be set up in the model! 
-            //still trying to decide how I want to model those and how the admins will configure
             .then(response => {
                 setData({ ...pushedData, details: response.data })
             })
             .then(() => setLoaded(true))
-            .catch(err => console.log('error and data', err, data))
+            .catch(err => console.log(err))
     }
 
     React.useState(() => props.location.state ? getDetails(props.location.state.data) : setLoaded(true), []);
 
     return (
-        <div onClick={() => console.log(data)} className='resource-detail'>
+        <div className='resource-detail'>
             {Object.keys(data)[0] && loaded ?
                 <React.Fragment>
                     <div className='left-detail'>
                         <h3>{data.title}</h3>
                         <br />
-                        <img
-                            src={data.url}
-                            alt={data.title}
-                            height='auto'
-                            width='auto'
-                        />
+                        <a href={data.website}>
+                            <img
+                                src={data.url}
+                                alt={data.title}
+                                height='auto'
+                                width='auto'
+                            />
+                        </a>
                         <br />
+                        {data.dynamicData.map(a => {
+                            return(
+                                <React.Fragment style={{display: 'flex'}}>
+                                    <p>{a.name}</p>
+                                    <p>{a.value}</p>
+                                    <p>{a.timestamp}</p>
+                                </React.Fragment>
+                            )
+                        })}
                     </div>
                     <div className='right-detail'>
+                        <br />
+                        <p>{data.address}</p>
+                        <br />
+                        <p>{data.city ? data.city : 'none'}, CO</p>
+                        <br />
+                        <p>{data.phone}</p>
+                        <br />
                         {Object.keys(data.services).map(a => {
                             return (
                                 <React.Fragment>
-                                    <h3>{a}</h3>
+                                    <h4>{a}</h4>
                                     <ul>
                                         {data.services[a].map(b => <li>{b}</li>)}
                                     </ul>
                                 </React.Fragment>
                             )
                         })}
-                        <br />
-                        <p>{data.address}</p>
-                        <p>{data.city ? data.city : 'none'}, CO</p>
-                        <br />
-                        <p>{data.phone}</p>
-                        <br />
                     </div>
                 </React.Fragment> :
                 loaded ?
                     <p>Thanks for checking out resource details! Head over to the resoure page to browse a list of available resources in your area</p> :
                     null
-                //import loading icon here and have some kind of time out
             }
         </div>
     )
