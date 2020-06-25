@@ -14,6 +14,7 @@ export const CustomButton = (props) => {
                         'custom-button'}
             onMouseEnter={() => setActive(true)}
             onMouseLeave={() => setActive(false)}
+            onClick={props.handleClick ? props.handleClick : null}
         >
             <div className="custom-button-name">{props.text}</div>
         </div>

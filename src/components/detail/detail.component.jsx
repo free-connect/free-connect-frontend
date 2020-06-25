@@ -38,7 +38,7 @@ const Detail = (props) => {
                                 src={data.url}
                                 alt={data.title}
                                 height='auto'
-                                width='auto'
+                                width='80%'
                             />
                         </a>
                         <br />
@@ -47,7 +47,7 @@ const Detail = (props) => {
                                 <React.Fragment style={{ display: 'flex' }}>
                                     <p>{a.name}</p>
                                     <p>{a.value}</p>
-                                    <p>{a.timestamp}</p>
+                                    <p style={{opacity: '.5'}}>As of {a.timestamp}</p>
                                 </React.Fragment>
                             )
                         })}

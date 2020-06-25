@@ -1,6 +1,7 @@
 import React from 'react';
 import { SelectCity } from '../select-city/select-city.component'
-import { Services } from '../services/services.component';
+import { ServicesAll } from '../services-all/services-all.component';
+import { CustomButton } from '../custom-button/custom-button.component';
 import { withRouter } from 'react-router-dom';
 
 const Filter = (props) => {
@@ -29,11 +30,14 @@ const Filter = (props) => {
 
     return (
         <React.Fragment>
-            <Services
+            <h1>What are you looking for?</h1>
+            <br />
+            <ServicesAll
                 setServices={setServices}
                 services={services}
             />
-            <SelectCity setVal={setVal} handleSubmit={handleSubmit} />
+            <SelectCity setVal={setVal}/>
+            <CustomButton handleClick={handleSubmit} text='Find!'/>
         </React.Fragment>
     )
 }

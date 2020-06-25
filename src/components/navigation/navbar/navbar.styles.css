@@ -1,12 +1,68 @@
 .nav-bar{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: nowrap;
     justify-content: space-between;
-    width: 100%;
+    width: 5%;
+    position: fixed;
+    z-index: 35;
+    background-color: #064109;
+    height: 85%;
+    margin: 0;
+    opacity: 1;
+    transition-duration: .3s;
+    overflow: hidden;
+    padding-top: 6%;
+    min-width: 80px;
+}
+
+.nav-bar.active{
+    width: 0%;
+    height: 0%;
+    padding: 0%;
+    min-width: 0px;
+}
+
+.block{
     position: fixed;
     z-index: 50;
-    background-color: #064109;
-    height: 5%;
-    margin: 0;
+    transition-duration: 1.5s;
+    width: auto;
+    height: auto;
+    margin: 1%;
+    cursor: pointer
+  }
+
+.line{
+    border-radius: 20%;
+    margin-top: 0px;
+    width: 30px;
+    height: 5px;
+    background-color: white;
+    transition-duration: .6s;
+}
+
+.line.active{
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    background-color: rgb(76, 76, 212);
+}
+
+.line1{
+    border-radius: 20%;
+    margin-top: 5px;
+    width: 30px;
+    height: 5px;
+    background-color: white;
+    transition-duration: .6s;
+}
+
+.line1.active{
+    transform: translate(0px, -30px);
+    border-radius: 50%;
+    margin-top: 0px;
+    height: 30px;
+    width: 30px;
+    background-color: rgb(76, 76, 212);
 }

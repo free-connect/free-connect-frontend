@@ -20,6 +20,31 @@ exports.getMyResource = (req, res, next) => {
         })
 };
 
+exports.getMyLikes = (req, res, next) => {
+    User
+        .findOne({
+            _id: req.userId
+        })
+        .populate('likes')
+        .then(user => {
+            const likes = user.likes.map(a =>{ 
+                return {
+                    title: a.title,
+                    dynamicData: a.dynamicData
+                    }
+                })
+            res.send({
+                likes: likes
+            })
+        })
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500
+            }
+            next(err)
+        })
+}
+
 exports.getDetails = (req, res, next) => {
     return Resource
         .findOne({

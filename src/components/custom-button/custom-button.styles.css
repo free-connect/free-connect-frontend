@@ -11,6 +11,7 @@
     float: center;
     background-color: rgb(24, 24, 116);
     font-size: 1em;
+    max-width: 200px;
 }   
 
 
@@ -24,9 +25,9 @@
 }
 
 .custom-button-name{
-    font-size: .6em;
+    font-size: auto;
     position: static;
-    padding-top: .7em;
+    padding: .5em;
     margin-top: 26px;
     left: 28px;
 }

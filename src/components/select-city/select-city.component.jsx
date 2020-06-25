@@ -4,12 +4,10 @@ import './select-city.styles.css'
 
 export const SelectCity = (props) => {
     return (
-        <form onSubmit={props.handleSubmit} className="city-select">
-            <fieldset>
-                <legend>Where are you?</legend>
-                <CityForm handleChange={props.setVal} />
-            </fieldset>
-            <button type="submit">Let's find some resources!</button>
-        </form>
+        <div className="city-select">
+            <h1>Where are you?</h1>
+            <br />
+            <CityForm handleChange={props.setVal} />
+        </div>
     )
 }

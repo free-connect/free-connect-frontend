@@ -6,7 +6,7 @@ import { Form } from '../../form/form.component';
 import { CityForm } from '../../city-form/city-form.component';
 import { SelectResource } from '../../select-resource/select-resource.component'
 import { withRouter } from 'react-router-dom';
-import { Services } from '../../services/services.component';
+import { ServicesAll } from '../../services-all/services-all.component';
 
 //start
 
@@ -196,7 +196,7 @@ const AddResource = (props) => {
             <br />
             <CityForm handleChange={setCity} />
             <br />
-            <Services
+            <ServicesAll
                 setServices={setServices}
                 services={services}
                 addDetail={addDetail}

@@ -8,7 +8,7 @@
 .left-detail{
     display: flex;
     flex-direction: column;
-    padding-left: 3%;
+    padding: 3%;
     flex: 1 1 38%;
     max-width: auto
 }
@@ -25,7 +25,8 @@
     font-size: 3vh;
     text-align: left;
     flex: 1 1 38%;
-    max-width: auto
+    max-width: auto;
+    padding: 3%
 }
 
 .right-detail li{
