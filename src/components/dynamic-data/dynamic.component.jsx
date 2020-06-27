@@ -18,8 +18,14 @@ export const Dynamic = (props) => {
         props.handleDynamic(val);
     }
 
+    //work on making this section into a chart!
+
     return (
         <React.Fragment>
+            <h1>
+                Dynamic Data (data that may
+                change from day to day)
+            </h1>
             {props.dynamicData[0] ?
                 [...props.dynamicData].map((a, i) => {
                     return (

@@ -8,8 +8,6 @@ import { SelectResource } from '../../select-resource/select-resource.component'
 import { withRouter } from 'react-router-dom';
 import { ServicesAll } from '../../services-all/services-all.component';
 
-//start
-
 const AddResource = (props) => {
     const [title, setTitle] = React.useState('');
     const [address, setAddress] = React.useState('');
@@ -194,7 +192,7 @@ const AddResource = (props) => {
                 name='picture'
                 onChange={handleImage} />
             <br />
-            <CityForm handleChange={setCity} />
+            <CityForm setCity={setCity} city={city}/>
             <br />
             <ServicesAll
                 setServices={setServices}

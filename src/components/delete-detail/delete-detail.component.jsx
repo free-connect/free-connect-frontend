@@ -13,7 +13,8 @@ export const DeleteDetail = (props) => {
             <p
                 style={{
                     cursor: 'pointer',
-                    color: 'red'
+                    color: 'red',
+                    fontSize: '15px'
                 }}
                 onClick={() => handleDeleteDesc(props.index)}>X</p>
         </React.Fragment>

@@ -30,7 +30,8 @@ export const ServicesAll = (props) => {
         'Veterans Services',
         'Shelter',
         'Food',
-        'Legal'
+        'Legal',
+        'Civil Rights',
     ];
 
     return (

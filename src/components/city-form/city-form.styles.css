@@ -1,4 +1,4 @@
-.filter-checks{
+.city-checks{
     height: auto;
     width: 100%;
     padding: 0;
@@ -12,28 +12,22 @@
     border-radius: 20px;
 }
 
-.filter-checks:hover{
+.city-checks:hover{
     color: white;
     transition-duration: 0s;
 }
 
-.filter-checks.active{
+.city-checks.active{
     background-color: rgb(24, 24, 116);
     color: white
 }
 
-.filter-checkbox{
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 25px;
-    width: 25px;
-    background-color: #eee;
-}
-
-.filter-drop{
+.city-drop{
     max-height: 0px;
+    width: 200px;
     overflow: hidden;
     margin: auto;
     user-select: none;
+    transition-duration: .8s;
+    width: 50%
 }

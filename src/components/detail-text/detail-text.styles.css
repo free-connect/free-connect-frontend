@@ -1,0 +1,17 @@
+.detail-text{
+    width: 100%;
+}
+
+.detail-add__symbol{
+    color: blue;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.detail-add{
+    display: flex;
+}
+
+.detail-text__delete{
+    display: flex
+}

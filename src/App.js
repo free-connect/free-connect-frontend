@@ -4,7 +4,6 @@ import './App.css';
 
 import MainPage from './pages/main-page/main-page.component';
 import EditResourcePage from './pages/edit-resource/edit-resource-page.component';
-import LoginPage from './pages/login-page/login-page.component';
 import RegisterPage from './pages/register-page/register-page.component';
 import ProfilePage from './pages/profile-page/profile-page.component';
 import NavBar from './components/navigation/navbar/navbar.component';
@@ -103,12 +102,13 @@ function App(props) {
         <NavBar
           logout={handleSubmitLogout}
           admin={userId === process.env.REACT_APP_USER_ID ? true : false}
-          isAuth={isAuth} /> :
+          isAuth={isAuth}
+          handleLogin={handleLogin}
+        /> :
         null}
       <div className="App">
         <Switch>
           <Route exact path='/' component={MainPage} />
-          <Route exact path='/login' render={props => <LoginPage handleLogin={handleLogin} />} />
           <Route exact path='/register' component={RegisterPage} />
           <Route exact path='/resources' component={ResourcesPage} />
           <Route exact path='/about' component={AboutPage} />

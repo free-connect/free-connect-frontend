@@ -1,19 +1,20 @@
 import React from 'react';
-import './login-page.styles.css'
-import { withRouter, Link } from 'react-router-dom';
+import './login.styles.css'
+import { withRouter} from 'react-router-dom';
 import { Form } from '../../components/form/form.component';
+import { LinkStyled } from '../../components/navigation/link-styled/link-styled.component';
 
-const LoginPage = (props) => {
+const Login = (props) => {
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
-
+    
     const data = {
         username: username,
         password: password
     }
 
     return (
-        <div className='login'>
+        <div className={props.active ? 'login-comp active' : 'login-comp'}>
             <form className='login-form' onSubmit={(e) => props.handleLogin(e, data)}>
                 <Form
                     title="username"
@@ -30,11 +31,13 @@ const LoginPage = (props) => {
                 <br />
                 <button type='submit'>Submit</button>
             </form>
-            <Link to='/reset'>Forgot password? No problem, reset here.</Link>
+            <div className='login-text'>
+            <LinkStyled loc='/reset' name='Forgot password?'/>
             <br />
-            <Link to='/register'>Not a member? Register here!</Link>
+            <LinkStyled loc='/register' name='Not a member?'/>
+            </div>
         </div>
     )
 }
 
-export default withRouter(LoginPage)
+export default withRouter(Login)

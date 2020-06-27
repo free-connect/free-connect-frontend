@@ -1,10 +1,13 @@
 .nav-active{
-    background-color: rgb(15, 15, 110)
+    border-bottom: solid rgb(15, 15, 110) 1px ;
 }
 
 .nav{
     text-decoration: none;
     color: white;
+    transition-duration: .5s;
+    font-family: 'Prata', serif;
+    padding: 1vh;
     transition-duration: .5s;
 }
 

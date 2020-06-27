@@ -1,16 +1,19 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import { LinkStyled } from '../link-styled/link-styled.component'
+import { LinkStyled } from '../link-styled/link-styled.component';
+import { CustomButton } from '../../custom-button/custom-button.component';
+import Login from '../../login/login.component';
 import './navbar.styles.css'
 
 const NavBar = (props) => {
     const [auth, setAuth] = React.useState(false);
     const [active, setActive] = React.useState(false);
+    const [logActive, setLogActive] = React.useState(false);
 
     const handleLogout = (e) => {
         e.preventDefault()
         props.logout();
-        props.history.push('/login')
+        props.history.push('/')
     }
 
     React.useEffect(() => setAuth(props.isAuth), [])
@@ -33,15 +36,21 @@ const NavBar = (props) => {
                             </React.Fragment> :
                             null}
                         <LinkStyled loc='/profile' name='Profile' />
-                        <form onSubmit={handleLogout}>
-                            <button type="submit">Logout</button>
-                        </form>
+                        <div style={{ paddingTop: '-55px' }}>
+                            <CustomButton handleClick={handleLogout} text='Logout' logout="true" />
+                        </div>
                     </React.Fragment> :
                     <React.Fragment>
                         <LinkStyled loc='/' name='Home' />
                         <LinkStyled loc='/resources' name='Resources' />
                         <LinkStyled loc='/about' name="About" />
-                        <LinkStyled loc='/login' name='Login' />
+                        <p
+                            onClick={() => setLogActive(!logActive)}
+                            className={logActive ? 'nav-login active' : 'nav-login'}
+                            >Login</p>
+                            <React.Fragment>
+                                <Login {...props} active={logActive}/>
+                            </React.Fragment>
                     </React.Fragment>
                 }
             </div>

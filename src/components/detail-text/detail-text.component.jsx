@@ -2,8 +2,6 @@ import React from 'react';
 import { DeleteDetail } from '../delete-detail/delete-detail.component';
 import './detail-text.styles.css'
 
-//start
-
 export const DetailText = (props) => {
     const [detailArray, setDetailArray] = React.useState([]);
     const [description, setDescription] = React.useState('');
@@ -33,35 +31,33 @@ export const DetailText = (props) => {
     }
 
     return (
-        <React.Fragment>
+        <div className='detail-text'>
             {detailArray[0] ?
                 <React.Fragment>
-                    <ul>
                         {detailArray.map((a, i) => {
                             return (
-                                <React.Fragment style={{
-                                    display: 'flex'
-                                }}>
+                                <div className='detail-text__delete'>
                                     <DeleteDetail
                                         detailArray={detailArray}
                                         handleDelete={handleDelete}
                                         index={i}
                                     />
-                                    <li key={i}>{a}</li>
-                                </React.Fragment>
+                                    <p key={i}>&nbsp;&nbsp;{a}</p>
+                                </div>
                             )
                         })}
-                    </ul>
                 </React.Fragment> :
                 null
             }
-            <input
-                type="text"
-                onChange={(e) => setDescription(e.target.value)}
-                value={description}
-            >
-            </input>
-            <button onClick={handleSubmitDesc}>add</button>
-        </React.Fragment>
+            <div className='detail-add'>
+                <div className='detail-add__symbol' onClick={handleSubmitDesc}>+&nbsp;&nbsp;</div>
+                <input
+                    type="text"
+                    onChange={(e) => setDescription(e.target.value)}
+                    value={description}
+                >
+                </input>
+            </div>
+        </div>
     )
 }

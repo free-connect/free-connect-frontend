@@ -3,7 +3,7 @@
     flex-direction: column;
     flex-wrap: nowrap;
     justify-content: space-between;
-    width: 5%;
+    width: 15%;
     position: fixed;
     z-index: 35;
     background-color: #064109;
@@ -12,8 +12,9 @@
     opacity: 1;
     transition-duration: .3s;
     overflow: hidden;
-    padding-top: 6%;
+    padding-top: 8vh;
     min-width: 80px;
+    text-align: center;
 }
 
 .nav-bar.active{
@@ -28,8 +29,9 @@
     z-index: 50;
     transition-duration: 1.5s;
     width: auto;
-    height: auto;
-    margin: 1%;
+    height: 30px;
+    margin-top: 1%;
+    margin-left: 1%;
     cursor: pointer
   }
 
@@ -65,4 +67,18 @@
     height: 30px;
     width: 30px;
     background-color: rgb(76, 76, 212);
+}
+
+.nav-login{
+    text-decoration: none;
+    color: white;
+    transition-duration: .5s;
+    font-family: 'Prata', serif;
+    padding: 1vh;
+    transition-duration: .5s;
+    cursor: pointer;
+}
+
+.nav-login.active{
+    color: rgb(191, 194, 24)
 }
