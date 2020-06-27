@@ -10,7 +10,8 @@
     float: center;
     background-color: rgb(24, 24, 116);
     font-size: 1em;
-    max-width: 200px;
+    max-width: 130px;
+    max-height: 50px;
 }   
 
 
@@ -27,6 +28,5 @@
     font-size: auto;
     position: static;
     padding: .5em;
-    margin-top: 26px;
     left: 28px;
 }

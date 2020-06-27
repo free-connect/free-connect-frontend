@@ -1,18 +1,11 @@
 .filter-checks{
-    height: auto;
-    width: 100%;
-    padding: 0;
-    margin:auto;
-    vertical-align: bottom;
     position: relative;
-    top: -1px;
-    overflow: hidden;
-    cursor: pointer;
-    transition-duration: .4s;
     border-radius: 20px;
+    cursor: pointer;
+    max-width: auto;
 }
 
-.filter-checks:hover{
+.filter-checks p:hover{
     color: white;
     transition-duration: 0s;
 }

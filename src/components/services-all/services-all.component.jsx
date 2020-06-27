@@ -64,7 +64,7 @@ export const ServicesAll = (props) => {
                                 onClick={() => handleChange(a, truthy)}
                                 className={truthy ? 'filter-checks active' : 'filter-checks'}
                             >
-                                {a}
+                                <p>{a}</p>
                             </div>
                             {truthy && props.add ?
                                 <DetailText

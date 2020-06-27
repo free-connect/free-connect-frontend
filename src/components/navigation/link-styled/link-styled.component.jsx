@@ -14,7 +14,7 @@ export const LinkStyled = (props) => {
     }
 
     return (
-        <React.Fragment>
+        <div className='link-styled-block'>
             <NavLink
                 onMouseOver={handleOver}
                 onMouseOut={handleOut}
@@ -24,6 +24,6 @@ export const LinkStyled = (props) => {
                 to={props.loc}>
                 {props.name}
             </NavLink>
-        </React.Fragment>
+        </div>
     )
 }

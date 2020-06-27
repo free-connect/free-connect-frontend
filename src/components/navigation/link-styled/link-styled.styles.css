@@ -14,3 +14,8 @@
 .nav.active{
     color: rgb(191, 194, 24)
 }
+
+.link-styled-block{
+    width: 80%;
+    margin-left: 10%
+}

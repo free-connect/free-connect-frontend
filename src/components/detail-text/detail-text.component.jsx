@@ -1,5 +1,6 @@
 import React from 'react';
 import { DeleteDetail } from '../delete-detail/delete-detail.component';
+import { AddButton } from '../add-button/add-button.component';
 import './detail-text.styles.css'
 
 export const DetailText = (props) => {
@@ -50,7 +51,7 @@ export const DetailText = (props) => {
                 null
             }
             <div className='detail-add'>
-                <div className='detail-add__symbol' onClick={handleSubmitDesc}>+&nbsp;&nbsp;</div>
+                <AddButton handleClick={handleSubmitDesc} />
                 <input
                     type="text"
                     onChange={(e) => setDescription(e.target.value)}
