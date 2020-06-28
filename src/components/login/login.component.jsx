@@ -15,6 +15,7 @@ const Login = (props) => {
     }
 
     const handleLogin = (e) => {
+        props.setActive(false)
         props.handleLogin(e, data)
     }
 
@@ -38,7 +39,7 @@ const Login = (props) => {
                     color='white'
                 />
                 <br />
-                <CustomButton text='Login' handleClick={handleLogin}/>
+                <CustomButton text='Login' handleClick={handleLogin} />
             </div>
             <div className='login-text'>
                 <LinkStyled loc='/reset' name='Forgot password?' />

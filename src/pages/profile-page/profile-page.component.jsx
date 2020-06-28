@@ -46,63 +46,67 @@ const ProfilePage = (props) => {
     React.useEffect(() => loadMyResources(), [])
 
     return (
-        <div className='profile' >
+        <React.Fragment>
             {pageLoaded ? null : <Loading />}
             <React.Fragment hidden={pageLoaded ? false : true}>
-                <React.Fragment>
-                    <h1>Welcome back {localStorage.getItem('name')}!</h1>
-                    <br />
-                </React.Fragment>
-                {loaded && likes[0] ?
-                    <React.Fragment>
-                        <h1>Liked Resources</h1>
-                            {likes.map(a => {
-                                return (
-                                    <div style={{ textAlign: 'left' }}>
-                                            <h1>{a.title}</h1>
-                                                {a.dynamicData.map(b => {
-                                                    return (
-                                                        <ul>
-                                                            <span>
-                                                                {b.name}:&nbsp;
+                <h1>Welcome back {localStorage.getItem('name')}!</h1>
+                <br />
+                <div className='profile' >
+                    <div className='profile-likes'>
+                        {loaded && likes[0] ?
+                            <React.Fragment>
+                                <h2>Liked Resources</h2>
+                                {likes.map(a => {
+                                    return (
+                                        <React.Fragment>
+                                            <h3>{a.title}</h3>
+                                            {a.dynamicData.map(b => {
+                                                return (
+                                                    <ul>
+                                                        <span>
+                                                            {b.name}:&nbsp;
                                                                 {b.value}&nbsp;as of
-                                                                <div style={{opacity: '.5'}}>{b.timestamp}</div></span>
-                                                        </ul>
-                                                    )
-                                                })}
-                                    </div>
-                                )
-                            })}
-                    </React.Fragment> :
-                    loaded ?
-                        <React.Fragment>
-                            <p>no liked resources :(</p>
-                        </React.Fragment> :
-                        null
-                }
-                {loaded && initAffiliation ?
-                    <React.Fragment>
-                        <h2>Affiliated Resource</h2>
-                        <div className='section'>
-                            <Resource
-                                admin={true}
-                                profile={true}
-                                data={initAffiliation}
-                            />
-                        </div>
-                    </React.Fragment> :
-                    loaded ?
-                        <React.Fragment>
-                            <p>Do you work for a nonprofit and want it to be included on this
+                                                                <div style={{ opacity: '.5' }}>{b.timestamp}</div></span>
+                                                    </ul>
+                                                )
+                                            })}
+                                        </React.Fragment>
+                                    )
+                                })}
+                            </React.Fragment> :
+                            loaded ?
+                                <React.Fragment>
+                                    <p>no liked resources :(</p>
+                                </React.Fragment> :
+                                null
+                        }
+                    </div>
+                    <div className='profile-resource'>
+                        {loaded && initAffiliation ?
+                            <React.Fragment>
+                                <h2>Affiliated Resource</h2>
+                                <div className='section'>
+                                    <Resource
+                                        admin={true}
+                                        profile={true}
+                                        data={initAffiliation}
+                                    />
+                                </div>
+                            </React.Fragment> :
+                            loaded ?
+                                <React.Fragment>
+                                    <p>Do you work for a nonprofit and want it to be included on this
                                 site? Add one here!</p>
-                            <div className='section'>
-                                <AddResource register={true} />
-                            </div>
-                        </React.Fragment> :
-                        null
-                }
+                                    <div className='section'>
+                                        <AddResource register={true} />
+                                    </div>
+                                </React.Fragment> :
+                                null
+                        }
+                    </div>
+                </div>
             </React.Fragment>
-        </div>
+        </React.Fragment>
     )
 }
 

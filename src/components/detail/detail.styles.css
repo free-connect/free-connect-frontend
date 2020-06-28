@@ -32,3 +32,20 @@
 .right-detail li{
     list-style-type: square;
 }
+
+.detail-layer{
+    height: 100%;
+    width: 98%;
+    position: absolute;
+    z-index: 10;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.detail-reviews{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: left;
+}

@@ -6,7 +6,6 @@
     margin: 20px;
     flex: 1 1 38%;
     padding: 3%;
-    cursor: pointer;
     transition-duration: 1s;
     min-width: auto;
     max-width: 550px;
@@ -43,4 +42,13 @@
 
 .resource-right{
     padding: 5%;
+}
+
+.resource-right__anchor{
+    text-decoration: none;
+    cursor: pointer
+}
+
+.resource-right__anchor.active{
+    color: yellow
 }

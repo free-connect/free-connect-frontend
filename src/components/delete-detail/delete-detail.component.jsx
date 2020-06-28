@@ -12,8 +12,8 @@ export const DeleteDetail = (props) => {
     return (
         <React.Fragment>
             <p
-                onMouseEnter={() =>setActive(true)}
-                onMouseOut={() =>setActive(false)}
+                onMouseEnter={() => setActive(true)}
+                onMouseOut={() => setActive(false)}
                 style={{
                     cursor: 'pointer',
                     fontSize: '15px',

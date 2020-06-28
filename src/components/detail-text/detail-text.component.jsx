@@ -35,18 +35,18 @@ export const DetailText = (props) => {
         <div className='detail-text'>
             {detailArray[0] ?
                 <React.Fragment>
-                        {detailArray.map((a, i) => {
-                            return (
-                                <div className='detail-text__delete'>
-                                    <DeleteDetail
-                                        detailArray={detailArray}
-                                        handleDelete={handleDelete}
-                                        index={i}
-                                    />
-                                    <p key={i}>&nbsp;&nbsp;{a}</p>
-                                </div>
-                            )
-                        })}
+                    {detailArray.map((a, i) => {
+                        return (
+                            <div className='detail-text__delete'>
+                                <DeleteDetail
+                                    detailArray={detailArray}
+                                    handleDelete={handleDelete}
+                                    index={i}
+                                />
+                                <p key={i}>&nbsp;&nbsp;{a}</p>
+                            </div>
+                        )
+                    })}
                 </React.Fragment> :
                 null
             }

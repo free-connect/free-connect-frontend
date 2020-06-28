@@ -7,7 +7,6 @@
     color: white;
     transition-duration: .5s;
     font-family: 'Prata', serif;
-    padding: 1vh;
     transition-duration: .5s;
 }
 
@@ -17,5 +16,5 @@
 
 .link-styled-block{
     width: 80%;
-    margin-left: 10%
+    margin-left: 10%;
 }

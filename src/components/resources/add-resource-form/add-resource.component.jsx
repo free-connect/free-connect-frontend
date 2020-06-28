@@ -192,7 +192,7 @@ const AddResource = (props) => {
                 name='picture'
                 onChange={handleImage} />
             <br />
-            <CityForm setCity={setCity} city={city}/>
+            <CityForm setCity={setCity} city={city} />
             <br />
             <ServicesAll
                 setServices={setServices}

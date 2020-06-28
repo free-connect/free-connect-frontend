@@ -31,8 +31,8 @@ const Filter = (props) => {
             />
             <h1>Where are you?</h1>
             <br />
-            <CityForm setCity={setCity} city={city}/>
-            <CustomButton handleClick={handleSubmit} text='Find!'/>
+            <CityForm setCity={setCity} city={city} />
+            <CustomButton handleClick={handleSubmit} text='Find!' />
         </React.Fragment>
     )
 }

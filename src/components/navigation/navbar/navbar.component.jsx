@@ -12,14 +12,29 @@ const NavBar = (props) => {
 
     const handleLogout = (e) => {
         e.preventDefault()
-        props.logout();
-        props.history.push('/')
+        setActive(false)
+        setTimeout(() => props.logout(), 400);
     }
+
+    let node = React.useRef(false)
+
+    const handleClickList = (e) => {
+        if (!node.current.contains(e.target)) {
+            setActive(false)
+        }
+    };
+
+    React.useEffect(() => {
+        document.addEventListener("mousedown", handleClickList);
+        return () => {
+            document.removeEventListener("mousedown", handleClickList);
+        };
+    });
 
     React.useEffect(() => setAuth(props.isAuth), [])
 
     return (
-        <React.Fragment>
+        <div ref={node}>
             <div className='block' onClick={() => setActive(!active)}>
                 <div className={!active ? "line" : 'line active'}></div>
                 <div className={!active ? "line1" : 'line1 active'}></div>
@@ -47,14 +62,18 @@ const NavBar = (props) => {
                         <p
                             onClick={() => setLogActive(!logActive)}
                             className={logActive ? 'nav-login active' : 'nav-login'}
-                            >Login</p>
-                            <React.Fragment>
-                                <Login {...props} active={logActive}/>
-                            </React.Fragment>
+                        >Login</p>
+                        <React.Fragment>
+                            <Login
+                                {...props}
+                                setActive={setActive}
+                                active={logActive}
+                            />
+                        </React.Fragment>
                     </React.Fragment>
                 }
             </div>
-        </React.Fragment>
+        </div>
     )
 }
 
