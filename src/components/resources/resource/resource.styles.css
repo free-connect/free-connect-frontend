@@ -1,6 +1,6 @@
 .resource-box{
-    border: solid transparent 1px;
-    box-shadow: 0 15px 10px #777;
+    border: solid  rgb(117, 204, 153) 5px;
+    box-shadow: none;
     display: grid;
     grid-template-columns: 50% 50%;
     margin: 20px;
@@ -15,7 +15,7 @@
 }
 
 .resource-box:hover{
-    background-color: rgb(117, 117, 207)
+    box-shadow: 0 15px 10px #777;
 }
 
 .resource-layer{

@@ -38,7 +38,15 @@ const AddResource = (props) => {
     }
 
     const handleEdit = () => {
-        const { title, dynamicData, phone, address, url, website, services, _id, city } = props.location.state.data;
+        const { title,
+            dynamicData,
+            phone,
+            address,
+            url,
+            website,
+            services,
+            _id,
+            city } = props.location.state.data;
         setTitle(title);
         setAddress(address);
         setPhone(phone);
@@ -77,11 +85,24 @@ const AddResource = (props) => {
     }
 
     const handleSubmit = (e) => {
+        console.log('props', props)
         e.preventDefault();
         let checkTelephone = siftPhone(phone);
         if (checkTelephone.length !== 10 && phone) {
             alert('number must be 10 digits long. Please include area code!');
             return
+        }
+        if (!Object.keys(services)[0]) {
+            alert('please select at least one service')
+            return;
+        }
+        if (!address) {
+            alert('Please enter an address.');
+            return;
+        }
+        if (!website) {
+            alert("Please enter a valid website! This can include facebook/instagram links as well.");
+            return;
         }
         const formData = new FormData();
         formData.append('title', title);
@@ -138,6 +159,7 @@ const AddResource = (props) => {
                 .then(res => res.json())
                 .then(response => {
                     if (response.errors) {
+                        console.log(response, response.errors)
                         alert(response.errors.map(a => a.msg).join(' '));
                         return;
                     }
@@ -167,7 +189,7 @@ const AddResource = (props) => {
                 type="text"
                 changeFunction={setTitle} />
             <Form
-                title='address'
+                title="address"
                 label="Address"
                 value={address}
                 type="text"
@@ -215,7 +237,12 @@ const AddResource = (props) => {
                     : null}
             </React.Fragment>
             <br />
-            <button type="submit">Submit Information</button>
+            <button
+                className="add-resource-button"
+                type="submit"
+            >
+                Submit Information
+            </button>
         </form>
     )
 }

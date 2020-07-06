@@ -6,14 +6,14 @@
     width: 15%;
     position: fixed;
     z-index: 35;
-    background-color: #064109;
+    background-color: rgb(117, 204, 153);
     height: 85%;
     margin: 0;
     opacity: 1;
     transition-duration: .3s;
     overflow: hidden;
     padding-top: 8vh;
-    min-width: 100px;
+    min-width: 250px;
     text-align: center;
 }
 
@@ -40,7 +40,7 @@
     margin-top: 0px;
     width: 30px;
     height: 5px;
-    background-color: white;
+    background-color: rgb(76, 76, 212);
     transition-duration: .6s;
 }
 
@@ -56,7 +56,7 @@
     margin-top: 5px;
     width: 30px;
     height: 5px;
-    background-color: white;
+    background-color: rgb(76, 76, 212);
     transition-duration: .6s;
 }
 
@@ -75,10 +75,9 @@
     transition-duration: .5s;
     font-family: 'Prata', serif;
     padding: 1vh;
-    transition-duration: .5s;
     cursor: pointer;
 }
 
 .nav-login.active{
-    color: rgb(191, 194, 24)
+    color: rgb(76, 76, 212)
 }

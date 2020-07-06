@@ -1,7 +1,8 @@
 import React from 'react';
+import './delete-detail.styles.css'
 
 export const DeleteDetail = (props) => {
-    const [active, setActive] = React.useState(false)
+    const [activeDelete, setDeleteActive] = React.useState(false)
 
     const handleDeleteDesc = (index) => {
         const newArr = [...props.detailArray];
@@ -12,14 +13,9 @@ export const DeleteDetail = (props) => {
     return (
         <React.Fragment>
             <p
-                onMouseEnter={() => setActive(true)}
-                onMouseOut={() => setActive(false)}
-                style={{
-                    cursor: 'pointer',
-                    fontSize: '15px',
-                    backgroundColor: active ? 'red' : 'transparent',
-                    color: active ? 'white' : 'red'
-                }}
+                onMouseEnter={() => setDeleteActive(true)}
+                onMouseOut={() => setDeleteActive(false)}
+                className={activeDelete ? 'detail-delete__symbol active' : 'detail-delete__symbol'}
                 onClick={() => handleDeleteDesc(props.index)}>X</p>
         </React.Fragment>
     )

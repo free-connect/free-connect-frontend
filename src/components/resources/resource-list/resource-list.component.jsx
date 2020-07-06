@@ -40,7 +40,7 @@ export const ResourceList = (props) => {
     return (
         <React.Fragment>
             <div className='resource-list'>
-                {data.length > 0 && loaded ?
+                {data[0] && loaded ?
                     data.map((a, i) => {
                         return (
                             <React.Fragment>

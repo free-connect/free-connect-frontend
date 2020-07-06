@@ -1,11 +1,6 @@
 .city-checks{
-    height: auto;
     width: 100%;
-    padding: 0;
-    margin:auto;
-    vertical-align: bottom;
-    position: relative;
-    top: -1px;
+    margin-top: 5px;
     overflow: hidden;
     cursor: pointer;
     transition-duration: .4s;
@@ -24,10 +19,10 @@
 
 .city-drop{
     max-height: 0px;
-    width: 200px;
+    width: 210px;
     overflow: hidden;
     margin: auto;
     user-select: none;
     transition-duration: .8s;
-    width: 50%
+    width: 50%;
 }

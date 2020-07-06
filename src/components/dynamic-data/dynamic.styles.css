@@ -1,0 +1,4 @@
+.dynamic-block{
+    display: flex;
+    flex-flow: row wrap
+}

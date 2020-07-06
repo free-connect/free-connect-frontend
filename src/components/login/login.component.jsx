@@ -15,16 +15,39 @@ const Login = (props) => {
     }
 
     const handleLogin = (e) => {
-        props.setActive(false)
         props.handleLogin(e, data)
     }
 
+    const handleLoginKey = (e) => {
+        if (e.key !== 'Enter') {
+            return;
+        }
+        if (!username || !password) {
+            alert("can't have blank username or password")
+            return;
+        }
+        handleLogin(e)
+    };
+
+    const handleInactive = () => {
+        if (!props.active) {
+            setUsername('');
+            setPassword('')
+        }
+        return;
+    }
+
+    React.useEffect(() => handleInactive())
+
     return (
         <div className={props.active ? 'login-comp active' : 'login-comp'}>
-            <div className='login-form'>
+            <div
+                className='login-form'
+                onKeyPress={handleLoginKey}
+            >
                 <Form
-                    title="username"
-                    label="username/email"
+                    title="email/username"
+                    label="Email"
                     value={username}
                     type="text"
                     changeFunction={setUsername}
@@ -32,7 +55,7 @@ const Login = (props) => {
                 />
                 <Form
                     title="password"
-                    label="password"
+                    label="Password"
                     value={password}
                     type="password"
                     changeFunction={setPassword}

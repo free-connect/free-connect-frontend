@@ -34,5 +34,10 @@
     width: 50%;
     max-width: auto;
     position: relative;
-    min-width: 400px
+    min-width: 400px;
+}
+
+.profile-section p:first-child{
+    text-align: left;
+    margin-top: 3%
 }

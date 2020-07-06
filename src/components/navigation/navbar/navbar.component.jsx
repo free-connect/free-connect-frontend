@@ -20,7 +20,8 @@ const NavBar = (props) => {
 
     const handleClickList = (e) => {
         if (!node.current.contains(e.target)) {
-            setActive(false)
+            setActive(false);
+            setLogActive(false)
         }
     };
 

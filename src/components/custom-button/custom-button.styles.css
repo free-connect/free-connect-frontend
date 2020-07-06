@@ -3,21 +3,23 @@
     cursor: pointer;
     border: none;
     transition-duration: .3s;
-    color: white;
+    color: black;
     opacity: 1;
     border-radius: 20px;
     margin: auto;
     float: center;
-    background-color: rgb(24, 24, 116);
+    background-color: #45b6fe;
     font-size: 1em;
     max-width: 130px;
     max-height: 50px;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
 }   
 
 
 .custom-button.active{
-    background-color: white;
-    color: rgb(24, 24, 116)
+    background-color: #daf0ff
 }
 
 .custom-button.disabled{

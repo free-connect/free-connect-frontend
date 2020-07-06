@@ -5,8 +5,6 @@ import { CustomButton } from '../custom-button/custom-button.component';
 import { withRouter } from 'react-router-dom';
 import './detail.styles.css'
 
-//do some fine tuning here
-
 const Detail = (props) => {
     const [data, setData] = React.useState({})
     const [loaded, setLoaded] = React.useState(false);
@@ -14,6 +12,7 @@ const Detail = (props) => {
     const [reviewList, setReviewList] = React.useState(false);
     const [reviewData, setReviewData] = React.useState([]);
     const [userLikes, setUserLikes] = React.useState(false)
+    const [thumbActive, setThumbActive] = React.useState(false)
 
     const handleResourceLoad = (id) => {
         const token = localStorage.getItem('token');
@@ -170,6 +169,18 @@ const Detail = (props) => {
 
     return (
         <div className='resource-detail'>
+            <ReviewBox
+                type='list'
+                active={reviewList}
+                data={reviewData}
+                handleClickOff={handleClickOffList}
+            />
+            <ReviewBox
+                type='review'
+                active={reviewAct}
+                handleSubmitReview={handleSubmitReview}
+                handleClickOff={handleClickOffAct}
+            />
             {Object.keys(data)[0] && loaded ?
                 <React.Fragment>
                     <div className='left-detail'>
@@ -184,80 +195,60 @@ const Detail = (props) => {
                             />
                         </a>
                         <br />
+                        <p>{data.address}</p>
+                        <p>{data.city ? `${data.city}, CO` : 'none specified'}</p>
+                        <p>{data.phone}</p>
+                        <br />
                         {data.dynamicData.map(a => {
                             return (
-                                <div style={{
-                                    display: 'flex',
-                                    textAlign: 'left',
-                                    width: '100%'
-                                }}>
+                                <div className='detail-dynamic-data'>
                                     <span><p>{a.name}:&nbsp;{a.value}&nbsp;</p></span>
-                                    <br />
-                                    <p style={{ opacity: '.5' }}>as of {a.timestamp}</p>
+                                    <p style={{ opacity: '.5', fontSize: '10px' }}>updated {a.timestamp}</p>
                                 </div>
                             )
                         })}
+                        <div className='detail-reviews'>
+                            <React.Fragment>
+                                {!props.admin ?
+                                    <CustomButton
+                                        text='Review'
+                                        disabled={reviewAct ? true : false}
+                                        handleClick={handleClickReview}
+                                    /> :
+                                    null}
+                                {!props.admin ?
+                                    <CustomButton
+                                        text='See All Reviews'
+                                        disabled={reviewList ? true : false}
+                                        handleClick={handleClickList}
+                                    /> :
+                                    null}
+                                {props.profile || props.admin ?
+                                    null :
+                                    <i
+                                        className={thumbActive ? "fa fa-thumbs-o-up active" : "fa fa-thumbs-o-up"}
+                                        style={{ fontSize: '50px' }}
+                                        onClick={handleLike}
+                                        onMouseEnter={() => setThumbActive(true)}
+                                        onMouseOut={() => setThumbActive(false)}
+                                    >
+                                    </i>
+                                }
+                                {userLikes ? <p>LIKED!!!!</p> : null}
+                            </React.Fragment>
+                        </div>
                     </div>
                     <div className='right-detail'>
-                        <br />
-                        <p>{data.address}</p>
-                        <br />
-                        <p>{data.city ? `${data.city}, CO` : 'none specified'}</p>
-                        <br />
-                        <p>{data.phone}</p>
-                        <br />
                         {Object.keys(data.services).map(a => {
                             return (
-                                <React.Fragment>
+                                <div className='detail-service'>
                                     <h4>{a}</h4>
                                     <ul>
                                         {data.services[a].map(b => <li>{b}</li>)}
                                     </ul>
-                                </React.Fragment>
+                                </div>
                             )
                         })}
-                    </div>
-                    <div className='detail-reviews'>
-                        <React.Fragment>
-                            <ReviewBox
-                                type='list'
-                                active={reviewList}
-                                data={reviewData}
-                                handleClickOff={handleClickOffList}
-                            />
-                            <ReviewBox
-                                type='review'
-                                active={reviewAct}
-                                handleSubmitReview={handleSubmitReview}
-                                handleClickOff={handleClickOffAct}
-                            />
-                            {!props.admin ?
-                                <CustomButton
-                                    text='Review'
-                                    disabled={reviewAct ? true : false}
-                                    handleClick={handleClickReview}
-                                /> :
-                                null}
-                            {!props.admin ?
-                                <CustomButton
-                                    text='See All Reviews'
-                                    disabled={reviewList ? true : false}
-                                    handleClick={handleClickList}
-                                /> :
-                                null}
-                            {props.profile || props.admin ?
-                                null :
-                                <img
-                                    onClick={handleLike}
-                                    src={require('../../logos/thumbs-up.jpg')}
-                                    alt='thumbs up'
-                                    height='70px'
-                                    width='70px'
-                                    style={{ cursor: 'pointer' }}
-                                />
-                            }
-                            {userLikes ? <p>LIKED!!!!</p> : null}
-                        </React.Fragment>
                     </div>
                 </React.Fragment>
                 :

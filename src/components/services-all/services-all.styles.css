@@ -6,7 +6,7 @@
 }
 
 .filter-checks p:hover{
-    color: white;
+    color: rgb(117, 204, 153);
     transition-duration: 0s;
 }
 

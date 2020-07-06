@@ -6,12 +6,13 @@ export const AddButton = (props) => {
 
     return (
         <React.Fragment>
-            <div
-                onMouseOver={() => setActive(true)}
-                onMouseOut={() => setActive(false)}
-                className={active ? 'detail-add__symbol active' : 'detail-add__symbol'}
-                onClick={(e) => props.handleClick(e)}>
-                +&nbsp;&nbsp;
+            <div>
+                <p
+                    className={active ? 'detail-add__symbol active' : 'detail-add__symbol'}
+                    onMouseOver={() => setActive(true)}
+                    onMouseOut={() => setActive(false)}
+                    onClick={(e) => props.handleClick(e)}
+                >+</p>&nbsp;&nbsp;
             </div>
         </React.Fragment>
     )

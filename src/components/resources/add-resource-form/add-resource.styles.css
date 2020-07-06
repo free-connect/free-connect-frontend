@@ -3,4 +3,31 @@
     flex-direction: column;
     margin-left: 20%;
     margin-right: 20%;
+    margin-bottom: 5%;
+}
+
+.add-resource-button{
+    height: auto;
+    cursor: pointer;
+    border: none;
+    transition-duration: .3s;
+    color: black;
+    opacity: 1;
+    border-radius: 20px;
+    margin: auto;
+    float: center;
+    background-color: #45b6fe;
+    font-size: 1em;
+    max-width: 130px;
+    max-height: 50px;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    font-family: 'Prata', serif;
+    font-weight: bold;
+}   
+
+
+.add-resource-button:hover{
+    background-color: #daf0ff
 }

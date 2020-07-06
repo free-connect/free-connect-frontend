@@ -57,16 +57,19 @@ const Resource = (props) => {
                     width='80vw'
                 />
                 <br />
+                <p>{props.data.address}</p>
+                <p>{props.data.city ? props.data.city : 'none'}, CO</p>
+                <br />
+                <p>{props.data.phone}</p>
+                <br />
             </div>
             <div className="resource-right">
                 <ul>
                     {Object.keys(props.data.services).map(a => <li>{a}</li>)}
                 </ul>
                 <br />
-                <p>{props.data.address}</p>
-                <p>{props.data.city ? props.data.city : 'none'}, CO</p>
+                <CustomButton handleClick={handleDetail} text='Learn more!' />
                 <br />
-                <p>{props.data.phone}</p>
                 <br />
                 <a
                     className={aActive ? 'resource-right__anchor active' : 'resource-right__anchor'}
@@ -76,8 +79,6 @@ const Resource = (props) => {
                 >
                     Click to visit {props.data.name}
                 </a>
-                <br />
-                <CustomButton handleClick={handleDetail} text='Learn more!' />
                 {props.admin ?
                     <div className='delete-resource'>
                         {!props.profile ?

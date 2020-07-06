@@ -22,23 +22,20 @@ export const Dynamic = (props) => {
 
     return (
         <React.Fragment>
-            <h1>
-                Dynamic Data (data that may
-                change from day to day)
-            </h1>
+            <h1>Dynamic Data</h1>
             {props.dynamicData[0] ?
                 [...props.dynamicData].map((a, i) => {
                     return (
-                        <React.Fragment>
+                        <div className='dynamic-block'>
                             <DeleteDetail
                                 detailArray={props.dynamicData}
                                 index={i}
                                 handleDelete={handleDelete}
                             />
-                            <p>{a.name}</p>
-                            <p>{a.value}</p>
-                            <p>{a.timestamp}</p>
-                        </React.Fragment>
+                            <span><p>&nbsp;&nbsp;{a.name}:&nbsp;{a.value}&nbsp;</p></span>
+                            <br />
+                            <p style={{ opacity: '.5' }}>as of {a.timestamp}</p>
+                        </div>
                     )
                 }) :
                 null}

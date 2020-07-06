@@ -7,8 +7,7 @@ export const CityForm = (props) => {
 
     const handleDropdown = (e) => {
         e.preventDefault();
-        const truthy = active ? false : true
-        setActive(truthy);
+        setActive(!active);
     }
 
     const cities = ['Boulder', 'Denver', 'All'];

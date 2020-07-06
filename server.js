@@ -55,7 +55,9 @@ app.use('/images', express.static(path.join(__dirname, 'images')))
 app.use(bodyParser.json())
 
 app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.set({
+        'Content-Security-Policy': "script-src 'self'"
+    })
     res.setHeader('Access-Control-Allow-Methods', 'POST, GET');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     next();
@@ -71,7 +73,7 @@ app.get('*', (req, res, next) => {
 })
 
 app.use((error, req, res, next) => {
-    console.log(error);
+    console.log('errrrr', error);
     const status = error.statusCode || 500;
     const message = error.message;
     res.status(status).json({ message: message })

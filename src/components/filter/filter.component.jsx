@@ -1,4 +1,5 @@
 import React from 'react';
+import './filter.styles.css'
 import { CityForm } from '../city-form/city-form.component';
 import { ServicesAll } from '../services-all/services-all.component';
 import { CustomButton } from '../custom-button/custom-button.component';

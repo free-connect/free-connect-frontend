@@ -85,7 +85,7 @@ const ProfilePage = (props) => {
                         {loaded && initAffiliation ?
                             <React.Fragment>
                                 <h2>Affiliated Resource</h2>
-                                <div className='section'>
+                                <div>
                                     <Resource
                                         admin={true}
                                         profile={true}
@@ -95,9 +95,19 @@ const ProfilePage = (props) => {
                             </React.Fragment> :
                             loaded ?
                                 <React.Fragment>
-                                    <p>Do you work for a nonprofit and want it to be included on this
-                                site? Add one here!</p>
-                                    <div className='section'>
+                                    <div className='profile-section'>
+                                        <p>
+                                            Want to add a new resource? This will help people in need access necessary
+                                            resources in their area. This section allows you to add some vital information
+                                            for your resource page. Along with the basics, we've also included a section to
+                                            clarify how you assist with certain services along with the option to add 'Dynamic
+                                            Data.'  Dynamic Data is simply information about your nonprofit that will change
+                                            on a daily basis (think beds, available housing applications, new services, etc). This
+                                            information will be featured on the users profile when they sign in to ensure that
+                                            they have this information immediately. It also includes a timestamp to make sure
+                                            dynamic information is up-to-date. Feel free to visit the 'about' section for more
+                                            details!
+            </p>
                                         <AddResource register={true} />
                                     </div>
                                 </React.Fragment> :

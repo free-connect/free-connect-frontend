@@ -10,8 +10,8 @@
 }
 
 .flash-box.active{
-    height: 350px;
-    width: 300px;
+    height: 80vw;
+    width: 50vw;
     border-radius: 15%;
     opacity: 1;
     font-size: 17px;

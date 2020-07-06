@@ -20,10 +20,20 @@ export const DetailText = (props) => {
 
     React.useEffect(() => onLoad(), [])
 
+    const handleEnter = (e) => {
+        if (e.key !== 'Enter') {
+            return;
+        }
+        handleSubmitDesc(e)
+    }
+
     const handleSubmitDesc = (e) => {
         e.preventDefault();
         const val = description;
-        let newArr = [...detailArray]
+        let newArr = [...detailArray];
+        if (newArr.length > 15) {
+            return;
+        }
         newArr = newArr.concat(val);
         props.addDetail({ [props.name]: newArr })
         setDescription('')
@@ -52,12 +62,16 @@ export const DetailText = (props) => {
             }
             <div className='detail-add'>
                 <AddButton handleClick={handleSubmitDesc} />
-                <input
+                <textarea
                     type="text"
+                    cols="40"
+                    rows="8"
+                    style={{ resize: 'none' }}
                     onChange={(e) => setDescription(e.target.value)}
                     value={description}
+                    onKeyPress={handleEnter}
                 >
-                </input>
+                </textarea>
             </div>
         </div>
     )

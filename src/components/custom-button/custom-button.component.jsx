@@ -15,6 +15,7 @@ export const CustomButton = (props) => {
                     props.disabled ?
                         'custom-button disabled' :
                         'custom-button'}
+            onTouchStart={() => setActive(!active)}
             onMouseEnter={() => setActive(true)}
             onMouseLeave={() => setActive(false)}
             onClick={props.handleClick ? props.handleClick : null}

@@ -31,7 +31,8 @@ export const ServicesAll = (props) => {
         'Shelter',
         'Food',
         'Legal',
-        'Civil Rights',
+        'Employment',
+        'Civil Rights'
     ];
 
     return (
@@ -45,6 +46,8 @@ export const ServicesAll = (props) => {
                         active ?
                             '200px' :
                             '0px',
+                    width: '40%',
+                    minWidth: '250px',
                     transitionDuration: active && props.add ?
                         '1.8s' :
                         active ?
