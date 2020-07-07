@@ -1,11 +1,11 @@
-@media screen and (max-width: 695px) {
+@media screen and (max-width: 756px) {
     .detail-reviews {
       display: block;
-      float: left
+      float: center
     }
   }
 
-  @media screen and (min-width: 695px) {
+  @media screen and (min-width: 756px) {
     .detail-reviews {
       display: flex
     }
@@ -70,15 +70,17 @@
     padding: 3%;
 }
 
-.fa.fa-thumbs-o-up{
-    transition-duration: .6s;
-    cursor: pointer
-}
-
-.fa.fa-thumbs-o-up.active{
-    color: rgb(24, 24, 116)
+.detail-reviews p{
+    font-size: 10px;
+    color: rgb(24, 24, 116);
+    border-radius: 50%
 }
 
 .detail-service{
     padding: 3%
+}
+
+.detail-dynamic-data__time{
+    opacity: .5;
+    font-size: 10px;
 }

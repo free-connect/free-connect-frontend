@@ -26,3 +26,7 @@
     transition-duration: .8s;
     width: 50%;
 }
+
+.city-drop.active{
+    max-height: 200px;
+}

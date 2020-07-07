@@ -85,7 +85,6 @@ const AddResource = (props) => {
     }
 
     const handleSubmit = (e) => {
-        console.log('props', props)
         e.preventDefault();
         let checkTelephone = siftPhone(phone);
         if (checkTelephone.length !== 10 && phone) {

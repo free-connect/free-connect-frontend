@@ -6,9 +6,6 @@ export const CustomButton = (props) => {
 
     return (
         <div
-            style={{
-                width: props.logout ? '100%' : '60%'
-            }}
             className={
                 active ?
                     'custom-button active' :

@@ -5,25 +5,13 @@ import './city-form.styles.css'
 export const CityForm = (props) => {
     const [active, setActive] = React.useState(false)
 
-    const handleDropdown = (e) => {
-        e.preventDefault();
-        setActive(!active);
-    }
-
     const cities = ['Boulder', 'Denver', 'All'];
 
     return (
         <React.Fragment>
-            <CustomButton handleClick={handleDropdown} text={'view city'} />
+            <CustomButton handleClick={() => setActive(!active)} text={'View City'} />
             <br />
-            <div
-                style={{
-                    maxHeight: active ?
-                        '200px' :
-                        '0px'
-                }}
-                className='city-drop'
-            >
+            <div className={active ? 'city-drop active' : 'city-drop'}>
                 {cities.map((a, i) => {
                     let truthy = false;
                     if (props.city) {

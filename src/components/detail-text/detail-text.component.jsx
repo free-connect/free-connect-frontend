@@ -66,7 +66,6 @@ export const DetailText = (props) => {
                     type="text"
                     cols="40"
                     rows="8"
-                    style={{ resize: 'none' }}
                     onChange={(e) => setDescription(e.target.value)}
                     value={description}
                     onKeyPress={handleEnter}

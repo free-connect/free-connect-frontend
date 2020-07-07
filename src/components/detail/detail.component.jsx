@@ -1,6 +1,7 @@
 import React from 'react';
 import { ReviewBox } from '../review/review-box/review-box.component';
 import { CustomButton } from '../custom-button/custom-button.component';
+import { LikeButton } from '../like-button/like-button.component';
 
 import { withRouter } from 'react-router-dom';
 import './detail.styles.css'
@@ -12,7 +13,6 @@ const Detail = (props) => {
     const [reviewList, setReviewList] = React.useState(false);
     const [reviewData, setReviewData] = React.useState([]);
     const [userLikes, setUserLikes] = React.useState(false)
-    const [thumbActive, setThumbActive] = React.useState(false)
 
     const handleResourceLoad = (id) => {
         const token = localStorage.getItem('token');
@@ -58,10 +58,10 @@ const Detail = (props) => {
             .then(res => res.json())
             .then(response => {
                 if (response.success) {
-                    setUserLikes(true)
-                    alert('success!')
+                    setUserLikes(true);
+                    return;
                 } else {
-                    alert(response.message)
+                    return;
                 }
             })
             .catch(err => console.log(err))
@@ -69,6 +69,11 @@ const Detail = (props) => {
 
     const handleClickReview = (e) => {
         e.preventDefault();
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+        });
         const token = localStorage.getItem('token')
         if (!token) {
             alert('You gotta sign in to review a resource!');
@@ -82,6 +87,11 @@ const Detail = (props) => {
 
     const handleClickList = (e) => {
         e.preventDefault();
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+        });
         if (reviewAct) {
             setReviewAct(false)
         }
@@ -99,14 +109,6 @@ const Detail = (props) => {
             })
             .then(() => setReviewList(true))
             .catch(err => console.log(err))
-    }
-
-    const handleClickOffAct = () => {
-        setReviewAct(false);
-    }
-
-    const handleClickOffList = () => {
-        setReviewList(false);
     }
 
     const handleSubmitReview = (e, review) => {
@@ -169,18 +171,6 @@ const Detail = (props) => {
 
     return (
         <div className='resource-detail'>
-            <ReviewBox
-                type='list'
-                active={reviewList}
-                data={reviewData}
-                handleClickOff={handleClickOffList}
-            />
-            <ReviewBox
-                type='review'
-                active={reviewAct}
-                handleSubmitReview={handleSubmitReview}
-                handleClickOff={handleClickOffAct}
-            />
             {Object.keys(data)[0] && loaded ?
                 <React.Fragment>
                     <div className='left-detail'>
@@ -203,7 +193,7 @@ const Detail = (props) => {
                             return (
                                 <div className='detail-dynamic-data'>
                                     <span><p>{a.name}:&nbsp;{a.value}&nbsp;</p></span>
-                                    <p style={{ opacity: '.5', fontSize: '10px' }}>updated {a.timestamp}</p>
+                                    <p className='detail-dynamic-data__time'>updated {a.timestamp}</p>
                                 </div>
                             )
                         })}
@@ -225,16 +215,13 @@ const Detail = (props) => {
                                     null}
                                 {props.profile || props.admin ?
                                     null :
-                                    <i
-                                        className={thumbActive ? "fa fa-thumbs-o-up active" : "fa fa-thumbs-o-up"}
-                                        style={{ fontSize: '50px' }}
-                                        onClick={handleLike}
-                                        onMouseEnter={() => setThumbActive(true)}
-                                        onMouseOut={() => setThumbActive(false)}
-                                    >
-                                    </i>
+                                    <React.Fragment>
+                                        <LikeButton
+                                            userLikes={userLikes}
+                                            handleLike={handleLike}
+                                        />
+                                    </React.Fragment>
                                 }
-                                {userLikes ? <p>LIKED!!!!</p> : null}
                             </React.Fragment>
                         </div>
                     </div>
@@ -250,6 +237,18 @@ const Detail = (props) => {
                             )
                         })}
                     </div>
+                    <ReviewBox
+                        type='list'
+                        active={reviewList}
+                        data={reviewData}
+                        handleClickOff={() => setReviewList(false)}
+                    />
+                    <ReviewBox
+                        type='review'
+                        active={reviewAct}
+                        handleSubmitReview={handleSubmitReview}
+                        handleClickOff={() => setReviewAct(false)}
+                    />
                 </React.Fragment>
                 :
                 loaded ?

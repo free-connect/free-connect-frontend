@@ -1,10 +1,10 @@
 .custom-button{
     height: auto;
+    width: 60%;
     cursor: pointer;
     border: none;
     transition-duration: .3s;
     color: black;
-    opacity: 1;
     border-radius: 20px;
     margin: auto;
     float: center;
@@ -30,5 +30,4 @@
     font-size: auto;
     position: static;
     padding: .5em;
-    left: 28px;
 }

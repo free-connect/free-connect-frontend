@@ -55,3 +55,23 @@
     animation-name: slideOver;
     animation-timing-function: cubic-bezier(0.331, 0.441, 0.444, 1.649);
 }
+
+.ball.one{
+    animation-delay: .1s;
+}
+
+.ball.two{
+    animation-delay: .2s
+}
+
+.ball.three{
+    animation-delay: .3s
+}
+
+.ball.four{
+    animation-delay: .4s
+}
+
+.ball.five{
+    animation-delay: .5s
+}

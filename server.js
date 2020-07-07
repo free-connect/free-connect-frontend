@@ -10,9 +10,6 @@ const multer = require('multer')
 const path = require('path');
 const { v4: uuidv4 } = require('uuid')
 
-
-mongoose.set('useFindAndModify', false);
-
 const dataBasePassword = process.env.dataBasePassword
 const dataBaseUser = process.env.dataBaseUser
 const cluster = process.env.cluster
@@ -21,6 +18,8 @@ const DB_URI = 'mongodb+srv://' + dataBaseUser + ':' + dataBasePassword + '@' + 
 
 const app = express();
 const port = process.env.PORT || 3000
+
+mongoose.set('useFindAndModify', false);
 
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {

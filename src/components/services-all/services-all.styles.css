@@ -3,6 +3,7 @@
     border-radius: 20px;
     cursor: pointer;
     max-width: auto;
+    margin-top: 1%;
 }
 
 .filter-checks p:hover{
@@ -29,4 +30,16 @@
     overflow: hidden;
     margin: auto;
     user-select: none;
+    min-width: 200px;
+    width: 40px;
+    transition-duration: .8s
+}
+
+.filter-drop.active{
+    max-height: 240px;
+}
+
+.filter-drop.active__add{
+    max-height: 1080px;
+    transition-duration: 1.8s
 }

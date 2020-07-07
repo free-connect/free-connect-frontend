@@ -5,13 +5,7 @@ export const Form = (props) => {
     return (
         <React.Fragment>
             <br />
-            <label style={{
-                color: props.color ?
-                    props.color :
-                    'black'
-            }}
-                htmlFor={props.title}
-            >
+            <label htmlFor={props.title}>
                 {props.label}
             </label>
             <input

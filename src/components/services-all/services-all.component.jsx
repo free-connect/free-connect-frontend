@@ -6,12 +6,6 @@ import './services-all.styles.css'
 export const ServicesAll = (props) => {
     const [active, setActive] = React.useState(false)
 
-    const handleDropdown = (e) => {
-        e.preventDefault();
-        const truthy = active ? false : true
-        setActive(truthy);
-    }
-
     const handleChange = (val, bool) => {
         let newChecked = { ...props.services };
         if (bool) {
@@ -37,24 +31,16 @@ export const ServicesAll = (props) => {
 
     return (
         <React.Fragment>
-            <CustomButton handleClick={handleDropdown} text={'view services'} />
+            <CustomButton handleClick={() => setActive(!active)} text={'View Services'} />
             <br />
             <div
-                style={{
-                    maxHeight: active && props.add ?
-                        '1080px' :
+                className={
+                    active && props.add ?
+                        'filter-drop active__add' :
                         active ?
-                            '200px' :
-                            '0px',
-                    width: '40%',
-                    minWidth: '250px',
-                    transitionDuration: active && props.add ?
-                        '1.8s' :
-                        active ?
-                            '.8s' :
-                            '.8s',
-                }}
-                className='filter-drop'
+                            'filter-drop active' :
+                            'filter-drop'
+                }
             >
                 {servicesList.map((a, i) => {
                     let truthy = false;

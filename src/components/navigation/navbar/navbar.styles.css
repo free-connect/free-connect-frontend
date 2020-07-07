@@ -78,6 +78,11 @@
     cursor: pointer;
 }
 
+.nav-logout{
+    padding-top: -55px;
+    width: 100%
+}
+
 .nav-login.active{
     color: rgb(76, 76, 212)
 }

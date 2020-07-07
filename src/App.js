@@ -8,9 +8,10 @@ import RegisterPage from './pages/register-page/register-page.component';
 import ProfilePage from './pages/profile-page/profile-page.component';
 import NavBar from './components/navigation/navbar/navbar.component';
 import Detail from './components/detail/detail.component';
+import { Footer } from './components/footer/footer.component';
 import { ResetPage } from './pages/reset-page/reset-page.component';
 import { AdminResourcePage } from './pages/admin-resources/admin-resource-page.component';
-import { ResourcesPage } from './pages/resource-page/resources-page.component';
+import { ResourcePage } from './pages/resource-page/resource-page.component';
 import { AboutPage } from './pages/about-page/about-page.component';
 import { ErrorPage } from './pages/error-page/error-page.component';
 
@@ -110,7 +111,7 @@ function App(props) {
         <Switch>
           <Route exact path='/' component={MainPage} />
           <Route exact path='/register' component={RegisterPage} />
-          <Route exact path='/resources' component={ResourcesPage} />
+          <Route exact path='/resources' component={ResourcePage} />
           <Route exact path='/about' component={AboutPage} />
           <Route exact path='/detail' component={Detail} />
           <Route exact path='/reset' component={ResetPage} />
@@ -122,6 +123,7 @@ function App(props) {
           <Route path='*' component={ErrorPage} />
         </Switch>
       </div>
+      {/* <Footer /> */}
     </React.Fragment>
   );
 }

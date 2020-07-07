@@ -4,7 +4,8 @@ import './dynamic-detail.styles.css'
 
 export const DynamicDetail = (props) => {
 
-    const handleSubmitDesc = () => {
+    const handleSubmitDesc = (e) => {
+        e.preventDefault()
         if (props.data.length > 14) {
             return;
         }
@@ -28,7 +29,7 @@ export const DynamicDetail = (props) => {
         <React.Fragment>
             <div className='dynamic-detail-box'>
                 <div className='dynamic-detail-add'>
-                    <AddButton handleClick={handleSubmitDesc} data={props.data}/>
+                    <AddButton handleClick={handleSubmitDesc} data={props.data} />
                     <label>information:&nbsp;</label>
                     <input
                         value={props.tempName}

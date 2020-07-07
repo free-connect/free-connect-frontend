@@ -7,7 +7,7 @@ export const Dynamic = (props) => {
     const [tempName, setTempName] = React.useState('');
     const [tempVal, setTempVal] = React.useState('');
 
-    const handleSubmit = (value) => {
+    const handleSubmitDyn = (value) => {
         const newData = [...props.dynamicData, value]
         props.handleDynamic(newData);
         setTempName('')
@@ -32,15 +32,14 @@ export const Dynamic = (props) => {
                                 index={i}
                                 handleDelete={handleDelete}
                             />
-                            <span><p>&nbsp;&nbsp;{a.name}:&nbsp;{a.value}&nbsp;</p></span>
-                            <br />
-                            <p style={{ opacity: '.5' }}>as of {a.timestamp}</p>
+                            <span><p>&nbsp;&nbsp;{a.name}:&nbsp;{a.value}&nbsp;</p>
+                                <p className='dynamic-block__time'>as of {a.timestamp}</p></span>
                         </div>
                     )
                 }) :
                 null}
             <DynamicDetail
-                handleSubmit={handleSubmit}
+                handleSubmit={handleSubmitDyn}
                 data={props.dynamicData}
                 tempName={tempName}
                 tempVal={tempVal}

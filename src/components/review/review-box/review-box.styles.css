@@ -7,14 +7,30 @@
     opacity: 0;
     position: absolute;
     font-size: 0px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.review-box p:first-child{
+    cursor: pointer;
+    opacity: .4;
+    position: absolute;
+    left: 7%;
+    top: 2%;
+}
+
+.review-box p:first-child:hover{
+    opacity: 1
 }
 
 .review-box.active{
-    height: 275px;
-    width: 275px;
+    height: 375px;
+    width: 375px;
+    max-width: 100%;
     border-radius: 15%;
     opacity: 1;
     font-size: 17px;
     background-color: white;
-    z-index: 20;
+    z-index: 50;
 }

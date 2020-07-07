@@ -57,15 +57,11 @@ export const ResourceList = (props) => {
                     </React.Fragment>
                 }
             </div>
-            <div className='button'>
+            <div className='button-block'>
                 {page > 1 ?
                     <div
-                        style={{
-                            marginLeft: '30%',
-                            marginRight: '30%'
-                        }}
-                        name='prev'
-                        onClick={(e) => handleClick('prev')}
+                        className='button-block__spec'
+                        onClick={() => handleClick('prev')}
                     >
                         <CustomButton
                             text="previous"
@@ -74,12 +70,8 @@ export const ResourceList = (props) => {
                     null}
                 {page < (count / 4) ?
                     <div
-                        style={{
-                            marginLeft: '30%',
-                            marginRight: '30%'
-                        }}
-                        name='next'
-                        onClick={(e) => handleClick('next')}
+                        className="button-block__spec"
+                        onClick={() => handleClick('next')}
                     >
                         <CustomButton
                             text="next"

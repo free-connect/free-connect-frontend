@@ -4,7 +4,7 @@ import Filter from '../../components/filter/filter.component';
 import { Loading } from '../../components/loading-icon/loading.component'
 import { ResourceList } from '../../components/resources/resource-list/resource-list.component';
 
-export const ResourcesPage = (props) => {
+export const ResourcePage = (props) => {
     const [pageLoaded, setPageLoaded] = React.useState(false)
 
     const cityProp = props.location.state ? props.location.state.city : '';
@@ -12,7 +12,7 @@ export const ResourcesPage = (props) => {
 
     return (
         <React.Fragment>
-            <div className={pageLoaded ? '' : 'resource-page'}>
+            <div className={pageLoaded ? 'loading-page' : 'resource-page'}>
                 <br />
                 <br />
                 <br />

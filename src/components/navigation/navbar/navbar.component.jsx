@@ -52,7 +52,7 @@ const NavBar = (props) => {
                             </React.Fragment> :
                             null}
                         <LinkStyled loc='/profile' name='Profile' />
-                        <div style={{ paddingTop: '-55px' }}>
+                        <div className='nav-logout'>
                             <CustomButton handleClick={handleLogout} text='Logout' logout="true" />
                         </div>
                     </React.Fragment> :

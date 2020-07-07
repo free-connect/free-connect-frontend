@@ -1,0 +1,22 @@
+.footer-box{
+    display: flex;
+    flex-flow: row wrap;
+    background-color: #45b6fe;
+    color: white;
+    font-family: 'Prata', serif;
+    font-size: 3vh;
+    padding-bottom: 6vh;
+    height: 10%;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+}
+
+.footer-box p{
+    padding: 1vh;
+    cursor: pointer;
+}
+
+.footer-box p:hover{
+    color: yellow
+}
