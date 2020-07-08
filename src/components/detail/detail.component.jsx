@@ -19,7 +19,7 @@ const Detail = (props) => {
         if (!token) {
             return;
         }
-        fetch('/myLikes', {
+        fetch('/my-likes', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -31,7 +31,7 @@ const Detail = (props) => {
                 if (response.likes && response.likes.includes(id)) {
                     setUserLikes(true)
                 } else {
-                    return
+                    return;
                 }
             })
             .catch(err => console.log(err))
@@ -57,12 +57,15 @@ const Detail = (props) => {
             })
             .then(res => res.json())
             .then(response => {
+                console.log('response', response)
                 if (response.success) {
                     setUserLikes(true);
                     return;
-                } else {
+                } else if (response.message){
+                    alert(response.message)
                     return;
                 }
+                return;
             })
             .catch(err => console.log(err))
     }

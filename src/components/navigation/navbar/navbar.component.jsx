@@ -60,10 +60,9 @@ const NavBar = (props) => {
                         <LinkStyled loc='/' name='Home' />
                         <LinkStyled loc='/resources' name='Resources' />
                         <LinkStyled loc='/about' name="About" />
-                        <p
-                            onClick={() => setLogActive(!logActive)}
-                            className={logActive ? 'nav-login active' : 'nav-login'}
-                        >Login</p>
+                        <div className={logActive ? 'nav-login active' : 'nav-login'}>
+                            <p onClick={() => setLogActive(!logActive)}>Login</p>
+                        </div>
                         <React.Fragment>
                             <Login
                                 {...props}

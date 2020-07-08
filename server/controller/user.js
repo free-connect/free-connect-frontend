@@ -9,6 +9,9 @@ exports.getMyResource = (req, res, next) => {
         })
         .populate('affiliation')
         .then(user => {
+            if (!user) {
+                throw new Error('no such user')
+            }
             const myResource = user.affiliation;
             res.json(myResource)
         })
@@ -51,6 +54,9 @@ exports.getDetails = (req, res, next) => {
             _id: ObjectId(req.query.id)
         })
         .then(resource => {
+            if (!resource) {
+                throw new Error('No such resource.')
+            }
             res.json({
                 data: resource.title
             })
@@ -70,6 +76,9 @@ exports.getReviews = (req, res, next) => {
         })
         .deepPopulate('reviews.userId')
         .then(rev => {
+            if (!rev[0]) {
+                throw new Error('not a valid resource');
+            }
             let data = rev[0]['reviews'].map(a => [a.userId.username, a.review])
             res.json({
                 success: true,

@@ -86,6 +86,11 @@ const AddResource = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        const token = localStorage.getItem('token');
+        if (affiliation) {
+            handleAddUserResource(affiliation, token)
+            return;
+        }
         let checkTelephone = siftPhone(phone);
         if (checkTelephone.length !== 10 && phone) {
             alert('number must be 10 digits long. Please include area code!');
@@ -112,11 +117,6 @@ const AddResource = (props) => {
         formData.append('services', JSON.stringify(services));
         formData.append('website', website);
         formData.append('city', city);
-        const token = localStorage.getItem('token');
-        if (affiliation) {
-            handleAddUserResource(affiliation, token)
-            return;
-        }
         if (!props.location.state) {
             fetch('/', {
                 method: "POST",

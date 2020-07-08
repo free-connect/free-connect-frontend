@@ -15,6 +15,9 @@
     padding-top: 8vh;
     min-width: 250px;
     text-align: center;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 .nav-bar.active{
@@ -75,14 +78,22 @@
     transition-duration: .5s;
     font-family: 'Prata', serif;
     padding: 1vh;
+    width: 100%;
+    text-align: center
+}
+
+.nav-login p{
     cursor: pointer;
+    width: 50px;
+    position: absolute;
+    left: 40%;
+}
+
+.nav-login.active{
+    color: rgb(76, 76, 212)
 }
 
 .nav-logout{
     padding-top: -55px;
     width: 100%
-}
-
-.nav-login.active{
-    color: rgb(76, 76, 212)
 }

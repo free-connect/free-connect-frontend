@@ -119,7 +119,7 @@ function App(props) {
           {(isAuth && userId === process.env.REACT_APP_USER_ID) ?
             <Route exact path="/admin-resources" component={AdminResourcePage} /> :
             null}
-          {isAuth ? <Route exact path="/profile" render={() => <ProfilePage token={token} />} /> : null}
+          {isAuth ? <Route exact path="/profile" render={() => <ProfilePage logout={handleSubmitLogout} token={token} />} /> : null}
           <Route path='*' component={ErrorPage} />
         </Switch>
       </div>

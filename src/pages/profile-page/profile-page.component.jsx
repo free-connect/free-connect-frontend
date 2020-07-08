@@ -32,7 +32,13 @@ const ProfilePage = (props) => {
                     }
                 })
                     .then(res => res.json())
-                    .then(response => setLikes([...response.likes]))
+                    .then(response => {
+                        if (response.message === 'jwt malformed') {
+                            //this section is meant to log someone out if someone has messed with the JWT
+                            props.logout();
+                        }
+                        setLikes([...response.likes]);
+                    })
                     .then(() => true)
                     .catch(err => console.log(err))
             })

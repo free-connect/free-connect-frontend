@@ -15,9 +15,10 @@ function compare(check, arrs) {
 }
 
 exports.getResources = (req, res, next) => {
+    const queryServices = req.query.services;
     const currentPage = parseInt(req.query.page) || 1;
     const city = req.query.city || '';
-    const services = req.query.services.split(',') || [];
+    const services = queryServices ? queryServices.split(',') : [];
     let totalRes;
     const perPage = 4;
     return Resource
