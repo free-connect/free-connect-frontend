@@ -1,0 +1,32 @@
+.city-checks{
+    width: 100%;
+    margin-top: 5px;
+    overflow: hidden;
+    cursor: pointer;
+    transition-duration: .4s;
+    border-radius: 20px;
+}
+
+.city-checks:hover{
+    color: white;
+    transition-duration: 0s;
+}
+
+.city-checks.active{
+    background-color: rgb(24, 24, 116);
+    color: white
+}
+
+.city-drop{
+    max-height: 0px;
+    width: 210px;
+    overflow: hidden;
+    margin: auto;
+    user-select: none;
+    transition-duration: .8s;
+    width: 50%;
+}
+
+.city-drop.active{
+    max-height: 200px;
+}

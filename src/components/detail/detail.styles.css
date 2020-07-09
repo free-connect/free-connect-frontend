@@ -1,3 +1,24 @@
+@media screen and (max-width: 756px) {
+    .detail-reviews {
+      display: block;
+      float: center
+    }
+  }
+
+  @media screen and (min-width: 756px) {
+    .detail-reviews {
+      display: flex
+    }
+  }
+
+.detail-dynamic{
+    display: flex;
+    flex-flow: column wrap;
+    text-align: left;
+    width: 100%;
+    cursor: none
+}
+
 .resource-detail{
     width: 100%;
     height: 100vh;
@@ -8,24 +29,58 @@
 .left-detail{
     display: flex;
     flex-direction: column;
-    padding-left: 3%;
-    width: 50%
+    padding: 3%;
+    flex: 1 1 38%;
+    max-width: auto
 }
 
 .left-detail h3{
     font-size: 8vh;
-    width: 50%;
 }
 
 .left-detail img{
-    border-radius: 50%;
-    height: 50%;
-    width: 50%;
+    border-radius: 0%;
 }
 
 .right-detail{
-    font-size: 5vh;
+    font-size: 3vh;
     text-align: left;
+    flex: 1 1 38%;
+    max-width: auto;
+    padding: 3%
+}
+
+.right-detail li{
     list-style-type: square;
-    width: auto;
+}
+
+.detail-layer{
+    height: 100%;
+    width: 98%;
+    position: absolute;
+    z-index: 10;
+    opacity: 0;
+}
+
+.detail-reviews{
+    width: 100%;
+    height: auto;
+    flex-flow: row wrap;
+    justify-content: left;
+    padding: 3%;
+}
+
+.detail-reviews p{
+    font-size: 10px;
+    color: rgb(24, 24, 116);
+    border-radius: 50%
+}
+
+.detail-service{
+    padding: 3%
+}
+
+.detail-dynamic-data__time{
+    opacity: .5;
+    font-size: 10px;
 }

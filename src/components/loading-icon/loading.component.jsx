@@ -14,6 +14,14 @@ export const Loading = () => {
         }
     }, []))
 
+    const changeFunction = (index) => {
+        let ball = document.querySelector(`.loading div:nth-child(${index + 1})`)
+        const check = getComputedStyle(ball);
+        ball.style.animationDelay = '0s'
+        ball.style.backgroundColor = 'rgb(109, 109, 233)'
+        ball.style.animationName = check.animationName === 'slideOver' ? 'slideBack' : 'slideOver'
+    }
+
     return (
         <div className='loading'>
             {visible ?
@@ -24,17 +32,7 @@ export const Loading = () => {
                         <div
                             key={i}
                             className={'ball ' + nums[i]}
-                            style={{
-                                animationDelay: `.${i}s`,
-                                animationName: 'slideOver'
-                            }}
-                            onAnimationEnd={() => {
-                                let ball = document.querySelector(`.loading div:nth-child(${i + 1})`)
-                                const check = getComputedStyle(ball);
-                                ball.style.animationDelay = '0s'
-                                ball.style.backgroundColor = 'rgb(109, 109, 233)'
-                                ball.style.animationName = check.animationName === 'slideOver' ? 'slideBack' : 'slideOver'
-                            }}
+                            onAnimationEnd={() => changeFunction(i)}
                         >
                         </div>) :
                 null}

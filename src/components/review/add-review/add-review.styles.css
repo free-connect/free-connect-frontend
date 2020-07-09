@@ -1,0 +1,27 @@
+.add-review{
+    overflow: hidden;
+}
+
+.add-review-text{
+    transition-duration: .6s;
+    width: 0px;
+    height: 0px;
+    resize: none;
+    overflow: hidden;
+}
+
+.add-review-text.active{
+    transition-duration: .6s;
+    width: 300px;
+    height: 240px;
+}
+
+.add-review-button{
+    height: 0px;
+    overflow: hidden;
+}
+
+.add-review-button.active{
+    height: auto;
+    overflow: none;
+}

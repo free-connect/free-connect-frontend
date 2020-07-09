@@ -1,0 +1,19 @@
+.login-form{
+    display: flex;
+    flex-direction: column;
+    margin-left: 0%;
+    margin-right: 0%;
+}
+
+.login-text{
+    font-size: 1.7vh
+}
+
+.login-comp{
+    height: 0%;
+    transition-duration: .5s
+}
+
+.login-comp.active{
+    height: 50%
+}

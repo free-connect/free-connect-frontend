@@ -60,7 +60,7 @@ const RegisterPage = (props) => {
                 }
                 if (response.success) {
                     alert('approved!');
-                    props.history.push('/login')
+                    props.history.push('/')
                 } else {
                     alert('email/username already exists! Go to Login Page, idiot. Or, you can try a different username/email :)');
                     return;

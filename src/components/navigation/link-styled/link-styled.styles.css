@@ -1,13 +1,20 @@
 .nav-active{
-    background-color: rgb(15, 15, 110)
+    border-bottom: solid rgb(15, 15, 110) 1px ;
 }
 
 .nav{
     text-decoration: none;
     color: white;
     transition-duration: .5s;
+    font-family: 'Prata', serif;
+    transition-duration: .5s;
 }
 
 .nav.active{
-    color: rgb(191, 194, 24)
+    color: rgb(76, 76, 212)
+}
+
+.link-styled-block{
+    width: 80%;
+    margin-left: 10%;
 }

@@ -1,21 +1,21 @@
 .resource-box{
-    border: solid transparent 1px;
-    box-shadow: 0 15px 10px #777;
+    border: solid  rgb(117, 204, 153) 5px;
+    box-shadow: none;
     display: grid;
     grid-template-columns: 50% 50%;
     margin: 20px;
     flex: 1 1 38%;
     padding: 3%;
-    cursor: pointer;
     transition-duration: 1s;
     min-width: auto;
     max-width: 550px;
     font-family: 'Prata', serif;
-    position: none;
+    position: relative;
+    z-index: 0;
 }
 
 .resource-box:hover{
-    background-color: rgb(117, 117, 207)
+    box-shadow: 0 15px 10px #777;
 }
 
 .resource-layer{
@@ -42,4 +42,13 @@
 
 .resource-right{
     padding: 5%;
+}
+
+.resource-right__anchor{
+    text-decoration: none;
+    cursor: pointer
+}
+
+.resource-right__anchor.active{
+    color: yellow
 }

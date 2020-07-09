@@ -1,0 +1,14 @@
+.detail-delete__symbol{
+    color: red;
+    cursor: pointer;
+    font-size: 15px;
+    width: 10px;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.detail-delete__symbol.active{
+    background-color: red;
+    color: white;
+}

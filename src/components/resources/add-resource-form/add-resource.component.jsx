@@ -1,10 +1,12 @@
 import React from 'react';
 import './add-resource.styles.css'
+import { siftPhone } from '../../../util/functions'
+import { Dynamic } from '../../dynamic-data/dynamic.component';
 import { Form } from '../../form/form.component';
 import { CityForm } from '../../city-form/city-form.component';
 import { SelectResource } from '../../select-resource/select-resource.component'
 import { withRouter } from 'react-router-dom';
-import { Services } from '../../services/services.component';
+import { ServicesAll } from '../../services-all/services-all.component';
 
 const AddResource = (props) => {
     const [title, setTitle] = React.useState('');
@@ -12,15 +14,11 @@ const AddResource = (props) => {
     const [phone, setPhone] = React.useState('');
     const [url, setUrl] = React.useState([]);
     const [website, setWebsite] = React.useState('');
-    const [services, setServices] = React.useState([]);
-    const [serviceDetail, setServiceDetail] = React.useState({})
+    const [services, setServices] = React.useState({})
     const [city, setCity] = React.useState('Boulder')
+    const [dynamicData, setDynamicData] = React.useState([]);
     const [id, setId] = React.useState('');
     const [affiliation, setAffiliation] = React.useState(null)
-
-    const handleResource = (val) => {
-        setAffiliation(val);
-    }
 
     const handleImage = (e) => {
         e.preventDefault();
@@ -28,60 +26,37 @@ const AddResource = (props) => {
         return
     }
 
-    //work on this section later. We're trying to change the service state to an object
-    //don't forget to change where services are accessed as we're changing the data type
-    //
     const addDetail = (arr, del = false) => {
-        console.log(serviceDetail)
         let name = Object.keys(arr)[0];
-        let deets = { ...serviceDetail }
+        let detail = { ...services }
         if (del) {
-            delete deets[name]
+            delete detail[name]
         } else {
-            deets[name] = arr[name];
+            detail[name] = arr[name];
         }
-        setServiceDetail(deets);
+        setServices(detail);
     }
 
-    const siftPhone = (val) => {
-        val = val.split(/[^\d]/gi).join('');
-        return val
-    };
-
     const handleEdit = () => {
-        const { title, phone, address, url, website, services, _id, city } = props.location.state.data;
+        const { title,
+            dynamicData,
+            phone,
+            address,
+            url,
+            website,
+            services,
+            _id,
+            city } = props.location.state.data;
         setTitle(title);
         setAddress(address);
         setPhone(phone);
+        setDynamicData(dynamicData);
         setUrl(url);
         setWebsite(website);
-        setServices(Object.keys(services));
-        setServiceDetail(services)
+        setServices(services)
         setId(_id);
-        setCity(city)
-    }
-
-    React.useEffect(() => {
-        if (!props.location.state) {
-            return;
-        } else {
-            handleEdit()
-        }
-    }, [])
-
-    const handleCityChange = (val) => {
-        setCity(val)
-    }
-
-    const handleChange = (e) => {
-        let newChecked = [...services];
-        let ind = newChecked.indexOf(e.target.name)
-        if (!e.target.checked) {
-            newChecked.splice(ind, 1)
-            setServices(newChecked)
-        } else {
-            setServices([...newChecked, e.target.name]);
-        }
+        setCity(city);
+        return
     }
 
     const handleAddUserResource = (aff, tok) => {
@@ -111,25 +86,37 @@ const AddResource = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        let checkTelephone = siftPhone(phone);
-        if (checkTelephone.length !== 10 && phone) {
-            alert('number must be 10 digits long. Please include area code!');
-            return
-        }
-        const formData = new FormData();
-        console.log('url', url, url[0], 'serve detail', serviceDetail, typeof formData)
-        formData.append('title', title);
-        formData.append('address', address);
-        formData.append('phone', checkTelephone);
-        formData.append('image', url[0]);
-        formData.append('services', JSON.stringify(serviceDetail));
-        formData.append('website', website);
-        formData.append('city', city);
         const token = localStorage.getItem('token');
         if (affiliation) {
             handleAddUserResource(affiliation, token)
             return;
         }
+        let checkTelephone = siftPhone(phone);
+        if (checkTelephone.length !== 10 && phone) {
+            alert('number must be 10 digits long. Please include area code!');
+            return
+        }
+        if (!Object.keys(services)[0]) {
+            alert('please select at least one service')
+            return;
+        }
+        if (!address) {
+            alert('Please enter an address.');
+            return;
+        }
+        if (!website) {
+            alert("Please enter a valid website! This can include facebook/instagram links as well.");
+            return;
+        }
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('address', address);
+        formData.append('phone', checkTelephone);
+        formData.append('image', url[0]);
+        formData.append('dynamicData', JSON.stringify(dynamicData));
+        formData.append('services', JSON.stringify(services));
+        formData.append('website', website);
+        formData.append('city', city);
         if (!props.location.state) {
             fetch('/', {
                 method: "POST",
@@ -171,6 +158,7 @@ const AddResource = (props) => {
                 .then(res => res.json())
                 .then(response => {
                     if (response.errors) {
+                        console.log(response, response.errors)
                         alert(response.errors.map(a => a.msg).join(' '));
                         return;
                     }
@@ -183,6 +171,14 @@ const AddResource = (props) => {
         }
     }
 
+    React.useEffect(() => {
+        if (!props.location.state) {
+            return;
+        } else {
+            handleEdit()
+        }
+    }, [])
+
     return (
         <form className='add-resource-form' onSubmit={handleSubmit}>
             <Form
@@ -192,7 +188,7 @@ const AddResource = (props) => {
                 type="text"
                 changeFunction={setTitle} />
             <Form
-                title='address'
+                title="address"
                 label="Address"
                 value={address}
                 type="text"
@@ -217,24 +213,35 @@ const AddResource = (props) => {
                 name='picture'
                 onChange={handleImage} />
             <br />
-            <CityForm handleChange={handleCityChange} />
+            <CityForm setCity={setCity} city={city} />
             <br />
-            <Services
-                handleChange={handleChange}
+            <ServicesAll
+                setServices={setServices}
                 services={services}
                 addDetail={addDetail}
-                detail={serviceDetail}
+                add={true}
                 {...props} />
+            <br />
+            <br />
+            <Dynamic
+                handleDynamic={setDynamicData}
+                dynamicData={dynamicData}
+            />
             <React.Fragment>
                 {props.register ?
                     <p>
                         <label>Or select from existing....</label>
-                        <SelectResource handleResource={handleResource} />
+                        <SelectResource handleResource={setAffiliation} />
                     </p>
                     : null}
             </React.Fragment>
             <br />
-            <button type="submit">Submit Information</button>
+            <button
+                className="add-resource-button"
+                type="submit"
+            >
+                Submit Information
+            </button>
         </form>
     )
 }

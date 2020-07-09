@@ -1,0 +1,45 @@
+.filter-checks{
+    position: relative;
+    border-radius: 20px;
+    cursor: pointer;
+    max-width: auto;
+    margin-top: 1%;
+}
+
+.filter-checks p:hover{
+    color: rgb(117, 204, 153);
+    transition-duration: 0s;
+}
+
+.filter-checks.active{
+    background-color: rgb(24, 24, 116);
+    color: white
+}
+
+.filter-checkbox{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+}
+
+.filter-drop{
+    max-height: 0px;
+    overflow: hidden;
+    margin: auto;
+    user-select: none;
+    min-width: 200px;
+    width: 40px;
+    transition-duration: .8s
+}
+
+.filter-drop.active{
+    max-height: 240px;
+}
+
+.filter-drop.active__add{
+    max-height: 1080px;
+    transition-duration: 1.8s
+}

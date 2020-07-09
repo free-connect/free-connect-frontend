@@ -1,0 +1,15 @@
+.detail-text{
+    width: 100%;
+}
+
+.detail-add{
+    display: flex;
+}
+
+.detail-add textarea{
+    resize: none
+}
+
+.detail-text__delete{
+    display: flex
+}

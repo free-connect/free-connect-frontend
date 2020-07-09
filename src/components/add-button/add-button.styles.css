@@ -1,0 +1,13 @@
+.detail-add__symbol{
+    color: rgb(76, 76, 212);
+    cursor: pointer;
+    font-size: 15px;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.detail-add__symbol.active{
+    background-color: rgb(76, 76, 212);
+    color: white;
+}

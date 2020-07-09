@@ -8,6 +8,11 @@
     overflow: hidden;
 }
 
-.button{
+.button-block{
     cursor: pointer
+}
+
+.button-block__spec{
+    margin-left: 30%;
+    margin-right: 30%
 }

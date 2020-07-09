@@ -10,9 +10,6 @@ const multer = require('multer')
 const path = require('path');
 const { v4: uuidv4 } = require('uuid')
 
-
-mongoose.set('useFindAndModify', false);
-
 const dataBasePassword = process.env.dataBasePassword
 const dataBaseUser = process.env.dataBaseUser
 const cluster = process.env.cluster
@@ -21,6 +18,8 @@ const DB_URI = 'mongodb+srv://' + dataBaseUser + ':' + dataBasePassword + '@' + 
 
 const app = express();
 const port = process.env.PORT || 3000
+
+mongoose.set('useFindAndModify', false);
 
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -33,7 +32,6 @@ const fileStorage = multer.diskStorage({
 })
 
 const fileFilter = (req, file, cb) => {
-    console.log('file', file)
     if (
         file.mimetype === 'image/png' ||
         file.mimetype === 'image/jpg' ||
@@ -56,7 +54,9 @@ app.use('/images', express.static(path.join(__dirname, 'images')))
 app.use(bodyParser.json())
 
 app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.set({
+        'Content-Security-Policy': "script-src 'self'"
+    })
     res.setHeader('Access-Control-Allow-Methods', 'POST, GET');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     next();
@@ -72,7 +72,7 @@ app.get('*', (req, res, next) => {
 })
 
 app.use((error, req, res, next) => {
-    console.log(error);
+    console.log('errrrr', error);
     const status = error.statusCode || 500;
     const message = error.message;
     res.status(status).json({ message: message })

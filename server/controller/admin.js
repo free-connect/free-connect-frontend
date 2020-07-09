@@ -15,33 +15,29 @@ function compare(check, arrs) {
 }
 
 exports.getResources = (req, res, next) => {
+    const queryServices = req.query.services;
     const currentPage = parseInt(req.query.page) || 1;
+    const city = req.query.city || '';
+    const services = queryServices ? queryServices.split(',') : [];
     let totalRes;
     const perPage = 4;
-    Resource
-        .find()
-        .countDocuments()
-        .then(count => {
-            totalRes = count;
-            const city = req.query.city || '';
-            const services = req.query.services.split(',') || [];
-            return Resource
-                .find(city ?
-                    { city: city } :
-                    null)
-                .then(resources => {
-                    let sorted = [];
-                    if (services[0]) {
-                        //see the above compare function. Services are stored in db as an object
-                        sorted = resources.sort((a, b) => {
-                            return compare(services, Object.keys(b.services)) - compare(services, Object.keys(a.services))
-                        })
-                    } else {
-                        sorted = resources
-                    }
-                    sorted = sorted.splice((currentPage - 1) * perPage, perPage)
-                    return sorted
+    return Resource
+        .find(city ?
+            { city: city } :
+            null)
+        .then(resources => {
+            totalRes = resources.length;
+            let sorted = [];
+            if (services[0]) {
+                //see the above compare function. Services are stored in db as an object
+                sorted = resources.sort((a, b) => {
+                    return compare(services, Object.keys(b.services)) - compare(services, Object.keys(a.services))
                 })
+            } else {
+                sorted = resources
+            }
+            sorted = sorted.splice((currentPage - 1) * perPage, perPage);
+            return sorted
         })
         .then(sortedResources => {
             res.json({
@@ -81,7 +77,8 @@ exports.getRegisterResources = (req, res, next) => {
 
 exports.postAddResource = (req, res, next) => {
     const { title, address, phone, website, city } = req.body;
-    const services = JSON.parse(req.body.services)
+    const services = JSON.parse(req.body.services);
+    const dynamicData = JSON.parse(req.body.dynamicData);
     const errors = validationResult(req);
     //this section handles the image file. If there is none, it sends this error
     if (!req.file) {
@@ -107,6 +104,7 @@ exports.postAddResource = (req, res, next) => {
         url: imageUrl,
         website: website,
         services: services,
+        dynamicData: dynamicData,
         city: city
     })
     resource
@@ -127,10 +125,9 @@ exports.postAddResource = (req, res, next) => {
 
 exports.postEditResource = (req, res, next) => {
     const { title, address, phone, website, id, city } = req.body;
-    //arrays are sent as strings in multiform data (will troubleshoot later), this section encodes data as an array
+    const dynamicData = JSON.parse(req.body.dynamicData);
     const services = JSON.parse(req.body.services)
     const errors = validationResult(req);
-    const url = req.file;
     if (!errors.isEmpty()) {
         return res.json({
             errors: errors.array()
@@ -145,14 +142,15 @@ exports.postEditResource = (req, res, next) => {
             resource.title = newTitle;
             resource.address = address;
             //only edits the image if a new file was sent
-            if (url) {
+            if (req.file) {
                 fileHelper.deleteFile(resource.url)
-                resource.url = url.path;
+                resource.url = req.file.path;
             }
             resource.services = services;
             resource.phone = newPhone;
             resource.website = website;
             resource.city = city;
+            resource.dynamicData = dynamicData;
             return resource.save()
         })
         .then(() => {

@@ -1,1 +1,4 @@
-export const DATA = 'DATA'
+export const USER_DATA_PENDING = 'USER_DATA_PENDING';
+export const USER_DATA_SUCCESS = 'USER_DATA_SUCCESS';
+export const USER_DATA_FAIL = 'USER_DATA_FAIL';
+export const LOG_OUT_USER = 'LOG_OUT_USER'

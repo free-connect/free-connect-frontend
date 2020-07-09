@@ -5,15 +5,15 @@ import { ReviewList } from '../review-list/review-list.component'
 
 export const ReviewBox = (props) => {
     React.useEffect(() => {
-        document.addEventListener("mousedown", handleClickList);
+        document.addEventListener("mousedown", handleClickRev);
         return () => {
-            document.removeEventListener("mousedown", handleClickList);
+            document.removeEventListener("mousedown", handleClickRev);
         };
     });
 
-    const handleClickList = (e) => {
+    const handleClickRev = (e) => {
         if (!node.current.contains(e.target)) {
-            props.handleClickOff()
+            props.handleClickOff();
         }
     };
 
@@ -21,6 +21,7 @@ export const ReviewBox = (props) => {
 
     return (
         <div ref={node} className={`review-box ${!props.active ? '' : 'active'}`}>
+            <p onClick={props.handleClickOff}>X</p>
             {props.type === 'list' ?
                 <ReviewList {...props} /> :
                 <AddReview {...props} />

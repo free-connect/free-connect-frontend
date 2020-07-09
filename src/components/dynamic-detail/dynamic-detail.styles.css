@@ -1,0 +1,15 @@
+.dynamic-detail-box{
+    display: flex;
+    flex-flow: row wrap
+}
+
+.dynamic-detail-add{
+    display: flex;
+    flex-flow: row nowrap
+}
+
+.dynamic-detail-add input{
+    width: 100%;
+    height: 40%;
+    position: relative;
+}

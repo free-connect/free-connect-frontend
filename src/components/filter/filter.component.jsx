@@ -1,38 +1,22 @@
 import React from 'react';
-import { SelectCity } from '../select-city/select-city.component'
-import { Services } from '../services/services.component';
+import './filter.styles.css'
+import { CityForm } from '../city-form/city-form.component';
+import { ServicesAll } from '../services-all/services-all.component';
+import { CustomButton } from '../custom-button/custom-button.component';
 import { withRouter } from 'react-router-dom';
 
 const Filter = (props) => {
     const [city, setCity] = React.useState('Boulder');
-    const [services, setServices] = React.useState([]);
-
-    const setVal = (val) => {
-        if (val === 'All') {
-            setCity('');
-            return;
-        }
-        setCity(val)
-    }
-
-    const handleChangeFilter = (e) => {
-        let newChecked = [...services];
-        let ind = newChecked.indexOf(e.target.name)
-        if (!e.target.checked) {
-            newChecked.splice(ind, 1)
-            setServices(newChecked)
-        } else {
-            setServices([...newChecked, e.target.name]);
-        }
-    }
+    const [services, setServices] = React.useState({});
 
     const handleSubmit = (e) => {
-        e.preventDefault()
+        e.preventDefault();
+        const pushedCity = city === 'All' ? '' : city;
         props.history.push({
             pathname: '/resources',
             state: {
-                city: city,
-                resources: services
+                city: pushedCity,
+                resources: Object.keys(services)
             }
         })
         window.location.reload(false)
@@ -40,8 +24,16 @@ const Filter = (props) => {
 
     return (
         <React.Fragment>
-            <Services handleChange={handleChangeFilter} services={services} />
-            <SelectCity setVal={setVal} handleSubmit={handleSubmit} />
+            <h1>What are you looking for?</h1>
+            <br />
+            <ServicesAll
+                setServices={setServices}
+                services={services}
+            />
+            <h1>Where are you?</h1>
+            <br />
+            <CityForm setCity={setCity} city={city} />
+            <CustomButton handleClick={handleSubmit} text='Find!' />
         </React.Fragment>
     )
 }

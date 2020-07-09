@@ -1,22 +1,25 @@
 .custom-button{
-    width: 60%;
     height: auto;
+    width: 60%;
     cursor: pointer;
     border: none;
     transition-duration: .3s;
-    color: white;
-    opacity: 1;
+    color: black;
     border-radius: 20px;
     margin: auto;
     float: center;
-    background-color: rgb(24, 24, 116);
+    background-color: #45b6fe;
     font-size: 1em;
+    max-width: 130px;
+    max-height: 50px;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
 }   
 
 
 .custom-button.active{
-    background-color: white;
-    color: rgb(24, 24, 116)
+    background-color: #daf0ff
 }
 
 .custom-button.disabled{
@@ -24,9 +27,7 @@
 }
 
 .custom-button-name{
-    font-size: .6em;
+    font-size: auto;
     position: static;
-    padding-top: .7em;
-    margin-top: 26px;
-    left: 28px;
+    padding: .5em;
 }

@@ -8,37 +8,6 @@ export const ResourceList = (props) => {
     const [loaded, setLoaded] = React.useState(false);
     const [page, setPage] = React.useState(1);
     const [count, setCount] = React.useState(0);
-    const [buttonActive, setButtonActive] = React.useState(false);
-    const [userLikes, setUserLikes] = React.useState([])
-
-    const updateLikes = (val) => {
-        const newLikes = [...userLikes, val];
-        setUserLikes(newLikes)
-    }
-
-    const handleResourceLoad = () => {
-        const token = localStorage.getItem('token');
-        if (!token) {
-            return;
-        }
-        fetch('/myLikes', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: 'bearer ' + token
-            }
-        })
-            .then(res => res.json())
-            .then(response => {
-                if (response.likes) {
-                    console.log(response.likes)
-                    setUserLikes(response.likes)
-                } else {
-                    return
-                }
-            })
-            .catch(err => console.log(err))
-    }
 
     const handleClick = (name) => {
         const newPage = name === 'next' ? page + 1 : page - 1;
@@ -46,8 +15,7 @@ export const ResourceList = (props) => {
         return getData(newPage)
     }
 
-    const getData = (pageVal) => {
-        pageVal = pageVal || 1;
+    const getData = (pageVal = 1) => {
         let query = `/data/resources?page=${pageVal}&city=${props.city ? props.city : ''}&services=${props.services ? props.services : ''}`
         fetch(query)
             .then(response => response.json())
@@ -66,24 +34,21 @@ export const ResourceList = (props) => {
 
     React.useEffect(() => {
         getData();
-        handleResourceLoad();
         return;
     }, [])
 
     return (
         <React.Fragment>
             <div className='resource-list'>
-                {data.length > 0 && loaded ?
+                {data[0] && loaded ?
                     data.map((a, i) => {
                         return (
                             <React.Fragment>
                                 <Resource
-                                    updateLikes={updateLikes}
-                                    liked={userLikes.includes(a._id)}
                                     id={i + 1 === data.length ? 0 : i + 1}
                                     data={a}
-                                    admin={props.admin} 
-                                    />
+                                    admin={props.admin}
+                                />
                             </React.Fragment>
                         )
                     }) :
@@ -92,37 +57,23 @@ export const ResourceList = (props) => {
                     </React.Fragment>
                 }
             </div>
-            <div className='button'>
+            <div className='button-block'>
                 {page > 1 ?
                     <div
-                        style={{
-                            marginLeft: '30%',
-                            marginRight: '30%'
-                        }}
-                        name='prev'
-                        onClick={(e) => handleClick('prev')}
-                        onMouseEnter={() => setButtonActive(true)}
-                        onMouseLeave={() => setButtonActive(false)}
+                        className='button-block__spec'
+                        onClick={() => handleClick('prev')}
                     >
                         <CustomButton
-                            active={buttonActive}
                             text="previous"
                         />
                     </div> :
                     null}
                 {page < (count / 4) ?
                     <div
-                        style={{
-                            marginLeft: '30%',
-                            marginRight: '30%'
-                        }}
-                        name='next'
-                        onClick={(e) => handleClick('next')}
-                        onMouseEnter={() => setButtonActive(true)}
-                        onMouseLeave={() => setButtonActive(false)}
+                        className="button-block__spec"
+                        onClick={() => handleClick('next')}
                     >
                         <CustomButton
-                            active={buttonActive}
                             text="next"
                         />
                     </div> :

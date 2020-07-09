@@ -1,24 +1,26 @@
 import React from 'react';
+import { Route, withRouter, Switch } from 'react-router-dom';
+import './App.css';
+
 import MainPage from './pages/main-page/main-page.component';
 import EditResourcePage from './pages/edit-resource/edit-resource-page.component';
-import LoginPage from './pages/login-page/login-page.component';
 import RegisterPage from './pages/register-page/register-page.component';
 import ProfilePage from './pages/profile-page/profile-page.component';
 import NavBar from './components/navigation/navbar/navbar.component';
 import Detail from './components/detail/detail.component';
+import { Footer } from './components/footer/footer.component';
 import { ResetPage } from './pages/reset-page/reset-page.component';
 import { AdminResourcePage } from './pages/admin-resources/admin-resource-page.component';
-import { ResourcesPage } from './pages/resource-page/resources-page.component';
-import { AboutPage } from './pages/about-page/about-page.component'
-import { ErrorPage } from './pages/error-page/error-page.component'
-import { Route, withRouter, Switch } from 'react-router-dom'
-import './App.css';
+import { ResourcePage } from './pages/resource-page/resource-page.component';
+import { AboutPage } from './pages/about-page/about-page.component';
+import { ErrorPage } from './pages/error-page/error-page.component';
+
 
 function App(props) {
   const [isAuth, setIsAuth] = React.useState(false);
   const [token, setToken] = React.useState(null);
   const [userId, setUserId] = React.useState(null);
-  const [load, setLoad] = React.useState(false)
+  const [load, setLoad] = React.useState(false);
 
   const handleLoad = () => {
     const token = localStorage.getItem('token');
@@ -49,7 +51,7 @@ function App(props) {
     localStorage.removeItem('expiryDate');
     localStorage.removeItem('userId');
     localStorage.removeItem('name');
-    props.history.push('/login')
+    props.history.push('/')
     window.location.reload(false);
   }
 
@@ -101,14 +103,15 @@ function App(props) {
         <NavBar
           logout={handleSubmitLogout}
           admin={userId === process.env.REACT_APP_USER_ID ? true : false}
-          isAuth={isAuth} /> :
+          isAuth={isAuth}
+          handleLogin={handleLogin}
+        /> :
         null}
       <div className="App">
         <Switch>
           <Route exact path='/' component={MainPage} />
-          <Route exact path='/login' render={props => <LoginPage handleLogin={handleLogin} />} />
           <Route exact path='/register' component={RegisterPage} />
-          <Route exact path='/resources' component={ResourcesPage} />
+          <Route exact path='/resources' component={ResourcePage} />
           <Route exact path='/about' component={AboutPage} />
           <Route exact path='/detail' component={Detail} />
           <Route exact path='/reset' component={ResetPage} />
@@ -116,11 +119,11 @@ function App(props) {
           {(isAuth && userId === process.env.REACT_APP_USER_ID) ?
             <Route exact path="/admin-resources" component={AdminResourcePage} /> :
             null}
-          {isAuth ? <Route exact path="/profile" render={() => <ProfilePage token={token} />} /> : null}
-          {/* <Route path='*' render={() => <p>Sorry, there's nothing here!</p>} /> */}
+          {isAuth ? <Route exact path="/profile" render={() => <ProfilePage logout={handleSubmitLogout} token={token} />} /> : null}
           <Route path='*' component={ErrorPage} />
         </Switch>
       </div>
+      {/* <Footer /> */}
     </React.Fragment>
   );
 }

@@ -5,7 +5,9 @@ export const Form = (props) => {
     return (
         <React.Fragment>
             <br />
-            <label htmlFor={props.title} >{props.label}</label>
+            <label htmlFor={props.title}>
+                {props.label}
+            </label>
             <input
                 className='custom-form'
                 type={props.type}

@@ -1,0 +1,8 @@
+.dynamic-block{
+    display: flex;
+    flex-flow: row wrap
+}
+
+.dynamic-block__time{
+    opacity: .5
+}
