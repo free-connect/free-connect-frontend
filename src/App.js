@@ -61,7 +61,7 @@ function App(props) {
       username: authData.username,
       password: authData.password
     }
-    fetch('/login', {
+    fetch(process.env.REACT_APP_LOCATION+'/login', {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
