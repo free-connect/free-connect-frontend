@@ -20,7 +20,6 @@ export const ResourceList = (props) => {
         fetch(query)
             .then(response => response.json())
             .then(newData => {
-                console.log('data', newData)
                 setCount(newData.totalRes)
                 setData([...newData.resources])
             })

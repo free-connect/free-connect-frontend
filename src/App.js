@@ -114,7 +114,7 @@ function App(props) {
           <Route exact path='/resources' component={ResourcePage} />
           <Route exact path='/about' component={AboutPage} />
           <Route exact path='/detail' component={Detail} />
-          <Route exact path='/reset' component={ResetPage} />
+          {/* <Route exact path='/reset' component={ResetPage} /> */}
           {isAuth ? <Route exact path='/edit-resource' component={EditResourcePage} /> : null}
           {(isAuth && userId === process.env.REACT_APP_USER_ID) ?
             <Route exact path="/admin-resources" component={AdminResourcePage} /> :

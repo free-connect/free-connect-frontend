@@ -2,10 +2,10 @@
     color: red;
     cursor: pointer;
     font-size: 15px;
-    width: 10px;
     -moz-user-select: none;
     -webkit-user-select: none;
     user-select: none;
+    height: 17px;
 }
 
 .detail-delete__symbol.active{
