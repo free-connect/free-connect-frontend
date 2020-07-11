@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "4fd315d21a83b4cdc1f6b62437fcb1f7",
+    "revision": "987a3842152fbb20be772e668b483b6f",
     "url": "/free-connect-frontend/index.html"
   },
   {
-    "revision": "0fe896ed94ca6f064b7f",
+    "revision": "cbfb89434da2bdce047c",
     "url": "/free-connect-frontend/static/css/main.d699827d.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/free-connect-frontend/static/js/2.6f6ed219.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "0fe896ed94ca6f064b7f",
-    "url": "/free-connect-frontend/static/js/main.31a7879a.chunk.js"
+    "revision": "cbfb89434da2bdce047c",
+    "url": "/free-connect-frontend/static/js/main.2da813ba.chunk.js"
   },
   {
     "revision": "2c7c86574c181a945976",
