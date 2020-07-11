@@ -16,24 +16,24 @@ const ProfilePage = (props) => {
         if (!token) {
             return;
         }
-        fetch('/my-resource', {
+        fetch(process.env.REACT_APP_LOCATION+'/my-resource', {
+            method: 'GET',
             headers: {
-                method: 'GET',
                 Authorization: 'Bearer ' + token
             }
         })
             .then(res => res.json())
             .then(response => setInitAffiliation(response))
             .then(() => {
-                return fetch('/my-likes', {
-                    headers: {
+                return fetch(process.env.REACT_APP_LOCATION+'/my-likes', {
                         method: 'GET',
+                        headers: {
                         Authorization: 'Bearer ' + token
                     }
                 })
                     .then(res => res.json())
                     .then(response => {
-                        if (response.message === 'jwt malformed') {
+                        if (response.message) {
                             //this section is meant to log someone out if someone has messed with the JWT
                             props.logout();
                         }

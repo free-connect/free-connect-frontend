@@ -19,7 +19,7 @@ const Detail = (props) => {
         if (!token) {
             return;
         }
-        fetch('/my-likes', {
+        fetch(process.env.REACT_APP_LOCATION+'/my-likes', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ const Detail = (props) => {
         const newData = {
             likedId: data._id
         }
-        fetch('/like',
+        fetch(process.env.REACT_APP_LOCATION+'/like',
             {
                 method: 'POST',
                 body: JSON.stringify(newData),
@@ -72,16 +72,16 @@ const Detail = (props) => {
 
     const handleClickReview = (e) => {
         e.preventDefault();
-        window.scrollTo({
-            top: 0,
-            left: 0,
-            behavior: 'smooth'
-        });
         const token = localStorage.getItem('token')
         if (!token) {
             alert('You gotta sign in to review a resource!');
             return;
         }
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+        });
         if (reviewList) {
             setReviewList(false)
         }
@@ -98,7 +98,7 @@ const Detail = (props) => {
         if (reviewAct) {
             setReviewAct(false)
         }
-        fetch(`/review-list?resId=${data._id}`, {
+        fetch(process.env.REACT_APP_LOCATION+`/review-list?resId=${data._id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -125,7 +125,7 @@ const Detail = (props) => {
             alert("Oh No! You're not a user! come register :)")
             return;
         };
-        fetch('/review', {
+        fetch(process.env.REACT_APP_LOCATION+'/review', {
             method: "POST",
             body: JSON.stringify(newData),
             headers: {
@@ -156,7 +156,7 @@ const Detail = (props) => {
         if (!pushedData) {
             return;
         }
-        fetch('/details?id=' + pushedData._id, {
+        fetch(process.env.REACT_APP_LOCATION+'/details?id=' + pushedData._id, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -181,7 +181,7 @@ const Detail = (props) => {
                         <br />
                         <a href={data.website}>
                             <img
-                                src={data.url}
+                                src={`${process.env.REACT_APP_LOCATION}/${data.url}`}
                                 alt={data.title}
                                 height='auto'
                                 width='80%'

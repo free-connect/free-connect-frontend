@@ -16,7 +16,7 @@ export const ResourceList = (props) => {
     }
 
     const getData = (pageVal = 1) => {
-        let query = `/data/resources?page=${pageVal}&city=${props.city ? props.city : ''}&services=${props.services ? props.services : ''}`
+        let query = process.env.REACT_APP_LOCATION+`/data/resources?page=${pageVal}&city=${props.city ? props.city : ''}&services=${props.services ? props.services : ''}`
         fetch(query)
             .then(response => response.json())
             .then(newData => {

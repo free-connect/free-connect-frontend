@@ -1,5 +1,7 @@
 .detail-text{
     width: 100%;
+    font-family: 'Prata', serif;
+    user-select: text;
 }
 
 .detail-add{
@@ -7,7 +9,9 @@
 }
 
 .detail-add textarea{
-    resize: none
+    resize: none;
+    font-family: 'Prata', serif;
+    font-weight: 700;
 }
 
 .detail-text__delete{

@@ -63,7 +63,7 @@ const AddResource = (props) => {
         let data = {
             affiliation: aff.toString()
         }
-        fetch('/add-user-resource', {
+        fetch(process.env.REACT_APP_LOCATION+'/add-user-resource', {
             method: "POST",
             body: JSON.stringify(data),
             headers: {
@@ -118,7 +118,7 @@ const AddResource = (props) => {
         formData.append('website', website);
         formData.append('city', city);
         if (!props.location.state) {
-            fetch('/', {
+            fetch(process.env.REACT_APP_LOCATION+'/', {
                 method: "POST",
                 body: formData,
                 headers: {
@@ -148,7 +148,7 @@ const AddResource = (props) => {
                 alert('not authorized')
                 return;
             }
-            fetch('/edit-resource', {
+            fetch(process.env.REACT_APP_LOCATION+'/edit-resource', {
                 method: "POST",
                 body: formData,
                 headers: {

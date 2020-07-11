@@ -45,7 +45,7 @@ const RegisterPage = (props) => {
             email: email,
             name: name
         }
-        fetch('/register', {
+        fetch(process.env.REACT_APP_LOCATION+'/register', {
             method: "POST",
             body: JSON.stringify(data),
             headers: {

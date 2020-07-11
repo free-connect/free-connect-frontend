@@ -27,7 +27,7 @@ const Resource = (props) => {
             alert('not authorized');
             return
         }
-        fetch('/delete-resource', {
+        fetch(process.env.REACT_APP_LOCATION+'/delete-resource', {
             method: "POST",
             body: JSON.stringify(data),
             headers: {
@@ -51,7 +51,7 @@ const Resource = (props) => {
             <div className="resource-left">
                 <h3>{props.data.title}</h3>
                 <img
-                    src={props.data.url}
+                    src={`${process.env.REACT_APP_LOCATION}/${props.data.url}`}
                     alt={props.data.title}
                     height='80vw'
                     width='80vw'

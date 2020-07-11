@@ -31,8 +31,9 @@
     margin: auto;
     user-select: none;
     min-width: 200px;
-    width: 40px;
-    transition-duration: .8s
+    width: 40%;
+    transition-duration: .8s;
+    font-family: 'Prata', serif;
 }
 
 .filter-drop.active{
@@ -41,5 +42,6 @@
 
 .filter-drop.active__add{
     max-height: 1080px;
-    transition-duration: 1.8s
+    transition-duration: 1.8s;
+    overflow-y: scroll
 }
