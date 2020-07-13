@@ -192,9 +192,9 @@ const Detail = (props) => {
                         <p>{data.city ? `${data.city}, CO` : 'none specified'}</p>
                         <p>{data.phone}</p>
                         <br />
-                        {data.dynamicData.map(a => {
+                        {data.dynamicData.map((a, i) => {
                             return (
-                                <div className='detail-dynamic-data'>
+                                <div key={i} className='detail-dynamic-data'>
                                     <span><p>{a.name}:&nbsp;{a.value}&nbsp;</p></span>
                                     <p className='detail-dynamic-data__time'>updated {a.timestamp}</p>
                                 </div>
@@ -229,12 +229,12 @@ const Detail = (props) => {
                         </div>
                     </div>
                     <div className='right-detail'>
-                        {Object.keys(data.services).map(a => {
+                        {Object.keys(data.services).map((a, i) => {
                             return (
-                                <div className='detail-service'>
+                                <div key={i} className='detail-service'>
                                     <h4>{a}</h4>
                                     <ul>
-                                        {data.services[a].map(b => <li>{b}</li>)}
+                                        {data.services[a].map((b, ind) => <li key={ind}>{b}</li>)}
                                     </ul>
                                 </div>
                             )

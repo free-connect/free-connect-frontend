@@ -9,12 +9,11 @@ const Login = (props) => {
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
 
-    const data = {
-        username: username,
-        password: password
-    }
-
     const handleLogin = (e) => {
+        const data = {
+            username: username,
+            password: password
+        }
         props.handleLogin(e, data)
     }
 

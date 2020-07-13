@@ -35,6 +35,12 @@
     }
   }
 
+.loading-screen{
+    height: 100%;
+    width: 100%;
+    background-color: #F8F8FF;
+}
+
 .loading{
     position: fixed;
     top: 50%;

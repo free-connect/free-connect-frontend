@@ -54,8 +54,8 @@ const ProfilePage = (props) => {
     return (
         <React.Fragment>
             {pageLoaded ? null : <Loading />}
-            <React.Fragment hidden={pageLoaded ? false : true}>
-                <div className='profile' >
+            <React.Fragment >
+                <div hidden={pageLoaded ? false : true} className='profile' >
                     <h1>Welcome back {localStorage.getItem('name')}!</h1>
                     <br />
                     <div className='profile-likes'>

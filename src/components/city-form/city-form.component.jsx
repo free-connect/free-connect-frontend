@@ -5,7 +5,7 @@ import './city-form.styles.css'
 export const CityForm = (props) => {
     const [active, setActive] = React.useState(false)
 
-    const cities = ['Boulder', 'Denver', 'All'];
+    const cities = ['All', 'Boulder', 'Denver'];
 
     return (
         <React.Fragment>

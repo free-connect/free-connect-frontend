@@ -3,6 +3,7 @@ import './register-page.styles.css'
 import { SelectResource } from '../../components/select-resource/select-resource.component'
 import { withRouter } from 'react-router-dom';
 import { Form } from '../../components/form/form.component';
+import { Loading } from '../../components/loading-icon/loading.component';
 
 const RegisterPage = (props) => {
     const [username, setUsername] = React.useState('');
@@ -11,7 +12,9 @@ const RegisterPage = (props) => {
     const [affiliation, setAffiliation] = React.useState(null);
     const [password, setPassword] = React.useState('');
     const [confirmPassword, setConfirmPassword] = React.useState('');
-    const [warning, setWarning] = React.useState('')
+    const [warning, setWarning] = React.useState('');
+    const [ loading, setLoading ] = React.useState(false)
+
 
     const checkEqual = (pw, pwConf) => {
         if (pw === pwConf && pw.length > 0 && pwConf.length > 0) {
@@ -55,22 +58,37 @@ const RegisterPage = (props) => {
             .then(res => res.json())
             .then(response => {
                 if (response.errors) {
+                    setLoading(false);
                     alert(response.errors.map(a => a.msg).join(' '));
                     return;
                 }
                 if (response.success) {
-                    alert('approved!');
-                    props.history.push('/')
+                    const loginData={
+                        username: username,
+                        password: password
+                    }
+                    setLoading(true)
+                    props.handleLogin(e, loginData)
+                    return;
                 } else {
+                    setLoading(false)
                     alert('email/username already exists! Go to Login Page, idiot. Or, you can try a different username/email :)');
                     return;
                 }
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                setLoading(false)
+                console.log(err)
+            })
     }
 
     return (
         <div className='register'>
+            {loading ? 
+                <React.Fragment>
+                    <h1>Logging you in...</h1>
+                    <Loading />
+                </React.Fragment> :
             <form className='register-form' onSubmit={handleSubmit}>
                 <Form
                     title="username"
@@ -110,7 +128,8 @@ const RegisterPage = (props) => {
                 <br />
                 <button type='submit'>Submit</button>
             </form>
-            <p>{warning}</p>
+            }
+            {loading ? null : <p className='register-warning'>{warning}</p>}
         </div>
     )
 }

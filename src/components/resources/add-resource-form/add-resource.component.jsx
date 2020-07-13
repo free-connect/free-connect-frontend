@@ -22,8 +22,8 @@ const AddResource = (props) => {
 
     const handleImage = (e) => {
         e.preventDefault();
-        setUrl([e.target.files[0]])
-        return
+        setUrl([e.target.files[0]]);
+        return;
     }
 
     const addDetail = (arr, del = false) => {
@@ -38,6 +38,11 @@ const AddResource = (props) => {
     }
 
     const handleEdit = () => {
+        console.log('propz', props.location.state.data)
+        if (!props.location.state.data) {
+            props.history.push('/');
+            return;
+        }
         const { title,
             dynamicData,
             phone,

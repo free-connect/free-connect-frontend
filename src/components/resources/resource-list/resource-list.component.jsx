@@ -43,7 +43,7 @@ export const ResourceList = (props) => {
                 {data[0] && loaded ?
                     data.map((a, i) => {
                         return (
-                            <React.Fragment>
+                            <React.Fragment key={i}>
                                 <Resource
                                     id={i + 1 === data.length ? 0 : i + 1}
                                     data={a}

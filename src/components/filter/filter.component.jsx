@@ -6,7 +6,7 @@ import { CustomButton } from '../custom-button/custom-button.component';
 import { withRouter } from 'react-router-dom';
 
 const Filter = (props) => {
-    const [city, setCity] = React.useState('Boulder');
+    const [city, setCity] = React.useState('All');
     const [services, setServices] = React.useState({});
 
     const handleSubmit = (e) => {

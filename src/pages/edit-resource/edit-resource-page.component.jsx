@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 const EditResourcePage = (props) => {
     return (
-        <div className='edit-resource'>
+        <div>
             <AddResource {...props} />
         </div>
     )

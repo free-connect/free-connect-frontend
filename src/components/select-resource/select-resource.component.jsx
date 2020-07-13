@@ -30,10 +30,10 @@ export const SelectResource = (props) => {
         <React.Fragment>
             {loaded ?
                 <select onChange={handleDropdown}>
-                    <option disabled selected="selected">Select a Resource</option>
-                    {resources.map(a => {
+                    <option disabled>Select a Resource</option>
+                    {resources.map((a, i) => {
                         return (
-                            <React.Fragment>
+                            <React.Fragment key={i}>
                                 <option>{a.title}</option>
                             </React.Fragment>
                         )

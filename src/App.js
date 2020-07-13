@@ -110,7 +110,7 @@ function App(props) {
       <div className="App">
         <Switch>
           <Route exact path='/' component={MainPage} />
-          <Route exact path='/register' component={RegisterPage} />
+          <Route exact path='/register' render={() => <RegisterPage handleLogin={handleLogin}/>} />
           <Route exact path='/resources' component={ResourcePage} />
           <Route exact path='/about' component={AboutPage} />
           <Route exact path='/detail' component={Detail} />

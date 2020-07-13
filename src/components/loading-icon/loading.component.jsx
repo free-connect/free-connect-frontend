@@ -6,13 +6,19 @@ export const Loading = () => {
 
     let nums = ['one', 'two', 'three', 'four', 'five']
 
-    React.useEffect(() => document.addEventListener("visibilitychange", () => {
+    const handleVis = () => {
         if (document.visibilityState === 'visible') {
             setVisible(true)
         } else {
             setVisible(false)
         }
-    }, []))
+    }
+
+    React.useEffect(
+        () => {
+            document.addEventListener("visibilitychange", handleVis)
+            return () => document.removeEventListener("visibilitychange", handleVis)
+        })
 
     const changeFunction = (index) => {
         let ball = document.querySelector(`.loading div:nth-child(${index + 1})`)
@@ -23,19 +29,21 @@ export const Loading = () => {
     }
 
     return (
-        <div className='loading'>
-            {visible ?
-                new Array(5)
-                    .fill(4)
-                    .map((a, i) => a - i)
-                    .map((b, i) =>
-                        <div
-                            key={i}
-                            className={'ball ' + nums[i]}
-                            onAnimationEnd={() => changeFunction(i)}
-                        >
-                        </div>) :
-                null}
+        <div className='loading-screen'>
+            <div className='loading'>
+                {visible ?
+                    new Array(5)
+                        .fill(4)
+                        .map((a, i) => a - i)
+                        .map((b, i) =>
+                            <div
+                                key={i}
+                                className={'ball ' + nums[i]}
+                                onAnimationEnd={() => changeFunction(i)}
+                            >
+                            </div>) :
+                    null}
+            </div>
         </div>
     )
 }
