@@ -32,11 +32,18 @@ const NavBar = (props) => {
         };
     });
 
+    React.useEffect(() => {
+        document.addEventListener("touchstart", handleClickList);
+        return () => {
+            document.removeEventListener("touchstart", handleClickList);
+        };
+    });
+
     React.useEffect(() => setAuth(props.isAuth), [])
 
     return (
         <div ref={node}>
-            <div className='block' onClick={() => setActive(!active)}>
+            <div className='nav-hamburger' onClick={() => setActive(!active)}>
                 <div className={!active ? "line" : 'line active'}></div>
                 <div className={!active ? "line1" : 'line1 active'}></div>
             </div>

@@ -10,6 +10,7 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    overflow-y: scroll;
 }
 
 .review-box p:first-child{
@@ -25,8 +26,8 @@
 }
 
 .review-box.active{
-    height: 375px;
-    width: 375px;
+    height: 350px;
+    width: 350px;
     max-width: 100%;
     border-radius: 15%;
     opacity: 1;
@@ -34,3 +35,16 @@
     background-color: white;
     z-index: 50;
 }
+
+.review-box::-webkit-scrollbar {
+    width: 0em;
+  }
+   
+  .review-box::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
+   
+  .review-box::-webkit-scrollbar-thumb {
+    background-color: rgb(38, 38, 109);
+    outline: 1px solid slategrey;
+  }
