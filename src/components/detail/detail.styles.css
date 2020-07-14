@@ -3,11 +3,25 @@
       display: block;
       float: center
     }
+    .left-detail{
+        flex: 1 1 45%;
+    }
+    
+    .right-detail{
+        flex: 1 1 45%;
+    }
   }
 
   @media screen and (min-width: 756px) {
     .detail-reviews {
       display: flex
+    }
+    .left-detail{
+        flex: 1 1 44%;
+    }
+    
+    .right-detail{
+        flex: 1 1 44%;
     }
   }
 
@@ -31,7 +45,6 @@
     display: flex;
     flex-direction: column;
     padding: 3%;
-    flex: 1 1 38%;
     max-width: auto;
     overflow-x: hidden;
 }
@@ -47,7 +60,6 @@
 .right-detail{
     font-size: 3vh;
     text-align: left;
-    flex: 1 1 52%;
     max-width: auto;
     padding: 3%
 }
