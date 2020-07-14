@@ -19,7 +19,7 @@ const Detail = (props) => {
         if (!token) {
             return;
         }
-        fetch(process.env.REACT_APP_LOCATION+'/my-likes', {
+        fetch(process.env.REACT_APP_LOCATION + '/my-likes', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -28,7 +28,8 @@ const Detail = (props) => {
         })
             .then(res => res.json())
             .then(response => {
-                if (response.likes && response.likes.includes(id)) {
+                let checkId = response.likes.map(a => a.id)
+                if (response.likes && checkId.includes(id)) {
                     setUserLikes(true)
                 } else {
                     return;
@@ -46,7 +47,7 @@ const Detail = (props) => {
         const newData = {
             likedId: data._id
         }
-        fetch(process.env.REACT_APP_LOCATION+'/like',
+        fetch(process.env.REACT_APP_LOCATION + '/like',
             {
                 method: 'POST',
                 body: JSON.stringify(newData),
@@ -61,7 +62,7 @@ const Detail = (props) => {
                 if (response.success) {
                     setUserLikes(true);
                     return;
-                } else if (response.message){
+                } else if (response.message) {
                     alert(response.message)
                     return;
                 }
@@ -98,7 +99,7 @@ const Detail = (props) => {
         if (reviewAct) {
             setReviewAct(false)
         }
-        fetch(process.env.REACT_APP_LOCATION+`/review-list?resId=${data._id}`, {
+        fetch(process.env.REACT_APP_LOCATION + `/review-list?resId=${data._id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -125,7 +126,7 @@ const Detail = (props) => {
             alert("Oh No! You're not a user! come register :)")
             return;
         };
-        fetch(process.env.REACT_APP_LOCATION+'/review', {
+        fetch(process.env.REACT_APP_LOCATION + '/review', {
             method: "POST",
             body: JSON.stringify(newData),
             headers: {
@@ -156,7 +157,7 @@ const Detail = (props) => {
         if (!pushedData) {
             return;
         }
-        fetch(process.env.REACT_APP_LOCATION+'/details?id=' + pushedData._id, {
+        fetch(process.env.REACT_APP_LOCATION + '/details?id=' + pushedData._id, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -170,7 +171,9 @@ const Detail = (props) => {
             .catch(err => console.log(err))
     }
 
-    React.useState(() => props.location.state ? getDetails(props.location.state.data) : setLoaded(true), []);
+    React.useEffect(() => console.log(props, userLikes))
+
+    React.useEffect(() => props.location.state ? getDetails(props.location.state.data) : setLoaded(true), []);
 
     return (
         <div className='resource-detail'>
@@ -200,33 +203,6 @@ const Detail = (props) => {
                                 </div>
                             )
                         })}
-                        <div className='detail-reviews'>
-                            <React.Fragment>
-                                {!props.admin ?
-                                    <CustomButton
-                                        text='Review'
-                                        disabled={reviewAct ? true : false}
-                                        handleClick={handleClickReview}
-                                    /> :
-                                    null}
-                                {!props.admin ?
-                                    <CustomButton
-                                        text='See All Reviews'
-                                        disabled={reviewList ? true : false}
-                                        handleClick={handleClickList}
-                                    /> :
-                                    null}
-                                {props.profile || props.admin ?
-                                    null :
-                                    <React.Fragment>
-                                        <LikeButton
-                                            userLikes={userLikes}
-                                            handleLike={handleLike}
-                                        />
-                                    </React.Fragment>
-                                }
-                            </React.Fragment>
-                        </div>
                     </div>
                     <div className='right-detail'>
                         {Object.keys(data.services).map((a, i) => {
@@ -259,6 +235,34 @@ const Detail = (props) => {
                     null
             }
             {reviewAct || reviewList ? <div className="detail-layer"></div> : null}
+            <div className='detail-reviews'>
+                <React.Fragment>
+                    {!props.admin ?
+                        <CustomButton
+                            text='Review'
+                            disabled={reviewAct ? true : false}
+                            handleClick={handleClickReview}
+                        /> :
+                        null}
+                    <br />
+                    {!props.admin ?
+                        <CustomButton
+                            text='See All Reviews'
+                            disabled={reviewList ? true : false}
+                            handleClick={handleClickList}
+                        /> :
+                        null}
+                    {props.profile || props.admin ?
+                        null :
+                        <React.Fragment>
+                            <LikeButton
+                                userLikes={userLikes}
+                                handleLike={handleLike}
+                            />
+                        </React.Fragment>
+                    }
+                </React.Fragment>
+            </div>
         </div>
     )
 }

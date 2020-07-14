@@ -16,7 +16,7 @@ const ProfilePage = (props) => {
         if (!token) {
             return;
         }
-        fetch(process.env.REACT_APP_LOCATION+'/my-resource', {
+        fetch(process.env.REACT_APP_LOCATION + '/my-resource', {
             method: 'GET',
             headers: {
                 Authorization: 'Bearer ' + token
@@ -25,9 +25,9 @@ const ProfilePage = (props) => {
             .then(res => res.json())
             .then(response => setInitAffiliation(response))
             .then(() => {
-                return fetch(process.env.REACT_APP_LOCATION+'/my-likes', {
-                        method: 'GET',
-                        headers: {
+                return fetch(process.env.REACT_APP_LOCATION + '/my-likes', {
+                    method: 'GET',
+                    headers: {
                         Authorization: 'Bearer ' + token
                     }
                 })
@@ -55,7 +55,7 @@ const ProfilePage = (props) => {
         <React.Fragment>
             {pageLoaded ? null : <Loading />}
             <React.Fragment >
-                <div hidden={pageLoaded ? false : true} className='profile' >
+                <div hidden={pageLoaded ? false : true} className='profile-block' >
                     <h1>Welcome back {localStorage.getItem('name')}!</h1>
                     <br />
                     <div className='profile-likes'>
@@ -66,16 +66,20 @@ const ProfilePage = (props) => {
                                     return (
                                         <React.Fragment>
                                             <h3>{a.title}</h3>
-                                            {a.dynamicData.map(b => {
-                                                return (
-                                                    <ul>
-                                                        <span>
-                                                            {b.name}:&nbsp;
+                                            {a.dynamicData[0] ?
+                                                a.dynamicData.map(b => {
+                                                    return (
+                                                        <ul>
+                                                            <span>
+                                                                {b.name}:&nbsp;
                                                                 {b.value}&nbsp;as of
                                                                 <div style={{ opacity: '.5' }}>{b.timestamp}</div></span>
-                                                    </ul>
-                                                )
-                                            })}
+                                                        </ul>
+                                                    )
+                                                }) :
+                                                <ul>
+                                                    <p>No updates</p>
+                                                </ul>}
                                         </React.Fragment>
                                     )
                                 })}

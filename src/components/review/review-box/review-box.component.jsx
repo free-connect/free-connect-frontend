@@ -4,6 +4,12 @@ import { AddReview } from '../add-review/add-review.component';
 import { ReviewList } from '../review-list/review-list.component'
 
 export const ReviewBox = (props) => {
+    const handleClickRev = (e) => {
+        if (!node.current.contains(e.target)) {
+            props.handleClickOff();
+        }
+    };
+
     React.useEffect(() => {
         document.addEventListener("mousedown", handleClickRev);
         return () => {
@@ -11,11 +17,12 @@ export const ReviewBox = (props) => {
         };
     });
 
-    const handleClickRev = (e) => {
-        if (!node.current.contains(e.target)) {
-            props.handleClickOff();
-        }
-    };
+    React.useEffect(() => {
+        document.addEventListener("touchstart", handleClickRev);
+        return () => {
+            document.removeEventListener("touchstart", handleClickRev);
+        };
+    });
 
     const node = React.useRef(null)
 

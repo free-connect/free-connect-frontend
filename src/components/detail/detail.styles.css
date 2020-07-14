@@ -24,7 +24,7 @@
     height: 100vh;
     display: flex;
     flex-flow: row wrap;
-    overflow-x: hidden;
+
 }
 
 .left-detail{
@@ -32,7 +32,8 @@
     flex-direction: column;
     padding: 3%;
     flex: 1 1 38%;
-    max-width: auto
+    max-width: auto;
+    overflow-x: hidden;
 }
 
 .left-detail h3{
@@ -46,7 +47,7 @@
 .right-detail{
     font-size: 3vh;
     text-align: left;
-    flex: 1 1 38%;
+    flex: 1 1 52%;
     max-width: auto;
     padding: 3%
 }

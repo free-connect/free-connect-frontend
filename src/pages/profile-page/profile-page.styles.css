@@ -1,4 +1,4 @@
-.profile{
+.profile-block{
     display: flex;
     flex-flow: row wrap;
     max-width: 100%;
@@ -9,11 +9,13 @@
     overflow-x: hidden;
 }
 
-.profile h1{
-    width: 80%
+.profile-block h1{
+    width: 80%;
+    margin-bottom: 3%;
+    margin-top: 0
 }
 
-.profile h2{
+.profile-block h2{
     text-align: left;
     margin-left: 20px;
 }
@@ -24,19 +26,26 @@
     position: relative;
     text-align: left;
     min-width: 325px;
-    border-bottom: solid black 1px;
+    margin-bottom: 5%;
+    padding-bottom: 5%;
+}
+
+.profile-likes h2{
+    margin-bottom: 0;
+}
+
+.profile-likes p{
+    opacity: .5
 }
 
 .profile-likes h3{
-    text-align: left;
     margin-top: 3%;
 }
 
 .profile-resource{
-    width: 50%;
-    max-width: auto;
+    flex-grow: 1;
     position: relative;
-    min-width: 300px;
+    min-width: 325px;
 }
 
 .profile-section p:first-child{
