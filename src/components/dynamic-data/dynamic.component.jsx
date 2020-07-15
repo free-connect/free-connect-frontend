@@ -22,7 +22,7 @@ export const Dynamic = (props) => {
 
     return (
         <React.Fragment>
-            <h1>Dynamic Data</h1>
+            <h1>Updates</h1>
             {props.dynamicData[0] ?
                 [...props.dynamicData].map((a, i) => {
                     return (

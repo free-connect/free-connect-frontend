@@ -3,17 +3,17 @@
     flex-direction: column;
     flex-wrap: nowrap;
     justify-content: space-between;
-    width: 15%;
+    width: 0%;
     position: fixed;
     z-index: 35;
     background-color: rgb(117, 204, 153);
-    height: 85%;
+    height: 0%;
     margin: 0;
     opacity: 1;
     transition-duration: .3s;
     overflow: hidden;
-    padding-top: 8vh;
-    min-width: 250px;
+    padding: 0vh;
+    min-width: 0px;
     text-align: center;
     -moz-user-select: none;
     -webkit-user-select: none;
@@ -21,10 +21,10 @@
 }
 
 .nav-bar.active{
-    width: 0%;
-    height: 0%;
-    padding: 0%;
-    min-width: 0px;
+    width: 15%;
+    height: 85%;
+    padding-top: 8vh;
+    min-width: 250px;
 }
 
 .nav-hamburger{

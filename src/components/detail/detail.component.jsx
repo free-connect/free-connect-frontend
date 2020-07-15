@@ -2,6 +2,7 @@ import React from 'react';
 import { ReviewBox } from '../review/review-box/review-box.component';
 import { CustomButton } from '../custom-button/custom-button.component';
 import { LikeButton } from '../like-button/like-button.component';
+import { Loading } from '../loading-icon/loading.component';
 
 import { withRouter } from 'react-router-dom';
 import './detail.styles.css'
@@ -177,6 +178,7 @@ const Detail = (props) => {
 
     return (
         <div className='resource-detail'>
+            {loaded ? null : <Loading />}
             {Object.keys(data)[0] && loaded ?
                 <React.Fragment>
                     <div className='left-detail'>
@@ -235,34 +237,36 @@ const Detail = (props) => {
                     null
             }
             {reviewAct || reviewList ? <div className="detail-layer"></div> : null}
-            <div className='detail-reviews'>
-                <React.Fragment>
-                    {!props.admin ?
-                        <CustomButton
-                            text='Review'
-                            disabled={reviewAct ? true : false}
-                            handleClick={handleClickReview}
-                        /> :
-                        null}
-                    <br />
-                    {!props.admin ?
-                        <CustomButton
-                            text='See All Reviews'
-                            disabled={reviewList ? true : false}
-                            handleClick={handleClickList}
-                        /> :
-                        null}
-                    {props.profile || props.admin ?
-                        null :
-                        <React.Fragment>
-                            <LikeButton
-                                userLikes={userLikes}
-                                handleLike={handleLike}
-                            />
-                        </React.Fragment>
-                    }
-                </React.Fragment>
-            </div>
+            {loaded ?
+                <div className='detail-reviews'>
+                    <React.Fragment>
+                        {!props.admin ?
+                            <CustomButton
+                                text='Review'
+                                disabled={reviewAct ? true : false}
+                                handleClick={handleClickReview}
+                            /> :
+                            null}
+                        <br />
+                        {!props.admin ?
+                            <CustomButton
+                                text='See All Reviews'
+                                disabled={reviewList ? true : false}
+                                handleClick={handleClickList}
+                            /> :
+                            null}
+                        {props.profile || props.admin ?
+                            null :
+                            <React.Fragment>
+                                <LikeButton
+                                    userLikes={userLikes}
+                                    handleLike={handleLike}
+                                />
+                            </React.Fragment>
+                        }
+                    </React.Fragment>
+                </div> :
+                null}
         </div>
     )
 }

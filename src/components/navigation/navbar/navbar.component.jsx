@@ -47,10 +47,10 @@ const NavBar = (props) => {
                 <div className={!active ? "line" : 'line active'}></div>
                 <div className={!active ? "line1" : 'line1 active'}></div>
             </div>
-            <div className={!active ? 'nav-bar active' : 'nav-bar'}>
+            <div className={!active ? 'nav-bar' : 'nav-bar active'}>
                 {auth ?
                     <React.Fragment>
-                        <LinkStyled loc='/' name='Home' />
+                        <LinkStyled loc='/' name='Home' handleClick={setActive}/>
                         <LinkStyled loc='/resources' name='Resources' />
                         <LinkStyled loc='/about' name='About' />
                         {props.admin ?

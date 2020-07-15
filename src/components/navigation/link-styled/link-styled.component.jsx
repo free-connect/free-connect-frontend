@@ -5,19 +5,11 @@ import { NavLink } from 'react-router-dom'
 export const LinkStyled = (props) => {
     const [active, setActive] = React.useState(false);
 
-    const handleOver = () => {
-        setActive(true)
-    }
-
-    const handleOut = () => {
-        setActive(false)
-    }
-
     return (
         <div className='link-styled-block'>
             <NavLink
-                onMouseOver={handleOver}
-                onMouseOut={handleOut}
+                onMouseOver={() => setActive(true)}
+                onMouseOut={() => setActive(false)}
                 className={`nav ${!active ? '' : 'active'}`}
                 activeClassName='nav-active'
                 exact={props.loc === '/' ? true : false}

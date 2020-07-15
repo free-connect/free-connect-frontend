@@ -68,7 +68,7 @@ const Resource = (props) => {
                     {Object.keys(props.data.services).map((a, i) => <li key={i}>{a}</li>)}
                 </ul>
                 <br />
-                <CustomButton handleClick={handleDetail} text='Learn more!' />
+                <CustomButton handleClick={handleDetail} text='Details' />
                 <br />
                 <br />
                 <a

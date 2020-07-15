@@ -110,14 +110,14 @@ const ProfilePage = (props) => {
                                             Want to add a new resource? This will help people in need access necessary
                                             resources in their area. This section allows you to add some vital information
                                             for your resource page. Along with the basics, we've also included a section to
-                                            clarify how you assist with certain services along with the option to add 'Dynamic
-                                            Data.'  Dynamic Data is simply information about your nonprofit that will change
+                                            clarify how you assist with certain services along with the option to add 'Updates.'
+                                            Updates are facts about your nonprofit that will change
                                             on a daily basis (think beds, available housing applications, new services, etc). This
                                             information will be featured on the users profile when they sign in to ensure that
                                             they have this information immediately. It also includes a timestamp to make sure
-                                            dynamic information is up-to-date. Feel free to visit the 'about' section for more
+                                            these updates are current. Feel free to visit the 'about' section for more
                                             details!
-            </p>
+                                        </p>
                                         <AddResource register={true} />
                                     </div>
                                 </React.Fragment> :
