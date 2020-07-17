@@ -122,8 +122,8 @@ function App(props) {
           {isAuth ? <Route exact path="/profile" render={() => <ProfilePage logout={handleSubmitLogout} token={token} />} /> : null}
           <Route path='*' component={ErrorPage} />
         </Switch>
+        <Footer />
       </div>
-      {/* <Footer /> */}
     </React.Fragment>
   );
 }

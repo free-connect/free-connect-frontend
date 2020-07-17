@@ -7,7 +7,7 @@
     position: fixed;
     z-index: 35;
     background-color: rgb(117, 204, 153);
-    height: 0%;
+    height: 85%;
     margin: 0;
     opacity: 1;
     transition-duration: .3s;
@@ -18,13 +18,16 @@
     -moz-user-select: none;
     -webkit-user-select: none;
     user-select: none;
+    opacity: 0;
 }
 
 .nav-bar.active{
     width: 15%;
-    height: 85%;
     padding-top: 8vh;
     min-width: 250px;
+    border-right: black solid 1px;
+    border-bottom: black solid 1px;
+    opacity: 1
 }
 
 .nav-hamburger{
@@ -94,5 +97,6 @@
 
 .nav-logout{
     padding-top: -55px;
-    width: 100%
+    width: 100%;
+    padding-bottom: 5%;
 }

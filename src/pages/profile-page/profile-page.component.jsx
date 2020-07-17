@@ -56,20 +56,20 @@ const ProfilePage = (props) => {
             {pageLoaded ? null : <Loading />}
             <React.Fragment >
                 <div hidden={pageLoaded ? false : true} className='profile-block' >
-                    <h1>Welcome back {localStorage.getItem('name')}!</h1>
+                    {loaded ? <h1>Welcome back {localStorage.getItem('name')}!</h1> : null}
                     <br />
                     <div className='profile-likes'>
                         {loaded && likes[0] ?
                             <React.Fragment>
                                 <h2>Liked Resources</h2>
-                                {likes.map(a => {
+                                {likes.map((a,i) => {
                                     return (
-                                        <React.Fragment>
+                                        <React.Fragment key={i}>
                                             <h3>{a.title}</h3>
                                             {a.dynamicData[0] ?
-                                                a.dynamicData.map(b => {
+                                                a.dynamicData.map((b, ind) => {
                                                     return (
-                                                        <ul>
+                                                        <ul key={ind}>
                                                             <span>
                                                                 {b.name}:&nbsp;
                                                                 {b.value}&nbsp;as of

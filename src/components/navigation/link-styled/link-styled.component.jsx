@@ -14,7 +14,7 @@ export const LinkStyled = (props) => {
                 activeClassName='nav-active'
                 exact={props.loc === '/' ? true : false}
                 to={props.loc}>
-                {props.name}
+                <p onClickCapture={() => props.handleClick()}>{props.name}</p>
             </NavLink>
         </div>
     )

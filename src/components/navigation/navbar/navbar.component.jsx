@@ -50,23 +50,23 @@ const NavBar = (props) => {
             <div className={!active ? 'nav-bar' : 'nav-bar active'}>
                 {auth ?
                     <React.Fragment>
-                        <LinkStyled loc='/' name='Home' handleClick={setActive}/>
-                        <LinkStyled loc='/resources' name='Resources' />
-                        <LinkStyled loc='/about' name='About' />
+                        <LinkStyled loc='/' name='Home' handleClick={() => setActive(false)}/>
+                        <LinkStyled loc='/resources' name='Resources' handleClick={() => setActive(false)}/>
+                        <LinkStyled loc='/about' name='About' handleClick={() => setActive(false)}/>
                         {props.admin ?
                             <React.Fragment>
-                                <LinkStyled loc='/admin-resources' name='Admin Resources' />
+                                <LinkStyled loc='/admin-resources' name='Admin Resources' handleClick={() => setActive(false)}/>
                             </React.Fragment> :
                             null}
-                        <LinkStyled loc='/profile' name='Profile' />
+                        <LinkStyled loc='/profile' name='Profile' handleClick={() => setActive(false)}/>
                         <div className='nav-logout'>
                             <CustomButton handleClick={handleLogout} text='Logout' logout="true" />
                         </div>
                     </React.Fragment> :
                     <React.Fragment>
-                        <LinkStyled loc='/' name='Home' />
-                        <LinkStyled loc='/resources' name='Resources' />
-                        <LinkStyled loc='/about' name="About" />
+                        <LinkStyled loc='/' name='Home' cheese={'yes'} handleClick={() => setActive(false)}/>
+                        <LinkStyled loc='/resources' name='Resources' handleClick={() => setActive(false)}/>
+                        <LinkStyled loc='/about' name="About" handleClick={() => setActive(false)}/>
                         <div className={logActive ? 'nav-login active' : 'nav-login'}>
                             <p onClick={() => setLogActive(!logActive)}>Login</p>
                         </div>

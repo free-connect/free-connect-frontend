@@ -4,11 +4,10 @@
     background-color: #45b6fe;
     color: white;
     font-family: 'Prata', serif;
-    font-size: 3vh;
-    padding-bottom: 6vh;
-    height: 10%;
+    font-size: 2vh;
+    height: 15vh;
     position: absolute;
-    bottom: 0px;
+    bottom: 0vh;
     width: 100%;
 }
 

@@ -31,6 +31,7 @@ export const SelectResource = (props) => {
             {loaded ?
                 <select onChange={handleDropdown}>
                     <option disabled>Select a Resource</option>
+                    <option>None</option>
                     {resources.map((a, i) => {
                         return (
                             <React.Fragment key={i}>
@@ -38,7 +39,6 @@ export const SelectResource = (props) => {
                             </React.Fragment>
                         )
                     })}
-                    <option>None</option>
                 </select> :
                 null
             }
