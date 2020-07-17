@@ -15,9 +15,6 @@ export const AboutPage = () => {
                 any help I can get! Feel free to take a look at the source code, fork the project,
                 and send pull requests to me <a href='https://github.com/free-connect'>here</a>.
                 Thanks again for checking it out!
-                <br />
-                <br />
-                -David
             </p>
         </div>
     )
