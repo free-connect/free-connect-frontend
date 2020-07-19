@@ -1,13 +1,16 @@
 .like-block{
     text-align: center;
+    margin: auto;
+    margin-bottom: 5vw;
 }
 
 .fa.fa-thumbs-o-up{
     transition-duration: .6s;
     cursor: pointer;
     font-size: 50px;
+    color: #45b6fe;
 }
 
 .fa.fa-thumbs-o-up.active{
-    color: #45b6fe
+    color: rgb(76, 76, 212)
 }

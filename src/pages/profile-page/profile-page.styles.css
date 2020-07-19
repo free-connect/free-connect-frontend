@@ -45,7 +45,7 @@
 .profile-resource{
     flex-grow: 1;
     position: relative;
-    min-width: 325px;
+    min-width: 260px;
 }
 
 .profile-section p:first-child{

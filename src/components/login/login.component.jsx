@@ -64,9 +64,10 @@ const Login = (props) => {
                 <CustomButton text='Login' handleClick={handleLogin} />
             </div>
             <div className='login-text'>
-                {/* <LinkStyled loc='/reset' name='Forgot password?' /> */}
                 <br />
-                <LinkStyled loc='/register' name='Not a member?' />
+                {/* <LinkStyled loc='/reset' name='Forgot password?' handleClick={() => props.setActive(false)}/> */}
+                <br />
+                <LinkStyled loc='/register' name='Not a member?' handleClick={() => props.setActive(false)}/>
             </div>
         </div>
     )

@@ -1,7 +1,6 @@
 @media screen and (max-width: 756px) {
     .detail-reviews {
       display: block;
-      float: center
     }
     .left-detail{
         flex: 1 1 45%;
@@ -9,12 +8,16 @@
     
     .right-detail{
         flex: 1 1 45%;
+    }
+    .left-detail h3{
+        font-size: 8vw;
     }
   }
 
   @media screen and (min-width: 756px) {
     .detail-reviews {
-      display: flex
+      display: flex;
+      justify-content: space-between;
     }
     .left-detail{
         flex: 1 1 44%;
@@ -22,6 +25,9 @@
     
     .right-detail{
         flex: 1 1 44%;
+    }
+    .left-detail h3{
+        font-size: 6vh;
     }
   }
 
@@ -43,12 +49,7 @@
     display: flex;
     flex-direction: column;
     padding: 3%;
-    max-width: auto;
     overflow-x: hidden;
-}
-
-.left-detail h3{
-    font-size: 8vh;
 }
 
 .left-detail img{

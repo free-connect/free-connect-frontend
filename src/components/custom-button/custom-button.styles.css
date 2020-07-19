@@ -19,7 +19,8 @@
 
 
 .custom-button.active{
-    background-color: #daf0ff
+    background-color: #daf0ff;
+    color: rgb(76, 76, 212)
 }
 
 .custom-button.disabled{

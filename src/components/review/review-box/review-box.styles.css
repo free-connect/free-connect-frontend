@@ -1,15 +1,14 @@
 .review-box{
     height: 0px;
     width: 0px;
-    border: solid black 1px;
     transition-duration: .6s;
     border-radius: 0%;
     opacity: 0;
     position: absolute;
     font-size: 0px;
     left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    top: 20%;
+    transform: translate(-50%, -20%);
     overflow-y: scroll;
 }
 
@@ -28,12 +27,13 @@
 .review-box.active{
     height: 375px;
     width: 350px;
-    max-width: 100%;
+    max-width: 90%;
     border-radius: 15%;
     opacity: 1;
     font-size: 17px;
-    background-color: white;
+    background-color: #F8F8FF;
     z-index: 50;
+    box-shadow: 0 10px 13px #777;
 }
 
 .review-box::-webkit-scrollbar {

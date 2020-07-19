@@ -45,7 +45,7 @@ const NavBar = (props) => {
         <div ref={node}>
             <div className='nav-hamburger' onClick={() => setActive(!active)}>
                 <div className={!active ? "line" : 'line active'}></div>
-                <div className={!active ? "line1" : 'line1 active'}></div>
+                <div className={!active ? "line bel" : 'line bel active'}></div>
             </div>
             <div className={!active ? 'nav-bar' : 'nav-bar active'}>
                 {auth ?
@@ -64,7 +64,7 @@ const NavBar = (props) => {
                         </div>
                     </React.Fragment> :
                     <React.Fragment>
-                        <LinkStyled loc='/' name='Home' cheese={'yes'} handleClick={() => setActive(false)}/>
+                        <LinkStyled loc='/' name='Home' handleClick={() => setActive(false)}/>
                         <LinkStyled loc='/resources' name='Resources' handleClick={() => setActive(false)}/>
                         <LinkStyled loc='/about' name="About" handleClick={() => setActive(false)}/>
                         <div className={logActive ? 'nav-login active' : 'nav-login'}>

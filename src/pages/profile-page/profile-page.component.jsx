@@ -95,13 +95,13 @@ const ProfilePage = (props) => {
                         {loaded && initAffiliation ?
                             <React.Fragment>
                                 <h2>Affiliated Resource</h2>
-                                <div>
+                                <React.Fragment>
                                     <Resource
                                         admin={true}
                                         profile={true}
                                         data={initAffiliation}
                                     />
-                                </div>
+                                </React.Fragment>
                             </React.Fragment> :
                             loaded ?
                                 <React.Fragment>
