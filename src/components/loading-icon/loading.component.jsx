@@ -30,6 +30,7 @@ export const Loading = () => {
 
     return (
         <div className='loading-screen'>
+            <p>Loading...</p>
             <div className='loading'>
                 {visible ?
                     new Array(5)

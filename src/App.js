@@ -9,11 +9,12 @@ import ProfilePage from './pages/profile-page/profile-page.component';
 import NavBar from './components/navigation/navbar/navbar.component';
 import Detail from './components/detail/detail.component';
 import { Footer } from './components/footer/footer.component';
-import { ResetPage } from './pages/reset-page/reset-page.component';
+import ResetPage from './pages/reset-page/reset-page.component';
 import { AdminResourcePage } from './pages/admin-resources/admin-resource-page.component';
 import { ResourcePage } from './pages/resource-page/resource-page.component';
 import { AboutPage } from './pages/about-page/about-page.component';
 import { ErrorPage } from './pages/error-page/error-page.component';
+import { ContactPage } from './pages/contact-page/contact-page.component';
 
 
 function App(props) {
@@ -114,7 +115,8 @@ function App(props) {
           <Route exact path='/resources' component={ResourcePage} />
           <Route exact path='/about' component={AboutPage} />
           <Route exact path='/detail' component={Detail} />
-          {/* <Route exact path='/reset' component={ResetPage} /> */}
+          <Route exact path='/reset' component={ResetPage} />
+          <Route exact path='/contact' component={ContactPage} />
           {isAuth ? <Route exact path='/edit-resource' component={EditResourcePage} /> : null}
           {(isAuth && userId === process.env.REACT_APP_USER_ID) ?
             <Route exact path="/admin-resources" component={AdminResourcePage} /> :

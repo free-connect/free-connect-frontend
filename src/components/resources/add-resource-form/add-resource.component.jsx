@@ -38,7 +38,6 @@ const AddResource = (props) => {
     }
 
     const handleEdit = () => {
-        console.log('propz', props.location.state.data)
         if (!props.location.state.data) {
             props.history.push('/');
             return;

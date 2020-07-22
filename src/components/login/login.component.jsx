@@ -65,7 +65,7 @@ const Login = (props) => {
             </div>
             <div className='login-text'>
                 <br />
-                {/* <LinkStyled loc='/reset' name='Forgot password?' handleClick={() => props.setActive(false)}/> */}
+                <LinkStyled loc='/reset' name='Forgot password?' handleClick={() => props.setActive(false)}/>
                 <br />
                 <LinkStyled loc='/register' name='Not a member?' handleClick={() => props.setActive(false)}/>
             </div>

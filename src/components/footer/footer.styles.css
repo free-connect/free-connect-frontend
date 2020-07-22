@@ -2,20 +2,26 @@
     display: flex;
     flex-flow: row wrap;
     background-color: #45b6fe;
-    color: white;
     font-family: 'Prata', serif;
     font-size: 2vh;
     height: 15vh;
     position: absolute;
     bottom: 0vh;
     width: 100%;
+    text-align: left
 }
 
-.footer-box p{
+.footer-box__left a{
+    text-decoration: none !important;
+    color: black !important;
+}
+
+.footer-box__left p{
     padding: 1vh;
     cursor: pointer;
 }
 
-.footer-box p:hover{
+
+.footer-box__left p:hover{
     color: yellow
 }

@@ -1,25 +1,48 @@
 import React from 'react';
 import { Form } from '../../components/form/form.component';
+import { withRouter } from 'react-router-dom';
 import './reset-page.styles.css'
 
-export const ResetPage = () => {
+const ResetPage = (props) => {
     const [email, setEmail] = React.useState('')
 
-    const handleReset = () => {
-        fetch(process.env.REACT_APP_LOCATION + '/reset')
-            .then(res => console.log(res))
+    const handleReset = (e) => {
+        e.preventDefault()
+        const data = {
+            email: email
+        }
+        fetch(process.env.REACT_APP_LOCATION + '/reset', {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(response => response.json())
+            .then(res => {
+                console.log(res, res.success)
+                if (res.success) {
+                    setEmail('')
+                    alert('reset email sent! Please check your inbox for further instructions.')
+                    props.history.push('/');
+                } else {
+                    alert(res.message)
+                }
+            })
             .catch(err => console.log(err))
     }
 
     return (
-        <div className='reset-form'>
+        <form className='reset-form' onSubmit={handleReset}>
             <Form
                 title="email"
                 label="Please enter email address associated with your profile."
                 value={email}
-                type="text"
+                type="email"
                 changeFunction={setEmail} />
-            <button onClick={handleReset} type='submit'>Send reset email</button>
-        </div>
+            <button type='submit'>Send reset email</button>
+        </form>
     )
 }
+
+export default withRouter(ResetPage);

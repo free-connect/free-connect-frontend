@@ -18,7 +18,7 @@
     grid-template-columns: 50% 50%;
     flex: 1 1 37%;
     padding: 3%;
-    transition-duration: 1s;
+    transition-duration: .2s;
     min-width: auto;
     max-width: 550px;
     font-family: 'Prata', serif;
