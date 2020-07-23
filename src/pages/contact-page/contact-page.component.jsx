@@ -1,15 +1,18 @@
 import React from 'react';
 import './contact-page.styles.css'
 import { Form } from '../../components/form/form.component';
+import { Loading } from '../../components/loading-icon/loading.component';
 
 export const ContactPage = () => {
     const [email, setEmail] = React.useState('');
     const [name, setName] = React.useState('');
     const [subject, setSubject] = React.useState('');
     const [message, setMessage] = React.useState('');
+    const [loading, setLoading] = React.useState(false)
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setLoading(true)
         const data = {
             email: email,
             name: name,
@@ -31,43 +34,54 @@ export const ContactPage = () => {
                     setName('')
                     setSubject('')
                     setMessage('')
+                    setLoading(false)
                     alert('Thanks for sending!')
                 } else {
+                    setLoading(false)
                     alert(res.message)
                 }
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                setLoading(false);
+                alert('hmmm something went wrong');
+                console.log(err);
+            })
     }
 
     return (
-        <form className='contact-page' onSubmit={handleSubmit}>
-            <h1>Contact Page</h1>
-            <p>Have a question about the site? Want to volunteer? Interested in expanding? Feel free to reach out!</p>
-            <Form
-                title="name"
-                label="Name"
-                value={name}
-                type="text"
-                changeFunction={setName} />
-            <Form
-                title="email"
-                label="Email"
-                value={email}
-                type="email"
-                changeFunction={setEmail} />
-            <Form
-                title="subject"
-                label="Subject"
-                value={subject}
-                type="text"
-                changeFunction={setSubject} />
-                <br />
-            <p>Message</p>
-            <textarea value={message} onChange={e => setMessage(e.target.value)}></textarea>
-            <br />
-            <button type='submit'>Send!</button>
-            <br />
-        </form>
+        <React.Fragment>
+            {loading ?
+                <Loading /> :
+                <form className='contact-page' onSubmit={handleSubmit}>
+                    <h1>Contact Page</h1>
+                    <p>Have a question about the site? Want to volunteer? Interested in expanding? Feel free to reach out!</p>
+                    <Form
+                        title="name"
+                        label="Name"
+                        value={name}
+                        type="text"
+                        changeFunction={setName} />
+                    <Form
+                        title="email"
+                        label="Email"
+                        value={email}
+                        type="email"
+                        changeFunction={setEmail} />
+                    <Form
+                        title="subject"
+                        label="Subject"
+                        value={subject}
+                        type="text"
+                        changeFunction={setSubject} />
+                    <br />
+                    <p>Message</p>
+                    <textarea value={message} onChange={e => setMessage(e.target.value)}></textarea>
+                    <br />
+                    <button type='submit'>Send!</button>
+                    <br />
+                </form>
+            }
+        </React.Fragment>
     )
 }
 
