@@ -64,7 +64,9 @@ export const ContactPage = () => {
                 <br />
             <p>Message</p>
             <textarea value={message} onChange={e => setMessage(e.target.value)}></textarea>
+            <br />
             <button type='submit'>Send!</button>
+            <br />
         </form>
     )
 }

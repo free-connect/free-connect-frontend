@@ -1,13 +1,12 @@
 .contact-page{
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    margin-left: 30%;
-    margin-right: 30%;
+    margin-left: 20%;
+    margin-right: 20%;
 }
 
 .contact-page textarea{
-    height: 10vw;
+    height: 25vh;
     width: 100%;
     resize: none;
 }
