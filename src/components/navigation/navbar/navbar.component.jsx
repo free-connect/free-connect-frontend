@@ -52,7 +52,7 @@ const NavBar = (props) => {
                     <React.Fragment>
                         <LinkStyled loc='/' name='Home' handleClick={() => setActive(false)}/>
                         <LinkStyled loc='/resources' name='Resources' handleClick={() => setActive(false)}/>
-                        <LinkStyled loc='/about' name='About' handleClick={() => setActive(false)}/>
+                        <LinkStyled loc='/contact' name='Contact' handleClick={() => setActive(false)}/>
                         {props.admin ?
                             <React.Fragment>
                                 <LinkStyled loc='/admin-resources' name='Admin Resources' handleClick={() => setActive(false)}/>
