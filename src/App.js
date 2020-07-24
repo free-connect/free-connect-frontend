@@ -10,6 +10,7 @@ import NavBar from './components/navigation/navbar/navbar.component';
 import Detail from './components/detail/detail.component';
 import { Footer } from './components/footer/footer.component';
 import ResetPage from './pages/reset-page/reset-page.component';
+import NewPwPage from './pages/new-pw-page/newPw-page.component';
 import { AdminResourcePage } from './pages/admin-resources/admin-resource-page.component';
 import { ResourcePage } from './pages/resource-page/resource-page.component';
 import { AboutPage } from './pages/about-page/about-page.component';
@@ -115,6 +116,7 @@ function App(props) {
           <Route exact path='/resources' component={ResourcePage} />
           <Route exact path='/about' component={AboutPage} />
           <Route exact path='/detail' component={Detail} />
+          <Route exact path='/reset/:resetId' component={NewPwPage} />
           <Route exact path='/reset' component={ResetPage} />
           <Route exact path='/contact' component={ContactPage} />
           {isAuth ? <Route exact path='/edit-resource' component={EditResourcePage} /> : null}

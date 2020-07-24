@@ -18,12 +18,6 @@ function requireHTTPS(req, res, next) {
 
 app.use(requireHTTPS)
 
-// app.use((req, res, next) => {
-//     res.set({
-//         'Content-Security-Policy': "script-src 'self', frame-ancestors 'none', X-Content-Type-Options 'nosniff'"
-//     })
-// })
-
 app.use(express.static(path.join(__dirname, 'build')))
 
 app.get('*', (req, res, next) => {

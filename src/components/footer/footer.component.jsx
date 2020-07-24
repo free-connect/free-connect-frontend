@@ -7,8 +7,8 @@ export const Footer = () => {
     return (
         <footer className='footer-box'>
             <div className='footer-box__left'>
-                <Link to={'/contact'}>
-                    <p>Contact</p>
+                <Link to={'/about'}>
+                    <p>About</p>
                 </Link>
                 {/* <Link to={'/Donate'}>
                     <p>Donate</p>

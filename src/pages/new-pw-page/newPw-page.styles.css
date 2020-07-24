@@ -1,0 +1,7 @@
+.new-pw-form{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin-left: 30%;
+    margin-right: 30%;
+}
