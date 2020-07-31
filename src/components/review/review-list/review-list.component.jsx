@@ -1,7 +1,8 @@
 import React from 'react';
+import './review-list.styles.css';
 
 export const ReviewList = (props) => (
-    <React.Fragment>
+    <div className='review-list-block'>
         {props.data[0] ?
             props.data.map(a => {
                 return (
@@ -12,5 +13,5 @@ export const ReviewList = (props) => (
                 )
             }) :
             <p>no reviews!</p>}
-    </React.Fragment>
+    </div>
 )

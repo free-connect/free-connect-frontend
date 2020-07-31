@@ -186,7 +186,7 @@ const Detail = (props) => {
                         <br />
                         <a href={data.website}>
                             <img
-                                src={`${process.env.REACT_APP_LOCATION}/${data.url}`}
+                                src={data.url}
                                 alt={data.title}
                                 height='auto'
                                 width='80%'

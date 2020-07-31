@@ -17,9 +17,7 @@ export const SelectResource = (props) => {
     const loadResources = () => {
         fetch(process.env.REACT_APP_LOCATION+'/data/register')
             .then(response => response.json())
-            .then(newData => {
-                setResources(newData);
-            })
+            .then(newData => setResources(newData))
             .then(() => setLoaded(true))
             .catch(err => console.log(err))
     }

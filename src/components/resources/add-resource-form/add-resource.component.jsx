@@ -7,6 +7,7 @@ import { CityForm } from '../../city-form/city-form.component';
 import { SelectResource } from '../../select-resource/select-resource.component'
 import { withRouter } from 'react-router-dom';
 import { ServicesAll } from '../../services-all/services-all.component';
+import { CustomButton } from '../../custom-button/custom-button.component';
 
 const AddResource = (props) => {
     const [title, setTitle] = React.useState('');
@@ -60,7 +61,7 @@ const AddResource = (props) => {
         setServices(services)
         setId(_id);
         setCity(city);
-        return
+        return;
     }
 
     const handleAddUserResource = (aff, tok) => {
@@ -162,7 +163,7 @@ const AddResource = (props) => {
                 .then(res => res.json())
                 .then(response => {
                     if (response.errors) {
-                        console.log(response, response.errors)
+                        console.log(response, response.errors, 'alo')
                         alert(response.errors.map(a => a.msg).join(' '));
                         return;
                     }
@@ -184,7 +185,7 @@ const AddResource = (props) => {
     }, [])
 
     return (
-        <form className='add-resource-form' onSubmit={handleSubmit}>
+        <div className='add-resource-form'>
             <Form
                 title='title'
                 label="Organization Name"
@@ -240,13 +241,8 @@ const AddResource = (props) => {
                     : null}
             </React.Fragment>
             <br />
-            <button
-                className="add-resource-button"
-                type="submit"
-            >
-                Submit Information
-            </button>
-        </form>
+            <CustomButton handleClick={handleSubmit} text={'Submit!'}/>
+        </div>
     )
 }
 

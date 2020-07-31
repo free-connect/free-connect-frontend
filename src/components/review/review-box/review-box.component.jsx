@@ -28,7 +28,7 @@ export const ReviewBox = (props) => {
 
     return (
         <div ref={node} className={`review-box ${!props.active ? '' : 'active'}`}>
-            <p onClick={props.handleClickOff}>X</p>
+            <h3 onClick={props.handleClickOff}>X</h3>
             {props.type === 'list' ?
                 <ReviewList {...props} /> :
                 <AddReview {...props} />
