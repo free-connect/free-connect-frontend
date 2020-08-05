@@ -4,15 +4,16 @@
         width: 10%;
     }
     50%{
-        height: 13%;
-        width: 13%;
-        background-color: rgb(109, 109, 233)
+        height: 10%;
+        width: 10%;
+        background-color: rgb(109, 109, 233);
     }
     100% {
         height: 10%;
         width: 10%;
         margin-left: 70%;
-        background-color: rgb(20, 110, 88)
+        background-color: rgb(20, 110, 88);
+        border: solid rgb(20, 110, 88) 1px;
     }
   }
 
@@ -24,8 +25,8 @@
         width: 10%;
     }
     50%{
-        height: 13%;
-        width: 13%;
+        height: 10%;
+        width: 10%;
         background-color: rgb(109, 109, 233);
     }
     100% {
@@ -45,15 +46,16 @@
 .loading-screen p{
     font-size: 8vh;
     padding: 0;
-    margin: 0
+    margin: 0;
 }
 
 .loading{
     position: fixed;
     top: 40%;
     left: 50%;
-    width: 80px;
-    height: 80px;
+    width: 20vh;
+    height: 20vh;
+    margin-top: 10vh;
     transform: translate(-50%, -50%);
     overflow: visible;
 }
@@ -66,25 +68,28 @@
     border-radius: 100%;
     animation-duration: .8s;
     animation-name: slideOver;
-    animation-timing-function: cubic-bezier(0.331, 0.441, 0.444, 1.649);
+    animation-timing-function: cubic-bezier(0.33, 0.44, 0.44, 1.64);
 }
 
-.ball.one{
-    animation-delay: .1s;
+@mixin animation-change($bool) {
+    @if $bool == true{
+        animation-name: slideOver
+    }
+    @else {
+        animation-name: slideBack
+    }
+    animation-delay: 0s;
+    background-color: rgb(109, 109, 233);
 }
 
-.ball.two{
-    animation-delay: .2s
+@for $i from 0 to 5 {
+    .ball.mod-#{$i} { animation-delay: .1s*$i; }
 }
 
-.ball.three{
-    animation-delay: .3s
+.ball.ball-fro{
+    @include animation-change(false)
 }
 
-.ball.four{
-    animation-delay: .4s
-}
-
-.ball.five{
-    animation-delay: .5s
+.ball.ball-to{
+    @include animation-change(true)
 }

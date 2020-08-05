@@ -1,10 +1,8 @@
 import React from 'react';
-import './loading.styles.css'
+import './loading.styles.scss'
 
 export const Loading = () => {
-    const [visible, setVisible] = React.useState(true)
-
-    let nums = ['one', 'two', 'three', 'four', 'five']
+    const [visible, setVisible] = React.useState(true);
 
     const handleVis = () => {
         if (document.visibilityState === 'visible') {
@@ -22,10 +20,11 @@ export const Loading = () => {
 
     const changeFunction = (index) => {
         let ball = document.querySelector(`.loading div:nth-child(${index + 1})`)
-        const check = getComputedStyle(ball);
-        ball.style.animationDelay = '0s'
-        ball.style.backgroundColor = 'rgb(109, 109, 233)'
-        ball.style.animationName = check.animationName === 'slideOver' ? 'slideBack' : 'slideOver'
+        if (ball.className.includes('mod') || ball.className === 'ball ball-to') {
+            ball.className = 'ball ball-fro';
+        } else if (ball.className === 'ball ball-fro') {
+            ball.className = 'ball ball-to';
+        }
     }
 
     return (
@@ -39,7 +38,7 @@ export const Loading = () => {
                         .map((b, i) =>
                             <div
                                 key={i}
-                                className={'ball ' + nums[i]}
+                                className={`ball mod-${i}`}
                                 onAnimationEnd={() => changeFunction(i)}
                             >
                             </div>) :
