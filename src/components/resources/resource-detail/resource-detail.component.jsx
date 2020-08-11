@@ -1,19 +1,21 @@
 import React from 'react';
-import { ReviewBox } from '../review/review-box/review-box.component';
-import { CustomButton } from '../custom-button/custom-button.component';
-import { LikeButton } from '../like-button/like-button.component';
-import { Loading } from '../loading-icon/loading.component';
+import { ReviewBox } from '../../review/review-box/review-box.component';
+import { CustomButton } from '../../custom-button/custom-button.component';
+import { LikeButton } from '../../like-button/like-button.component';
+import { Loading } from '../../loading-icon/loading.component';
+import { ResourceLink } from '../../resources/resource-link/resource-link.component';
+import { DetailServices } from '../detail-services/detail-services.component';
 
 import { withRouter } from 'react-router-dom';
-import './detail.styles.css'
+import './resource-detail.styles.css'
 
-const Detail = (props) => {
-    const [data, setData] = React.useState({})
+const ResourceDetail = (props) => {
+    const [data, setData] = React.useState({});
     const [loaded, setLoaded] = React.useState(false);
-    const [reviewAct, setReviewAct] = React.useState(false)
+    const [reviewAct, setReviewAct] = React.useState(false);
     const [reviewList, setReviewList] = React.useState(false);
     const [reviewData, setReviewData] = React.useState([]);
-    const [userLikes, setUserLikes] = React.useState(false)
+    const [userLikes, setUserLikes] = React.useState(false);
 
     const handleResourceLoad = (id) => {
         const token = localStorage.getItem('token');
@@ -184,14 +186,14 @@ const Detail = (props) => {
                     <div className='left-detail'>
                         <h3>{data.title}</h3>
                         <br />
-                        <a href={data.website}>
                             <img
                                 src={data.url}
                                 alt={data.title}
                                 height='auto'
                                 width='80%'
                             />
-                        </a>
+                        <br />
+                        <ResourceLink website={data.website}/>
                         <br />
                         <p>{data.address}</p>
                         <p>{data.city ? `${data.city}, CO` : 'none specified'}</p>
@@ -205,39 +207,7 @@ const Detail = (props) => {
                                 </div>
                             )
                         })}
-                    </div>
-                    <div className='right-detail'>
-                        {Object.keys(data.services).map((a, i) => {
-                            return (
-                                <div key={i} className='detail-service'>
-                                    <h4>{a}</h4>
-                                    <ul>
-                                        {data.services[a].map((b, ind) => <li key={ind}>{b}</li>)}
-                                    </ul>
-                                </div>
-                            )
-                        })}
-                    </div>
-                    <ReviewBox
-                        type='list'
-                        active={reviewList}
-                        data={reviewData}
-                        handleClickOff={() => setReviewList(false)}
-                    />
-                    <ReviewBox
-                        type='review'
-                        active={reviewAct}
-                        handleSubmitReview={handleSubmitReview}
-                        handleClickOff={() => setReviewAct(false)}
-                    />
-                </React.Fragment>
-                :
-                loaded ?
-                    <p>Thanks for checking out resource details! Head over to the resoure page to browse a list of available resources in your area</p> :
-                    null
-            }
-            {reviewAct || reviewList ? <div className="detail-layer"></div> : null}
-            {loaded ?
+                        {loaded ?
                 <div className='detail-reviews'>
                     <React.Fragment>
                         {!props.admin ?
@@ -267,8 +237,35 @@ const Detail = (props) => {
                     </React.Fragment>
                 </div> :
                 null}
+                    </div>
+                    <div className='right-detail'>
+                        {Object.keys(data.services).map((service, key) => {
+                            return (
+                                <DetailServices key={key} service={service} details={data.services[service]}/>
+                            )
+                        })}
+                    </div>
+                    <ReviewBox
+                        type='list'
+                        active={reviewList}
+                        data={reviewData}
+                        handleClickOff={() => setReviewList(false)}
+                    />
+                    <ReviewBox
+                        type='review'
+                        active={reviewAct}
+                        handleSubmitReview={handleSubmitReview}
+                        handleClickOff={() => setReviewAct(false)}
+                    />
+                </React.Fragment>
+                :
+                loaded ?
+                    <p>Thanks for checking out resource details! Head over to the resoure page to browse a list of available resources in your area</p> :
+                    null
+            }
+            {reviewAct || reviewList ? <div className="detail-layer"></div> : null}
         </div>
     )
 }
 
-export default withRouter(Detail)
+export default withRouter(ResourceDetail)

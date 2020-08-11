@@ -72,7 +72,7 @@ const RegisterPage = (props) => {
                     return;
                 } else {
                     setLoading(false)
-                    alert('email/username already exists! Go to Login Page, idiot. Or, you can try a different username/email :)');
+                    alert('email/username already exists! Go to Login Page. Or, you can try a different username/email :)');
                     return;
                 }
             })

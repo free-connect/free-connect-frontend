@@ -1,19 +1,20 @@
 .footer-box{
     display: flex;
     flex-flow: row wrap;
-    background-color: #45b6fe;
+    background-color: #0c3752;
     font-family: 'Prata', serif;
     font-size: 2vh;
     height: 15vh;
     position: absolute;
     bottom: 0vh;
     width: 100%;
-    text-align: left
+    text-align: left;
+    justify-content: space-between;
 }
 
 .footer-box__left a{
     text-decoration: none !important;
-    color: black !important;
+    color: white !important;
 }
 
 .footer-box__left p{
@@ -24,4 +25,11 @@
 
 .footer-box__left p:hover{
     color: yellow
+}
+
+.footer-box__right{
+    font-size: 1vh;
+    padding: 3vh;
+    color: white !important;
+    cursor: default
 }

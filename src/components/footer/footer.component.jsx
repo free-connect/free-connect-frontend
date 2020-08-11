@@ -19,7 +19,7 @@ export const Footer = () => {
                 <a href='http://www.nth-iter.com'><p>Powered By Nth Iter</p></a>
             </div>
             <div className='footer-box__right'>
-
+                <h1>@2020, Free Connect</h1>
             </div>
         </footer>
     )

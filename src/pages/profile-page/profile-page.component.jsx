@@ -62,7 +62,7 @@ const ProfilePage = (props) => {
                         {loaded && likes[0] ?
                             <React.Fragment>
                                 <h2>Liked Resources</h2>
-                                {likes.map((a,i) => {
+                                {likes.map((a, i) => {
                                     return (
                                         <React.Fragment key={i}>
                                             <h3>{a.title}</h3>

@@ -19,7 +19,7 @@ const AddResource = (props) => {
     const [city, setCity] = React.useState('Boulder')
     const [dynamicData, setDynamicData] = React.useState([]);
     const [id, setId] = React.useState('');
-    const [affiliation, setAffiliation] = React.useState(null)
+    const [affiliation, setAffiliation] = React.useState(null);
 
     const handleImage = (e) => {
         e.preventDefault();
@@ -91,6 +91,7 @@ const AddResource = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        props.handleLoading(true);
         const token = localStorage.getItem('token');
         if (affiliation) {
             handleAddUserResource(affiliation, token)
@@ -132,6 +133,7 @@ const AddResource = (props) => {
             })
                 .then(res => res.json())
                 .then(response => {
+                    props.handleLoading(false);
                     if (response.errors) {
                         alert(response.errors);
                         return;
@@ -162,6 +164,7 @@ const AddResource = (props) => {
             })
                 .then(res => res.json())
                 .then(response => {
+                    props.handleLoading(false);
                     if (response.errors) {
                         console.log(response, response.errors, 'alo')
                         alert(response.errors.map(a => a.msg).join(' '));

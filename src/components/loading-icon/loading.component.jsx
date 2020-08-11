@@ -1,5 +1,5 @@
 import React from 'react';
-import './loading.styles.scss'
+import './loading.styles.scss';
 
 export const Loading = () => {
     const [visible, setVisible] = React.useState(true);
@@ -35,11 +35,12 @@ export const Loading = () => {
                     new Array(5)
                         .fill(4)
                         .map((a, i) => a - i)
-                        .map((b, i) =>
+                        .reverse()
+                        .map(b =>
                             <div
-                                key={i}
-                                className={`ball mod-${i}`}
-                                onAnimationEnd={() => changeFunction(i)}
+                                key={b}
+                                className={`ball mod-${b}`}
+                                onAnimationEnd={() => changeFunction(b)}
                             >
                             </div>) :
                     null}

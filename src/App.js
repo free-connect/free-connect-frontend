@@ -7,7 +7,7 @@ import EditResourcePage from './pages/edit-resource/edit-resource-page.component
 import RegisterPage from './pages/register-page/register-page.component';
 import ProfilePage from './pages/profile-page/profile-page.component';
 import NavBar from './components/navigation/navbar/navbar.component';
-import Detail from './components/detail/detail.component';
+import ResourceDetail from './components/resources/resource-detail/resource-detail.component';
 import { Footer } from './components/footer/footer.component';
 import ResetPage from './pages/reset-page/reset-page.component';
 import NewPwPage from './pages/new-pw-page/newPw-page.component';
@@ -115,7 +115,7 @@ function App(props) {
           <Route exact path='/register' render={() => <RegisterPage handleLogin={handleLogin}/>} />
           <Route exact path='/resources' component={ResourcePage} />
           <Route exact path='/about' component={AboutPage} />
-          <Route exact path='/detail' component={Detail} />
+          <Route exact path='/detail' component={ResourceDetail} />
           <Route exact path='/reset/:resetId' component={NewPwPage} />
           <Route exact path='/reset' component={ResetPage} />
           <Route exact path='/contact' component={ContactPage} />

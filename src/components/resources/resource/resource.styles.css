@@ -1,13 +1,13 @@
 @media screen and (max-width: 300px) {
     .resource-box{
         margin: 2vh;
-        border: solid  rgb(117, 204, 153) 2px;
+        border: solid  #7bd6a1 2px;
     }
 }
 
 @media screen and (min-width: 300px) {
     .resource-box{
-        border: solid  rgb(117, 204, 153) 3px;
+        border: solid  #7bd6a1 3px;
         margin: 20px;
     }
 }
@@ -55,14 +55,4 @@
 
 .resource-right{
     padding: 5%;
-
-}
-
-.resource-right__anchor{
-    text-decoration: none;
-    cursor: pointer
-}
-
-.resource-right__anchor.active{
-    color: yellow
 }

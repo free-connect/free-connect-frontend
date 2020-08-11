@@ -55,7 +55,6 @@ const NewPwPage = (props) => {
         })
             .then(response => response.json())
             .then(res => {
-                console.log(res, res.success)
                 if (res.success) {
                     alert('Password reset!')
                     props.history.push('/');
@@ -65,8 +64,6 @@ const NewPwPage = (props) => {
             })
             .catch(err => console.log(err))
     }
-
-    React.useEffect(() => console.log('props', props))
 
     React.useEffect(() => checkId(props.match.params.resetId), [])
 

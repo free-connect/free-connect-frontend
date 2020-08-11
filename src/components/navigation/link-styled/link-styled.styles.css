@@ -1,5 +1,5 @@
 .nav-active p{
-    color: rgb(76, 76, 212)
+    color: #0c3752
 }
 
 .nav{
@@ -11,7 +11,7 @@
 }
 
 .nav.active{
-    color: rgb(76, 76, 212)
+    color: #0c3752
 }
 
 .link-styled-block{

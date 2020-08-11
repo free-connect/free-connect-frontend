@@ -2,7 +2,7 @@ import React from 'react';
 import './main-page.styles.css'
 import Filter from '../../components/filter/filter.component'
 
-const MainPage = (props) => {
+const MainPage = () => {
     return (
         <div className="main">
             <Filter />

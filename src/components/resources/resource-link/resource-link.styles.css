@@ -1,0 +1,10 @@
+.resource-link{
+    text-decoration: none;
+    cursor: pointer;
+    color: black;
+    transition-duration: .3s
+}
+
+.resource-link.active{
+    color: rgb(76, 76, 212)
+}

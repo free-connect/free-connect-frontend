@@ -10,7 +10,6 @@
     top: 20%;
     transform: translate(-50%, -20%);
     overflow-y: scroll;
-    text-align: left;
 }
 
 .review-box h3{

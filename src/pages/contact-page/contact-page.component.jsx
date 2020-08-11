@@ -2,6 +2,7 @@ import React from 'react';
 import './contact-page.styles.css'
 import { Form } from '../../components/form/form.component';
 import { Loading } from '../../components/loading-icon/loading.component';
+import { CustomButton } from '../../components/custom-button/custom-button.component';
 
 export const ContactPage = () => {
     const [email, setEmail] = React.useState('');
@@ -52,7 +53,7 @@ export const ContactPage = () => {
         <React.Fragment>
             {loading ?
                 <Loading /> :
-                <form className='contact-page' onSubmit={handleSubmit}>
+                <div className='contact-page'>
                     <h1>Contact Page</h1>
                     <p>Have a question about the site? Want to volunteer? Interested in expanding? Feel free to reach out!</p>
                     <Form
@@ -77,9 +78,9 @@ export const ContactPage = () => {
                     <p>Message</p>
                     <textarea value={message} onChange={e => setMessage(e.target.value)}></textarea>
                     <br />
-                    <button type='submit'>Send!</button>
+                    <CustomButton handleClick={handleSubmit} text="Submit!"/>
                     <br />
-                </form>
+                </div>
             }
         </React.Fragment>
     )

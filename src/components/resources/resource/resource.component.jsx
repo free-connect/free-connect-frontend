@@ -1,17 +1,32 @@
 import React from 'react';
-import { CustomButton } from '../../custom-button/custom-button.component';
-
 import './resource.styles.css';
-import { Link, withRouter } from 'react-router-dom';
+import { CustomButton } from '../../custom-button/custom-button.component';
+import { ConfirmationDialog } from '../../new-alert-box/new-alert-box.component';
+import { ResourceLink } from '../resource-link/resource-link.component';
+
+import { withRouter } from 'react-router-dom';
 
 const Resource = (props) => {
-    const [aActive, setAActive] = React.useState(false)
+    const [conf, setConf] = React.useState(false);
+    const [description, setDescription] = React.useState('Are you sure you want to delete? Process cannot be reversed.');
+    const [options, setOptions] = React.useState(true);
 
     const handleDetail = () => {
         props.history.push({
             pathname: '/detail',
             state: {
                 data: props.data
+            }
+        })
+        return;
+    }
+
+    const handleEditRedirect = () => {
+        props.history.push({
+            pathname: "/edit-resource",
+            state: {
+                data: props.data,
+                edit: true
             }
         })
         return;
@@ -27,7 +42,7 @@ const Resource = (props) => {
             alert('not authorized');
             return
         }
-        fetch(process.env.REACT_APP_LOCATION+'/delete-resource', {
+        fetch(process.env.REACT_APP_LOCATION + '/delete-resource', {
             method: "POST",
             body: JSON.stringify(data),
             headers: {
@@ -38,16 +53,33 @@ const Resource = (props) => {
             .then(res => res.json())
             .then(response => {
                 if (response.success) {
-                    alert('Successfully Deleted!');
-                    props.history.push('/admin-resources');
-                    window.location.reload(false);
+                    setOptions(false);
+                    setDescription('Successfully deleted!');
                 }
             })
             .catch(err => console.log(err))
     }
 
+    const handleClose = () => {
+        if (!options) {
+            props.history.push('/admin-resources');
+            window.location.reload(false);
+        } else {
+            setConf(false);
+        }
+    }
+
     return (
         <div className='resource-box'>
+            <ConfirmationDialog
+                open={conf}
+                title={'DELETING RESOURCE'}
+                description={description}
+                onSubmit={handleDelete}
+                onClose={handleClose}
+                options={options}
+                closeText={options ? 'Cancel' : 'Close'}
+            />
             <div className="resource-left">
                 <h3>{props.data.title}</h3>
                 <img
@@ -62,6 +94,7 @@ const Resource = (props) => {
                 <br />
                 <p>{props.data.phone}</p>
                 <br />
+                <ResourceLink website={props.data.website} />
             </div>
             <div className="resource-right">
                 <ul>
@@ -70,34 +103,14 @@ const Resource = (props) => {
                 <br />
                 <CustomButton handleClick={handleDetail} text='Details' />
                 <br />
-                <br />
-                <a
-                    className={aActive ? 'resource-right__anchor active' : 'resource-right__anchor'}
-                    href={props.data.website}
-                    onMouseOver={() => setAActive(true)}
-                    onMouseOut={() => setAActive(false)}
-                >
-                    Click to visit {props.data.name}
-                </a>
                 {props.admin ?
                     <div className='delete-resource'>
                         {!props.profile ?
-                            <React.Fragment>
-                                <button
-                                    onClick={handleDelete}>
-                                    Delete
-                        </button>
-                            </React.Fragment> :
+                            <CustomButton handleClick={() => setConf(true)} text='Delete'/> :
                             null
                         }
-                        <Link
-                            to={{
-                                pathname: "/edit-resource",
-                                state: {
-                                    data: props.data,
-                                    edit: true
-                                }
-                            }}>Edit</Link>
+                        <br />
+                        <CustomButton handleClick={handleEditRedirect} text='Edit'/>
                     </div> :
                     null
                 }

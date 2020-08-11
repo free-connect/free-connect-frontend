@@ -4,13 +4,9 @@
         width: 10%;
     }
     50%{
-        height: 10%;
-        width: 10%;
         background-color: rgb(109, 109, 233);
     }
     100% {
-        height: 10%;
-        width: 10%;
         margin-left: 70%;
         background-color: rgb(20, 110, 88);
         border: solid rgb(20, 110, 88) 1px;
@@ -21,18 +17,12 @@
     0% {
         margin-left: 70%;
         background-color: rgb(20, 110, 88);
-        height: 10%;
-        width: 10%;
     }
     50%{
-        height: 10%;
-        width: 10%;
         background-color: rgb(109, 109, 233);
     }
     100% {
         background-color: rgb(20, 110, 88);
-        height: 10%;
-        width: 10%;
     }
   }
 
@@ -50,6 +40,7 @@
 }
 
 .loading{
+    padding-left: 5vh;
     position: fixed;
     top: 40%;
     left: 50%;
@@ -57,7 +48,7 @@
     height: 20vh;
     margin-top: 10vh;
     transform: translate(-50%, -50%);
-    overflow: visible;
+    overflow: hidden;
 }
 
 .ball{

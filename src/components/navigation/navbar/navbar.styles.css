@@ -7,7 +7,7 @@
     position: fixed;
     box-shadow: 0 10px 13px #777;
     z-index: 35;
-    background-color: rgb(117, 204, 153);
+    background-color: #7bd6a1;
     height: 85%;
     margin: 0;
     transition-duration: .3s;
@@ -45,7 +45,7 @@
     margin-top: 0px;
     width: 35px;
     height: 7px;
-    background-color: rgb(76, 76, 212);
+    background-color: #0c3752;
     transition-duration: .6s;
 }
 
@@ -53,7 +53,7 @@
     border-radius: 50%;
     width: 30px;
     height: 30px;
-    background-color: rgb(76, 76, 212);
+    background-color: #0c3752;
 }
 
 .line.bel{
@@ -83,7 +83,7 @@
 }
 
 .nav-login.active{
-    color: rgb(76, 76, 212)
+    color: #0c3752
 }
 
 .nav-logout{
