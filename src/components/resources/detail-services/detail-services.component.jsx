@@ -8,7 +8,7 @@ export const DetailServices = (props) => {
         <div className='detail-service'>
             <h3 onClick={() => setActive(!active)}>{props.service}</h3>
             <ul className={active ? 'detail-service__list active' : 'detail-service__list'}>
-                {props.details.map((detail, index) => <li key={index}>{detail}</li>)}
+                {props.details.map((detail, key) => <li key={key}>{detail}</li>)}
             </ul>
         </div>
     )

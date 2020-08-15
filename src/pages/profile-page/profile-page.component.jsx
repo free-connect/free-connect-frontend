@@ -3,15 +3,16 @@ import './profile-page.styles.css'
 import Resource from '../../components/resources/resource/resource.component';
 import { Loading } from '../../components/loading-icon/loading.component'
 import { withRouter } from 'react-router-dom';
-import AddResource from '../../components/resources/add-resource-form/add-resource.component';
+import NewEditResource from '../../components/resources/new-edit-resource/new-edit-resource.component';
 
 const ProfilePage = (props) => {
     const [initAffiliation, setInitAffiliation] = React.useState(null)
     const [loaded, setLoaded] = React.useState(false);
-    const [pageLoaded, setPageLoaded] = React.useState(false);
-    const [likes, setLikes] = React.useState([])
-
+    const [likes, setLikes] = React.useState([]);
+    const [loading, setLoading] = React.useState(false);
+ 
     const loadMyResources = () => {
+        setLoading(true);
         const token = localStorage.getItem('token');
         if (!token) {
             return;
@@ -39,23 +40,25 @@ const ProfilePage = (props) => {
                         }
                         setLikes([...response.likes]);
                     })
-                    .then(() => true)
+                    .then(() => setLoading(false))
                     .catch(err => console.log(err))
             })
             .then(() => {
                 setLoaded(true);
-                setPageLoaded(true)
+                setLoading(false)
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                console.log(err);
+                setLoading(false)
+            })
     }
 
-    React.useEffect(() => loadMyResources(), [])
+    React.useEffect(() => loadMyResources(), [setLoading])
 
     return (
-        <React.Fragment>
-            {pageLoaded ? null : <Loading />}
             <React.Fragment >
-                <div hidden={pageLoaded ? false : true} className='profile-block' >
+                {!loading ?
+                <div hidden={loading ? true : false} className='profile-block' >
                     {loaded ? <h1>Welcome back {localStorage.getItem('name')}!</h1> : null}
                     <br />
                     <div className='profile-likes'>
@@ -118,15 +121,15 @@ const ProfilePage = (props) => {
                                             these updates are current. Feel free to visit the 'about' section for more
                                             details!
                                         </p>
-                                        <AddResource register={true} />
+                                        <NewEditResource handleLoading={setLoading} register={true} />
                                     </div>
                                 </React.Fragment> :
                                 null
                         }
                     </div>
-                </div>
+                </div> : 
+                <Loading />}
             </React.Fragment>
-        </React.Fragment>
     )
 }
 

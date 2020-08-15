@@ -1,5 +1,5 @@
 import React from 'react';
-import './add-resource.styles.css'
+import './new-edit-resource.styles.css'
 import { siftPhone } from '../../../util/functions'
 import { Dynamic } from '../../dynamic-data/dynamic.component';
 import { Form } from '../../form/form.component';
@@ -9,33 +9,32 @@ import { withRouter } from 'react-router-dom';
 import { ServicesAll } from '../../services-all/services-all.component';
 import { CustomButton } from '../../custom-button/custom-button.component';
 
-const AddResource = (props) => {
-    const [title, setTitle] = React.useState('');
-    const [address, setAddress] = React.useState('');
-    const [phone, setPhone] = React.useState('');
+const NewEditResource = (props) => {
+    const [title, setTitle] = React.useState('Organization Name');
+    const [address, setAddress] = React.useState('Address');
+    const [phone, setPhone] = React.useState('Phone');
     const [url, setUrl] = React.useState([]);
-    const [website, setWebsite] = React.useState('');
+    const [preview, setPreview] = React.useState('')
+    const [website, setWebsite] = React.useState('Website');
     const [services, setServices] = React.useState({})
     const [city, setCity] = React.useState('Boulder')
     const [dynamicData, setDynamicData] = React.useState([]);
     const [id, setId] = React.useState('');
     const [affiliation, setAffiliation] = React.useState(null);
 
-    const handleImage = (e) => {
+    const handleImage = async (e) => {
         e.preventDefault();
-        setUrl([e.target.files[0]]);
-        return;
-    }
-
-    const addDetail = (arr, del = false) => {
-        let name = Object.keys(arr)[0];
-        let detail = { ...services }
-        if (del) {
-            delete detail[name]
-        } else {
-            detail[name] = arr[name];
+        const file = e.target.files[0];
+        setUrl([file]);
+        if (window.FileReader) {
+            const reader = new FileReader();
+            if (file && file.type.match('image.*')) {
+                reader.readAsDataURL(file);
+            }
+            reader.onloadend = function (e) {
+                setPreview(reader.result)
+            }
         }
-        setServices(detail);
     }
 
     const handleEdit = () => {
@@ -68,7 +67,7 @@ const AddResource = (props) => {
         let data = {
             affiliation: aff.toString()
         }
-        fetch(process.env.REACT_APP_LOCATION+'/add-user-resource', {
+        fetch(process.env.REACT_APP_LOCATION + '/add-user-resource', {
             method: "POST",
             body: JSON.stringify(data),
             headers: {
@@ -83,7 +82,8 @@ const AddResource = (props) => {
                     return;
                 }
                 if (response.success) {
-                    window.location.reload()
+                    props.handleLoading(false);
+                    alert('success!');
                 }
             })
             .catch((err) => console.log(err, 'err'))
@@ -124,7 +124,7 @@ const AddResource = (props) => {
         formData.append('website', website);
         formData.append('city', city);
         if (!props.location.state) {
-            fetch(process.env.REACT_APP_LOCATION+'/', {
+            fetch(process.env.REACT_APP_LOCATION + '/', {
                 method: "POST",
                 body: formData,
                 headers: {
@@ -133,7 +133,9 @@ const AddResource = (props) => {
             })
                 .then(res => res.json())
                 .then(response => {
-                    props.handleLoading(false);
+                    if (!props.register) {
+                        props.handleLoading(false)
+                    }
                     if (response.errors) {
                         alert(response.errors);
                         return;
@@ -155,7 +157,7 @@ const AddResource = (props) => {
                 alert('not authorized')
                 return;
             }
-            fetch(process.env.REACT_APP_LOCATION+'/edit-resource', {
+            fetch(process.env.REACT_APP_LOCATION + '/edit-resource', {
                 method: "POST",
                 body: formData,
                 headers: {
@@ -166,7 +168,6 @@ const AddResource = (props) => {
                 .then(response => {
                     props.handleLoading(false);
                     if (response.errors) {
-                        console.log(response, response.errors, 'alo')
                         alert(response.errors.map(a => a.msg).join(' '));
                         return;
                     }
@@ -188,65 +189,77 @@ const AddResource = (props) => {
     }, [])
 
     return (
-        <div className='add-resource-form'>
-            <Form
-                title='title'
-                label="Organization Name"
-                value={title}
-                type="text"
-                changeFunction={setTitle} />
-            <Form
-                title="address"
-                label="Address"
-                value={address}
-                type="text"
-                changeFunction={setAddress} />
-            <Form
-                title='phone'
-                label="Phone"
-                value={phone}
-                type="text"
-                changeFunction={setPhone} />
-            <Form
-                title='website'
-                label="Website"
-                value={website}
-                type="text"
-                changeFunction={setWebsite} />
+        <React.Fragment>
+            <div className='resource-edit'>
+                <div className='left-edit'>
+                    <Form
+                        title='title'
+                        label={title}
+                        type="text"
+                        changeFunction={setTitle} />
+                    <br />
+                    <label htmlFor='picture' >Picture</label>
+                    <input
+                        className='custom-form'
+                        type='file'
+                        name='picture'
+                        onChange={handleImage} />
+                    <br />
+                    {preview ?
+                        <img
+                            src={preview}
+                            width='200px'
+                            height='200px'
+                        /> :
+                        null}
+                    <br />
+                    <Form
+                        title='website'
+                        label={website}
+                        type="text"
+                        changeFunction={setWebsite} />
+                    <Form
+                        title="address"
+                        label={address}
+                        type="text"
+                        changeFunction={setAddress} />
+                    <br />
+                    <CityForm setCity={setCity} city={city} add={true} />
+                    <br />
+                    <Form
+                        title='phone'
+                        label={phone}
+                        type="text"
+                        changeFunction={setPhone} />
+                    <br />
+                    <Dynamic
+                        handleDynamic={setDynamicData}
+                        dynamicData={dynamicData}
+                    />
+                </div>
+                <div className='right-edit'>
+                    <ServicesAll
+                        setServices={setServices}
+                        services={services}
+                        add={true}
+                        {...props} />
+                    <br />
+                    <br />
+                </div>
+                <React.Fragment>
+                    {props.register ?
+                        <p>
+                            <label>Or select from existing....</label>
+                            <SelectResource handleResource={setAffiliation} />
+                        </p>
+                        : null}
+                </React.Fragment>
+                <br />
+            </div>
+            <CustomButton handleClick={handleSubmit} text={'Submit!'} />
             <br />
-            <label htmlFor='picture' >Picture</label>
-            <input
-                className='custom-form'
-                type='file'
-                name='picture'
-                onChange={handleImage} />
-            <br />
-            <CityForm setCity={setCity} city={city} />
-            <br />
-            <ServicesAll
-                setServices={setServices}
-                services={services}
-                addDetail={addDetail}
-                add={true}
-                {...props} />
-            <br />
-            <br />
-            <Dynamic
-                handleDynamic={setDynamicData}
-                dynamicData={dynamicData}
-            />
-            <React.Fragment>
-                {props.register ?
-                    <p>
-                        <label>Or select from existing....</label>
-                        <SelectResource handleResource={setAffiliation} />
-                    </p>
-                    : null}
-            </React.Fragment>
-            <br />
-            <CustomButton handleClick={handleSubmit} text={'Submit!'}/>
-        </div>
+        </React.Fragment>
     )
 }
 
-export default withRouter(AddResource)
+export default withRouter(NewEditResource)

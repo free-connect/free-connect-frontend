@@ -260,7 +260,7 @@ const ResourceDetail = (props) => {
                 </React.Fragment>
                 :
                 loaded ?
-                    <p>Thanks for checking out resource details! Head over to the resoure page to browse a list of available resources in your area</p> :
+                    <p className='detail-default'>Thanks for checking out resource details! Head over to the resoure page to browse a list of available resources in your area</p> :
                     null
             }
             {reviewAct || reviewList ? <div className="detail-layer"></div> : null}

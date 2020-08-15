@@ -6,3 +6,8 @@
 .dynamic-block__time{
     opacity: .5
 }
+
+.fa.fa-info-circle{
+    font-size: 15px;
+    cursor: pointer
+}

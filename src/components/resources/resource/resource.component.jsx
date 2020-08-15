@@ -106,11 +106,11 @@ const Resource = (props) => {
                 {props.admin ?
                     <div className='delete-resource'>
                         {!props.profile ?
-                            <CustomButton handleClick={() => setConf(true)} text='Delete'/> :
+                            <CustomButton handleClick={() => setConf(true)} text='Delete' /> :
                             null
                         }
                         <br />
-                        <CustomButton handleClick={handleEditRedirect} text='Edit'/>
+                        <CustomButton handleClick={handleEditRedirect} text='Edit' />
                     </div> :
                     null
                 }

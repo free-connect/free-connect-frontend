@@ -31,7 +31,15 @@ export const ReviewBox = (props) => {
             <h3 onClick={props.handleClickOff}>X</h3>
             {props.type === 'list' ?
                 <ReviewList {...props} /> :
-                <AddReview {...props} />
+                props.type === 'info' ?
+                    <React.Fragment>
+                        <br />
+                        <br />
+                        <p>
+                            {props.info}
+                        </p>
+                    </React.Fragment> :
+                    <AddReview {...props} />
             }
         </div>
     )

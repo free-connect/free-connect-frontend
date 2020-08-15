@@ -100,3 +100,8 @@
     opacity: .5;
     font-size: 10px;
 }
+
+.detail-default{
+    height: 100vh;
+    padding: 15vh
+}

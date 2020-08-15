@@ -1,7 +1,7 @@
 import React from 'react';
 import { Loading } from '../../components/loading-icon/loading.component';
 import { ResourceList } from '../../components/resources/resource-list/resource-list.component';
-import AddResource from '../../components/resources/add-resource-form/add-resource.component';
+import NewEditResource from '../../components/resources/new-edit-resource/new-edit-resource.component';
 
 export const AdminResourcePage = (props) => {
     const [loading, setLoading] = React.useState(false);
@@ -15,7 +15,7 @@ export const AdminResourcePage = (props) => {
                 <Loading />
                 </React.Fragment> :
                 <React.Fragment>
-                    <AddResource handleLoading={setLoading}/>
+                    <NewEditResource handleLoading={setLoading}/>
                     <ResourceList
                         admin={true}
                         city={props.location.state ? props.location.state.city : ''} />

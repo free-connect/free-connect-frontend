@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, withRouter, Switch } from 'react-router-dom';
 import './App.css';
 
+import NewEditResource from './components/resources/new-edit-resource/new-edit-resource.component';
 import MainPage from './pages/main-page/main-page.component';
 import EditResourcePage from './pages/edit-resource/edit-resource-page.component';
 import RegisterPage from './pages/register-page/register-page.component';

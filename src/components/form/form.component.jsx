@@ -12,8 +12,9 @@ export const Form = (props) => {
                 className='custom-form'
                 type={props.type}
                 name={props.title}
-                value={props.value}
-                onChange={(e) => props.changeFunction(e.target.value)} />
+                onChange={(e) => props.changeFunction(e.target.value)}
+                placeholder={props.label} 
+                />
         </React.Fragment>
     )
 }

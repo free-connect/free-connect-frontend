@@ -30,19 +30,17 @@ export const DynamicDetail = (props) => {
             <div className='dynamic-detail-box'>
                 <div className='dynamic-detail-add'>
                     <AddButton handleClick={handleSubmitDesc} data={props.data} />
-                    <label>information:&nbsp;</label>
                     <input
                         value={props.tempName}
                         onChange={e => props.setTempName(e.target.value)}
                         onKeyPress={handleEnter}
-                    ></input>
-                </div>
-                <div>
-                    <label>&nbsp;value</label>
+                        placeholder='name'
+                    ></input>&nbsp;
                     <input
                         value={props.tempVal}
                         onChange={e => props.setTempVal(e.target.value)}
                         onKeyPress={handleEnter}
+                        placeholder='information'
                     ></input>
                 </div>
             </div>

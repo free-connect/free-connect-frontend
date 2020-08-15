@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom';
 
 const Filter = (props) => {
     const [city, setCity] = React.useState('All');
-    const [services, setServices] = React.useState({});
+    const [services, setServices] = React.useState([]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -21,6 +21,8 @@ const Filter = (props) => {
         })
         window.location.reload(false)
     }
+
+    React.useEffect(() => console.log(services), [services])
 
     return (
         <React.Fragment>

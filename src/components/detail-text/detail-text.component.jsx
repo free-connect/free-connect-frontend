@@ -13,9 +13,10 @@ export const DetailText = (props) => {
         }
     }
 
-    const handleDelete = (val) => {
-        setDetailArray(val);
-        props.addDetail({ [props.name]: val })
+    const handleDelete = (newArray) => {
+        setDetailArray(newArray);
+        const newValue = { [props.name]: newArray }
+        props.handleChange(newValue)
     }
 
     React.useEffect(() => onLoad(), [])
@@ -24,20 +25,22 @@ export const DetailText = (props) => {
         if (e.key !== 'Enter') {
             return;
         }
-        handleSubmitDesc(e)
+        handleSubmitDescription(e)
     }
 
-    const handleSubmitDesc = (e) => {
+    const handleSubmitDescription = (e) => {
         e.preventDefault();
-        const val = description;
-        let newArr = [...detailArray];
-        if (newArr.length > 15) {
+        if (!description) {
             return;
         }
-        newArr = newArr.concat(val);
-        props.addDetail({ [props.name]: newArr })
+        const newDescriptionData = [...detailArray, description]
+        if (newDescriptionData.length > 15) {
+            return;
+        }
+        const newDetail = { [props.name]: newDescriptionData };
+        props.handleChange(newDetail)
         setDescription('')
-        setDetailArray(newArr);
+        setDetailArray(newDescriptionData);
         return;
     }
 
@@ -45,15 +48,15 @@ export const DetailText = (props) => {
         <div className='detail-text'>
             {detailArray[0] ?
                 <React.Fragment>
-                    {detailArray.map((a, i) => {
+                    {detailArray.map((serviceDetail, key) => {
                         return (
-                            <div className='detail-text__delete'>
+                            <div key={key} className='detail-text__delete'>
                                 <DeleteDetail
                                     detailArray={detailArray}
                                     handleDelete={handleDelete}
-                                    index={i}
+                                    index={key}
                                 />
-                                <p key={i}>&nbsp;&nbsp;{a}</p>
+                                <p>&nbsp;&nbsp;{serviceDetail}</p>
                             </div>
                         )
                     })}
@@ -61,7 +64,7 @@ export const DetailText = (props) => {
                 null
             }
             <div className='detail-add'>
-                <AddButton handleClick={handleSubmitDesc} />
+                <AddButton handleClick={handleSubmitDescription} />
                 <textarea
                     type="text"
                     cols="40"

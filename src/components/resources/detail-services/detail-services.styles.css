@@ -15,7 +15,7 @@
 .detail-service__list{
     transform: scaleY(0);
     max-height: 0px;
-    transition-duration: .5s;
+    transition-duration: .7s;
     overflow: hidden;
     display: flex;
     flex-direction: column;

@@ -12,18 +12,18 @@ export const CityForm = (props) => {
             <CustomButton handleClick={() => setActive(!active)} text={'View City'} />
             <br />
             <div className={active ? 'city-drop active' : 'city-drop'}>
-                {cities.map((a, i) => {
-                    let truthy = false;
+                {cities.map((selectedCity, key) => {
+                    let selected = false;
                     if (props.city) {
-                        truthy = props.city === a ? true : false;
+                        selected = props.city === selectedCity ? true : false;
                     }
                     return (
-                        <React.Fragment key={i}>
+                        <React.Fragment key={key}>
                             <div
-                                onClick={() => props.setCity(a)}
-                                className={truthy ? 'city-checks active' : 'city-checks'}
+                                onClick={() => props.setCity(selectedCity)}
+                                className={selected ? 'city-checks active' : 'city-checks'}
                             >
-                                {a}
+                                {selectedCity}
                             </div>
                         </React.Fragment>
                     )

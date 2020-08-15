@@ -4,16 +4,17 @@ import { DetailText } from '../detail-text/detail-text.component';
 import './services-all.styles.css'
 
 export const ServicesAll = (props) => {
-    const [active, setActive] = React.useState(false)
+    const [active, setActive] = React.useState(false);
 
-    const handleChange = (val, bool) => {
-        let newChecked = { ...props.services };
-        if (bool) {
-            delete newChecked[val]
-            props.setServices(newChecked)
+    const handleChange = (serviceToBeAdded, deleteService = false) => {
+        let name = Object.keys(serviceToBeAdded)[0];
+        let newServices = { ...props.services };
+        if (deleteService) {
+            delete newServices[name];
         } else {
-            props.setServices({ ...newChecked, [val]: [] });
+            newServices = { ...newServices, ...serviceToBeAdded }
         }
+        props.setServices(newServices);
     }
 
     const servicesList = [
@@ -42,23 +43,23 @@ export const ServicesAll = (props) => {
                             'filter-drop'
                 }
             >
-                {servicesList.map((a, i) => {
-                    let truthy = false;
+                {servicesList.map((service, key) => {
+                    let active = false;
                     if (props.services) {
-                        truthy = Object.keys(props.services).includes(a) ? true : false;
+                        active = Object.keys(props.services).includes(service) ? true : false;
                     }
                     return (
-                        <React.Fragment key={i}>
+                        <React.Fragment key={key}>
                             <div
-                                onClick={() => handleChange(a, truthy)}
-                                className={truthy ? 'filter-checks active' : 'filter-checks'}
+                                onClick={() => handleChange({ [service]: [] }, active)}
+                                className={active ? 'filter-checks active' : 'filter-checks'}
                             >
-                                <p>{a}</p>
+                                <p>{service}</p>
                             </div>
-                            {truthy && props.add ?
+                            {active && props.add ?
                                 <DetailText
-                                    name={a}
-                                    addDetail={props.addDetail}
+                                    name={service}
+                                    handleChange={handleChange}
                                     {...props}
                                 /> :
                                 null

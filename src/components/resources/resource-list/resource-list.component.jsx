@@ -15,8 +15,8 @@ export const ResourceList = (props) => {
         return getData(newPage)
     }
 
-    const getData = (pageVal = 1) => {
-        let query = process.env.REACT_APP_LOCATION+`/data/resources?page=${pageVal}&city=${props.city ? props.city : ''}&services=${props.services ? props.services : ''}`
+    const getData = (currentPage = 1) => {
+        let query = process.env.REACT_APP_LOCATION + `/data/resources?page=${currentPage}&city=${props.city ? props.city : ''}&services=${props.services ? props.services : ''}`
         fetch(query)
             .then(response => response.json())
             .then(newData => {
@@ -29,7 +29,7 @@ export const ResourceList = (props) => {
                 }
                 setLoaded(true);
             })
-            .catch(err => console.log('errorrrrr', err))
+            .catch(err => console.log('err', err))
     }
 
     React.useEffect(() => {
@@ -41,12 +41,12 @@ export const ResourceList = (props) => {
         <React.Fragment>
             <div className='resource-list'>
                 {data[0] && loaded ?
-                    data.map((a, i) => {
+                    data.map((data, key) => {
                         return (
-                            <React.Fragment key={i}>
+                            <React.Fragment key={key}>
                                 <Resource
-                                    id={i + 1 === data.length ? 0 : i + 1}
-                                    data={a}
+                                    id={key + 1 === data.length ? 0 : key + 1}
+                                    data={data}
                                     admin={props.admin}
                                 />
                             </React.Fragment>

@@ -1,0 +1,61 @@
+@media screen and (max-width: 756px) {
+    .left-edit{
+        flex: 1 1 45%;
+    }
+    
+    .right-edit{
+        flex: 1 1 45%;
+    }
+    .left-edit h3{
+        font-size: 8vw;
+    }
+  }
+
+  @media screen and (min-width: 756px) {
+    .left-edit{
+        flex: 1 1 44%;
+    }
+    
+    .right-edit{
+        flex: 1 1 44%;
+    }
+    .left-edit h3{
+        font-size: 5vh;
+    }
+  }
+
+.resource-edit{
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-start;
+}
+
+.left-edit{
+    display: flex;
+    flex-direction: column;
+    padding: 3%;
+    overflow-x: hidden;
+}
+
+.right-edit{
+    font-size: 2.5vh;
+    max-width: 100%;
+    padding-right: 6%;
+    padding-top: 6%
+}
+
+.right-edit li{
+    list-style-type: square;
+}
+
+.image-edit{
+    background-color: black;
+    height: 25vh;
+    width: 25vh;
+    display: inline-block
+}
+
+img{
+    margin: auto
+}
