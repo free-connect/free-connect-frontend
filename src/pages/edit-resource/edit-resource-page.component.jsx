@@ -13,12 +13,10 @@ const EditResourcePage = (props) => {
             if (props.location.state.edit) {
                 setAuthed(true)
                 return;
-            } else {
-                props.history.push('/')
             }
-        } else {
-            props.history.push('/')
         }
+        props.history.push('/')
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (

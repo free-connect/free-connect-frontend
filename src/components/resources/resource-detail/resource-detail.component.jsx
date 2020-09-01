@@ -5,11 +5,14 @@ import { LikeButton } from '../../like-button/like-button.component';
 import { Loading } from '../../loading-icon/loading.component';
 import { ResourceLink } from '../../resources/resource-link/resource-link.component';
 import { DetailServices } from '../detail-services/detail-services.component';
+import { AlertBoxContext } from '../../../util/context/alertContext';
+import { quickAlert } from '../../../util/functions'
 
 import { withRouter } from 'react-router-dom';
 import './resource-detail.styles.css'
 
 const ResourceDetail = (props) => {
+    const [state, setState] = React.useContext(AlertBoxContext);
     const [data, setData] = React.useState({});
     const [loaded, setLoaded] = React.useState(false);
     const [reviewAct, setReviewAct] = React.useState(false);
@@ -44,7 +47,8 @@ const ResourceDetail = (props) => {
     const handleLike = () => {
         const token = localStorage.getItem('token')
         if (!token) {
-            alert('You gotta be signed in to like a resource!');
+            const message = 'You gotta be signed in to like a resource!';
+            quickAlert(message, state, setState)
             return;
         }
         const newData = {
@@ -61,12 +65,12 @@ const ResourceDetail = (props) => {
             })
             .then(res => res.json())
             .then(response => {
-                console.log('response', response)
                 if (response.success) {
                     setUserLikes(true);
                     return;
                 } else if (response.message) {
-                    alert(response.message)
+                    const message = response.message;
+                    quickAlert(message, state, setState)
                     return;
                 }
                 return;
@@ -78,7 +82,8 @@ const ResourceDetail = (props) => {
         e.preventDefault();
         const token = localStorage.getItem('token')
         if (!token) {
-            alert('You gotta sign in to review a resource!');
+            const message = 'You gotta sign in to review a resource!';
+            quickAlert(message, state, setState)
             return;
         }
         window.scrollTo({
@@ -126,7 +131,8 @@ const ResourceDetail = (props) => {
             review: review
         };
         if (!token) {
-            alert("Oh No! You're not a user! come register :)")
+            const message = "Oh No! You're not a user! come register :)";
+            quickAlert(message, state, setState);
             return;
         };
         fetch(process.env.REACT_APP_LOCATION + '/review', {
@@ -139,17 +145,20 @@ const ResourceDetail = (props) => {
         })
             .then(res => res.json())
             .then(response => {
+                let message;
                 if (response.success) {
-                    alert('thanks for reviewing!');
+                    message = 'thanks for reviewing!'
                 } else {
-                    alert(response.message)
+                    message = response.message
                 };
+                quickAlert(message, state, setState)
                 setReviewAct(false);
                 return
             })
             .catch(err => {
                 console.log(err);
-                alert('hmm somthing went wrong. Please make sure you have a reistered affiliation before reviewing!')
+                const message = 'hmm somthing went wrong. Please make sure you have a reistered affiliation before reviewing!';
+                quickAlert(message, state, setState)
                 setReviewAct(false);
                 return
             })
@@ -174,9 +183,10 @@ const ResourceDetail = (props) => {
             .catch(err => console.log(err))
     }
 
-    React.useEffect(() => console.log(props, userLikes))
-
-    React.useEffect(() => props.location.state ? getDetails(props.location.state.data) : setLoaded(true), []);
+    React.useEffect(() => {
+        props.location.state ? getDetails(props.location.state.data) : setLoaded(true);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+}, []);
 
     return (
         <div className='resource-detail'>
@@ -199,11 +209,11 @@ const ResourceDetail = (props) => {
                         <p>{data.city ? `${data.city}, CO` : 'none specified'}</p>
                         <p>{data.phone}</p>
                         <br />
-                        {data.dynamicData.map((a, i) => {
+                        {data.dynamicData.map((dataPoint, key) => {
                             return (
-                                <div key={i} className='detail-dynamic-data'>
-                                    <span><p>{a.name}:&nbsp;{a.value}&nbsp;</p></span>
-                                    <p className='detail-dynamic-data__time'>updated {a.timestamp}</p>
+                                <div key={key} className='detail-dynamic-data'>
+                                    <span><p>{dataPoint.name}:&nbsp;{dataPoint.value}&nbsp;</p></span>
+                                    <p className='detail-dynamic-data__time'>updated {dataPoint.timestamp}</p>
                                 </div>
                             )
                         })}

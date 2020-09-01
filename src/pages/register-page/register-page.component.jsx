@@ -4,8 +4,11 @@ import { SelectResource } from '../../components/select-resource/select-resource
 import { withRouter } from 'react-router-dom';
 import { Form } from '../../components/form/form.component';
 import { Loading } from '../../components/loading-icon/loading.component';
+import { AlertBoxContext } from '../../util/context/alertContext';
+import { quickAlert } from '../../util/functions';
 
 const RegisterPage = (props) => {
+    const [state, setState] = React.useContext(AlertBoxContext);
     const [username, setUsername] = React.useState('');
     const [email, setEmail] = React.useState('');
     const [name, setName] = React.useState('');
@@ -37,7 +40,10 @@ const RegisterPage = (props) => {
             setConfirmPassword('');
             return;
         } else if (!equal) {
-            setWarning('must enter a value');
+            setWarning('must enter a value for all fields.');
+            return;
+        } else if (password.length <= 12 || confirmPassword.length <= 12) {
+            setWarning('Password is too short, must be 12 characters or more. Try a passphrase! For instance, "Monkeyk@ratemobile!"');
             return;
         }
         const data = {
@@ -59,7 +65,8 @@ const RegisterPage = (props) => {
             .then(response => {
                 if (response.errors) {
                     setLoading(false);
-                    alert(response.errors.map(a => a.msg).join(' '));
+                    const message = response.errors.map(a => a.msg).join(' ')
+                    quickAlert(message, state, setState);
                     return;
                 }
                 if (response.success) {
@@ -72,7 +79,8 @@ const RegisterPage = (props) => {
                     return;
                 } else {
                     setLoading(false)
-                    alert('email/username already exists! Go to Login Page. Or, you can try a different username/email :)');
+                    const message = 'email/username already exists! Go to Login Page. Or, you can try a different username/email :)';
+                    quickAlert(message, state, setState);
                     return;
                 }
             })

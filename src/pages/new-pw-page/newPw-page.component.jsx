@@ -65,7 +65,10 @@ const NewPwPage = (props) => {
             .catch(err => console.log(err))
     }
 
-    React.useEffect(() => checkId(props.match.params.resetId), [])
+    React.useEffect(() => {
+        checkId(props.match.params.resetId);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <React.Fragment>

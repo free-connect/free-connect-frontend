@@ -22,10 +22,8 @@ const Filter = (props) => {
         window.location.reload(false)
     }
 
-    React.useEffect(() => console.log(services), [services])
-
     return (
-        <React.Fragment>
+        <div className="filter-block">
             <h1>What are you looking for?</h1>
             <br />
             <ServicesAll
@@ -36,7 +34,7 @@ const Filter = (props) => {
             <br />
             <CityForm setCity={setCity} city={city} />
             <CustomButton handleClick={handleSubmit} text='Find!' />
-        </React.Fragment>
+        </div>
     )
 }
 

@@ -1,5 +1,10 @@
-.resource_page{
-    height: 3600px
+.resource-page{
+    height: 3600px;
+}
+
+.resource-page__hidden{
+    height: 0px;
+    transition-duration: .5s;
 }
 
 .loading-page{

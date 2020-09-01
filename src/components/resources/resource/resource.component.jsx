@@ -1,15 +1,13 @@
 import React from 'react';
-import './resource.styles.css';
-import { CustomButton } from '../../custom-button/custom-button.component';
-import { ConfirmationDialog } from '../../new-alert-box/new-alert-box.component';
-import { ResourceLink } from '../resource-link/resource-link.component';
-
 import { withRouter } from 'react-router-dom';
+import './resource.styles.css';
+
+import { CustomButton } from '../../custom-button/custom-button.component';
+import { ResourceLink } from '../resource-link/resource-link.component';
+import { AlertBoxContext } from '../../../util/context/alertContext';
 
 const Resource = (props) => {
-    const [conf, setConf] = React.useState(false);
-    const [description, setDescription] = React.useState('Are you sure you want to delete? Process cannot be reversed.');
-    const [options, setOptions] = React.useState(true);
+    const [state, setState] = React.useContext(AlertBoxContext);
 
     const handleDetail = () => {
         props.history.push({
@@ -30,7 +28,7 @@ const Resource = (props) => {
             }
         })
         return;
-    }
+    };
 
     const handleDelete = (e) => {
         e.preventDefault()
@@ -39,7 +37,13 @@ const Resource = (props) => {
         }
         const token = localStorage.getItem('token')
         if (!token) {
-            alert('not authorized');
+            setState({
+                ...state,
+                options: false,
+                open: true,
+                description: 'Not Authorized',
+                closeText: 'Close'
+            });
             return
         }
         fetch(process.env.REACT_APP_LOCATION + '/delete-resource', {
@@ -53,33 +57,38 @@ const Resource = (props) => {
             .then(res => res.json())
             .then(response => {
                 if (response.success) {
-                    setOptions(false);
-                    setDescription('Successfully deleted!');
+                    setState({
+                        ...state,
+                        options: false,
+                        open: true,
+                        title: 'Successfully deleted!',
+                        description: '',
+                        closeText: ''
+                    });
+                    return true;
                 }
+            })
+            .then(() => {
+                props.history.push('/admin-resources');
+                window.location.reload(false);
             })
             .catch(err => console.log(err))
     }
 
-    const handleClose = () => {
-        if (!options) {
-            props.history.push('/admin-resources');
-            window.location.reload(false);
-        } else {
-            setConf(false);
+    const deleteConfirmationBox = () => {
+        const newState = {
+            open: true,
+            options: true,
+            closeText: 'Cancel',
+            title: 'Caution! Deleting Resource',
+            description: 'Are you sure you want to delete? Process cannot be reversed.',
+            onSubmit: handleDelete
         }
+        setState(newState);
     }
 
     return (
         <div className='resource-box'>
-            <ConfirmationDialog
-                open={conf}
-                title={'DELETING RESOURCE'}
-                description={description}
-                onSubmit={handleDelete}
-                onClose={handleClose}
-                options={options}
-                closeText={options ? 'Cancel' : 'Close'}
-            />
             <div className="resource-left">
                 <h3>{props.data.title}</h3>
                 <img
@@ -106,7 +115,7 @@ const Resource = (props) => {
                 {props.admin ?
                     <div className='delete-resource'>
                         {!props.profile ?
-                            <CustomButton handleClick={() => setConf(true)} text='Delete' /> :
+                            <CustomButton handleClick={deleteConfirmationBox} text='Delete' /> :
                             null
                         }
                         <br />

@@ -10,7 +10,7 @@ const ProfilePage = (props) => {
     const [loaded, setLoaded] = React.useState(false);
     const [likes, setLikes] = React.useState([]);
     const [loading, setLoading] = React.useState(false);
- 
+
     const loadMyResources = () => {
         setLoading(true);
         const token = localStorage.getItem('token');
@@ -53,11 +53,15 @@ const ProfilePage = (props) => {
             })
     }
 
-    React.useEffect(() => loadMyResources(), [setLoading])
+    React.useEffect(() => {
+        loadMyResources()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
-            <React.Fragment >
-                {!loading ?
+        <React.Fragment >
+            {loaded ? null : <Loading />}
+            {!loading ?
                 <div hidden={loading ? true : false} className='profile-block' >
                     {loaded ? <h1>Welcome back {localStorage.getItem('name')}!</h1> : null}
                     <br />
@@ -65,18 +69,21 @@ const ProfilePage = (props) => {
                         {loaded && likes[0] ?
                             <React.Fragment>
                                 <h2>Liked Resources</h2>
-                                {likes.map((a, i) => {
+                                {likes.map((likedResource, key) => {
                                     return (
-                                        <React.Fragment key={i}>
-                                            <h3>{a.title}</h3>
-                                            {a.dynamicData[0] ?
-                                                a.dynamicData.map((b, ind) => {
+                                        <React.Fragment key={key}>
+                                            <h3>{likedResource.title}</h3>
+                                            {likedResource.dynamicData[0] ?
+                                                likedResource.dynamicData.map((dataPoint, dataKey) => {
                                                     return (
-                                                        <ul key={ind}>
+                                                        <ul key={dataKey}>
                                                             <span>
-                                                                {b.name}:&nbsp;
-                                                                {b.value}&nbsp;as of
-                                                                <div style={{ opacity: '.5' }}>{b.timestamp}</div></span>
+                                                                {dataPoint.name}:&nbsp;
+                                                                {dataPoint.value}&nbsp;as of
+                                                                <div style={{ opacity: '.5' }}>
+                                                                    {dataPoint.timestamp}
+                                                                </div>
+                                                            </span>
                                                         </ul>
                                                     )
                                                 }) :
@@ -127,9 +134,9 @@ const ProfilePage = (props) => {
                                 null
                         }
                     </div>
-                </div> : 
+                </div> :
                 <Loading />}
-            </React.Fragment>
+        </React.Fragment>
     )
 }
 

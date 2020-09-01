@@ -2,6 +2,7 @@
     width: 100%;
     font-family: 'Prata', serif;
     user-select: text;
+    font-size: smaller;
 }
 
 .detail-add{

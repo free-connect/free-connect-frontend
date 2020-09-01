@@ -2,14 +2,12 @@ import React from 'react';
 import { Route, withRouter, Switch } from 'react-router-dom';
 import './App.css';
 
-import NewEditResource from './components/resources/new-edit-resource/new-edit-resource.component';
 import MainPage from './pages/main-page/main-page.component';
 import EditResourcePage from './pages/edit-resource/edit-resource-page.component';
 import RegisterPage from './pages/register-page/register-page.component';
 import ProfilePage from './pages/profile-page/profile-page.component';
 import NavBar from './components/navigation/navbar/navbar.component';
 import ResourceDetail from './components/resources/resource-detail/resource-detail.component';
-import { Footer } from './components/footer/footer.component';
 import ResetPage from './pages/reset-page/reset-page.component';
 import NewPwPage from './pages/new-pw-page/newPw-page.component';
 import { AdminResourcePage } from './pages/admin-resources/admin-resource-page.component';
@@ -17,15 +15,17 @@ import { ResourcePage } from './pages/resource-page/resource-page.component';
 import { AboutPage } from './pages/about-page/about-page.component';
 import { ErrorPage } from './pages/error-page/error-page.component';
 import { ContactPage } from './pages/contact-page/contact-page.component';
+import { Footer } from './components/footer/footer.component';
+import { ConfirmationDialog } from './components/new-alert-box/new-alert-box.component';
+import { AlertBoxProvider } from './util/context/alertContext';
 
-
-function App(props) {
+const App = (props) => {
   const [isAuth, setIsAuth] = React.useState(false);
-  const [token, setToken] = React.useState(null);
   const [userId, setUserId] = React.useState(null);
   const [load, setLoad] = React.useState(false);
 
   const handleLoad = () => {
+    setLoad(true)
     const token = localStorage.getItem('token');
     const expiryDate = localStorage.getItem('expiryDate');
     if (!token || !expiryDate) {
@@ -38,17 +38,15 @@ function App(props) {
     setIsAuth(true);
     const userId = localStorage.getItem('userId');
     setUserId(userId);
-    setToken(token);
   }
 
   React.useEffect(() => {
-    handleLoad()
-    setLoad(true)
+    handleLoad();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleSubmitLogout = () => {
     setIsAuth(false);
-    setToken(null);
     setUserId(null);
     localStorage.removeItem('token');
     localStorage.removeItem('expiryDate');
@@ -59,12 +57,12 @@ function App(props) {
   }
 
   const handleLogin = (e, authData) => {
-    e.preventDefault()
+    e.preventDefault();
     const data = {
       username: authData.username,
       password: authData.password
     }
-    fetch(process.env.REACT_APP_LOCATION+'/login', {
+    fetch(process.env.REACT_APP_LOCATION + '/login', {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
@@ -74,14 +72,12 @@ function App(props) {
       .then(res => res.json())
       .then((response) => {
         if (response.message) {
-          setIsAuth(false)
-          alert(response.message)
+          setIsAuth(false);
+          alert(response.message);
           return;
         } else if (response.success) {
-          setToken(response.token);
           setUserId(response.userId);
           setIsAuth(true);
-          alert('logged in successfully!')
         }
         localStorage.setItem('token', response.token);
         localStorage.setItem('userId', response.userId);
@@ -92,7 +88,7 @@ function App(props) {
         );
         localStorage.setItem('expiryDate', expiryDate.toISOString());
         props.history.push('/profile');
-        window.location.reload(false);
+        return true;
       })
       .catch(err => {
         console.log(err);
@@ -102,33 +98,38 @@ function App(props) {
 
   return (
     <React.Fragment>
-      {load ?
-        <NavBar
-          logout={handleSubmitLogout}
-          admin={userId === process.env.REACT_APP_USER_ID ? true : false}
-          isAuth={isAuth}
-          handleLogin={handleLogin}
-        /> :
-        null}
-      <div className="App">
-        <Switch>
-          <Route exact path='/' component={MainPage} />
-          <Route exact path='/register' render={() => <RegisterPage handleLogin={handleLogin}/>} />
-          <Route exact path='/resources' component={ResourcePage} />
-          <Route exact path='/about' component={AboutPage} />
-          <Route exact path='/detail' component={ResourceDetail} />
-          <Route exact path='/reset/:resetId' component={NewPwPage} />
-          <Route exact path='/reset' component={ResetPage} />
-          <Route exact path='/contact' component={ContactPage} />
-          {isAuth ? <Route exact path='/edit-resource' component={EditResourcePage} /> : null}
-          {(isAuth && userId === process.env.REACT_APP_USER_ID) ?
-            <Route exact path="/admin-resources" component={AdminResourcePage} /> :
-            null}
-          {isAuth ? <Route exact path="/profile" render={() => <ProfilePage logout={handleSubmitLogout} token={token} />} /> : null}
-          <Route path='*' component={ErrorPage} />
-        </Switch>
-        <Footer />
-      </div>
+      <AlertBoxProvider>
+        {load ?
+          <NavBar
+            logout={handleSubmitLogout}
+            admin={userId === process.env.REACT_APP_USER_ID ? true : false}
+            isAuth={isAuth}
+            handleLogin={handleLogin}
+          /> :
+          null}
+        <div className="App">
+          <React.Fragment>
+            <ConfirmationDialog open={false} />
+            <Switch>
+              <Route exact path='/' component={MainPage} />
+              <Route exact path='/register' render={() => <RegisterPage handleLogin={handleLogin} />} />
+              <Route exact path='/resources' component={ResourcePage} />
+              <Route exact path='/about' component={AboutPage} />
+              <Route exact path='/detail' component={ResourceDetail} />
+              <Route exact path='/reset/:resetId' component={NewPwPage} />
+              <Route exact path='/reset' component={ResetPage} />
+              <Route exact path='/contact' component={ContactPage} />
+              {isAuth ? <Route exact path='/edit-resource' component={EditResourcePage} /> : null}
+              {(isAuth && userId === process.env.REACT_APP_USER_ID) ?
+                <Route exact path="/admin-resources" component={AdminResourcePage} /> :
+                null}
+              {isAuth ? <Route exact path="/profile" render={() => <ProfilePage logout={handleSubmitLogout} />} /> : null}
+              <Route path='*' component={ErrorPage} />
+            </Switch>
+            <Footer />
+          </React.Fragment>
+        </div>
+      </AlertBoxProvider>
     </React.Fragment>
   );
 }

@@ -29,13 +29,13 @@ export const Dynamic = (props) => {
         infoActive ? setInfoActive(false) : setInfoActive(true);
     }
 
-    const info="Updates are for information that may change frequently, such as number of available beds, events, housing applications, etc. You can add as many of these as you like! These also come with a timestamp so users can tell the last time the information has been updated."
+    const info = "Updates are for information that may change frequently, such as number of available beds, events, housing applications, etc. You can add as many of these as you like! These also come with a timestamp so users can tell the last time the information has been updated."
 
     //work on making this section into a chart!
 
     return (
         <React.Fragment>
-            <ReviewBox type="info" info={info} active={infoActive} handleClickOff={() => setInfoActive(false)}/>
+            <ReviewBox type="info" info={info} active={infoActive} handleClickOff={() => setInfoActive(false)} />
             <h1>Updates &nbsp;<i onClick={handleClick} className="fa fa-info-circle"></i></h1>
             {props.dynamicData[0] ?
                 [...props.dynamicData].map((data, index) => {

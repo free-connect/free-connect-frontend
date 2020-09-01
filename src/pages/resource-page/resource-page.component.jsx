@@ -13,9 +13,6 @@ export const ResourcePage = (props) => {
     return (
         <React.Fragment>
             <div className={pageLoaded ? 'loading-page' : 'resource-page'}>
-                <br />
-                <br />
-                <br />
                 {pageLoaded ? null : <Loading />}
                 <div hidden={pageLoaded ? false : true}>
                     <Filter />

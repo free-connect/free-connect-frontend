@@ -3,8 +3,11 @@ import './contact-page.styles.css'
 import { Form } from '../../components/form/form.component';
 import { Loading } from '../../components/loading-icon/loading.component';
 import { CustomButton } from '../../components/custom-button/custom-button.component';
+import { AlertBoxContext } from '../../util/context/alertContext';
+import { quickAlert, handleEnterKey } from '../../util/functions';
 
 export const ContactPage = () => {
+    const [state, setState] = React.useContext(AlertBoxContext);
     const [email, setEmail] = React.useState('');
     const [name, setName] = React.useState('');
     const [subject, setSubject] = React.useState('');
@@ -13,7 +16,12 @@ export const ContactPage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setLoading(true)
+        if (!subject || !message || !email || !name) {
+            const message = 'Please fill out all fields.';
+            quickAlert(message, state, setState);
+            return;
+        };
+        setLoading(true);
         const data = {
             email: email,
             name: name,
@@ -47,13 +55,13 @@ export const ContactPage = () => {
                 alert('hmmm something went wrong');
                 console.log(err);
             })
-    }
+    };
 
     return (
         <React.Fragment>
             {loading ?
                 <Loading /> :
-                <div className='contact-page'>
+                <div className='contact-page' onKeyDown={e => handleEnterKey(e, handleSubmit)}>
                     <h1>Contact Page</h1>
                     <p>Have a question about the site? Want to volunteer? Interested in expanding? Feel free to reach out!</p>
                     <Form

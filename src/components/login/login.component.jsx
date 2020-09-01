@@ -1,73 +1,73 @@
 import React from 'react';
 import './login.styles.css'
 import { withRouter } from 'react-router-dom';
-import { Form } from '../../components/form/form.component';
 import { LinkStyled } from '../../components/navigation/link-styled/link-styled.component';
 import { CustomButton } from '../custom-button/custom-button.component';
+import { AlertBoxContext } from '../../util/context/alertContext';
+import { quickAlert, handleEnterKey } from '../../util/functions';
 
 const Login = (props) => {
+    const [state, setState] = React.useContext(AlertBoxContext);
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
 
     const handleLogin = (e) => {
+        if (!username || !password) {
+            const errorMessage = "Can't have blank username or password";
+            quickAlert(errorMessage, state, setState)
+            return;
+        }
         const data = {
             username: username,
             password: password
         }
-        props.handleLogin(e, data)
+        props.handleLogin(e, data);
     }
-
-    const handleLoginKey = (e) => {
-        if (e.key !== 'Enter') {
-            return;
-        }
-        if (!username || !password) {
-            alert("can't have blank username or password")
-            return;
-        }
-        handleLogin(e)
-    };
 
     const handleInactive = () => {
         if (!props.active) {
             setUsername('');
-            setPassword('')
+            setPassword('');
         }
         return;
     }
 
-    React.useEffect(() => handleInactive())
+    React.useEffect(() => {
+        handleInactive();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.active]);
+
+    React.useEffect(() => state.open ? props.setAlert(true) : props.setAlert(false), [props, state])
 
     return (
         <div className={props.active ? 'login-comp active' : 'login-comp'}>
             <div
                 className='login-form'
-                onKeyPress={handleLoginKey}
+                onKeyPress={e => handleEnterKey(e, handleLogin)}
             >
-                <Form
-                    title="email/username"
-                    label="Email"
-                    value={username}
+                <br />
+                <label htmlFor="email/username">Email/Username</label>
+                <input
                     type="text"
-                    changeFunction={setUsername}
-                    color='white'
+                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder="email/username"
+                    value={username}
                 />
-                <Form
-                    title="password"
-                    label="Password"
-                    value={password}
+                <label htmlFor="password">Password</label>
+                <input
                     type="password"
-                    changeFunction={setPassword}
-                    color='white'
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="password"
+                    value={password}
                 />
                 <br />
                 <CustomButton text='Login' handleClick={handleLogin} />
             </div>
             <div className='login-text'>
                 <br />
-                <LinkStyled loc='/reset' name='Forgot password?' handleClick={() => props.setActive(false)}/>
+                <LinkStyled loc='/reset' name='Forgot password?' handleClick={() => props.setActive(false)} />
                 <br />
-                <LinkStyled loc='/register' name='Not a member?' handleClick={() => props.setActive(false)}/>
+                <LinkStyled loc='/register' name='Not a member?' handleClick={() => props.setActive(false)} />
             </div>
         </div>
     )

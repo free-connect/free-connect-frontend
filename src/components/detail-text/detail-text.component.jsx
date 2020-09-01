@@ -19,7 +19,10 @@ export const DetailText = (props) => {
         props.handleChange(newValue)
     }
 
-    React.useEffect(() => onLoad(), [])
+    React.useEffect(() => {
+        onLoad();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     const handleEnter = (e) => {
         if (e.key !== 'Enter') {

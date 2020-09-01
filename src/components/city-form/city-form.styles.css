@@ -24,7 +24,7 @@
     margin: auto;
     user-select: none;
     transition-duration: .8s;
-    width: 50%;
+    width: 30%;
 }
 
 .city-drop.active{

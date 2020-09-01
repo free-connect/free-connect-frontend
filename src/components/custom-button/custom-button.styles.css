@@ -3,11 +3,10 @@
     width: 60%;
     cursor: pointer;
     border: none;
-    transition-duration: .3s;
+    transition-duration: .5s;
     color: #daf0ff;
     border-radius: 20px;
     margin: auto;
-    float: center;
     background-color: #0c3752;
     font-size: 1em;
     max-width: 130px;
@@ -20,11 +19,7 @@
 
 .custom-button.active{
     background-color: #daf0ff;
-    color: #0c3752
-}
-
-.custom-button.disabled{
-    background-color: black;
+    color: #0c3752;
 }
 
 .custom-button-name{
