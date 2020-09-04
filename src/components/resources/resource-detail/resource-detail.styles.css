@@ -83,7 +83,7 @@
     height: auto;
     flex-flow: row wrap;
     justify-content: left;
-    padding: 3%;
+    padding-top: 3%;
 }
 
 .detail-reviews p{

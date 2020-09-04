@@ -1,5 +1,6 @@
 import React from 'react';
 import { CustomButton } from '../custom-button/custom-button.component';
+import { DropDown } from '../styles/drop-down/drop-down.component';
 import './city-form.styles.css'
 
 export const CityForm = (props) => {
@@ -11,7 +12,7 @@ export const CityForm = (props) => {
         <React.Fragment>
             <CustomButton handleClick={() => setActive(!active)} text={'View City'} />
             <br />
-            <div className={active ? 'city-drop active' : 'city-drop'}>
+            <DropDown active={active} add={props.add}>
                 {cities.map((selectedCity, key) => {
                     let selected = false;
                     if (props.city) {
@@ -28,7 +29,7 @@ export const CityForm = (props) => {
                         </React.Fragment>
                     )
                 })}
-            </div>
+            </DropDown>
         </React.Fragment>
     )
 }

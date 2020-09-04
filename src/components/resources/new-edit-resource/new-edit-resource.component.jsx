@@ -260,6 +260,8 @@ const NewEditResource = (props) => {
                     />
                 </div>
                 <div className='right-edit'>
+                    <p>Services</p>
+                    <br />
                     <ServicesAll
                         setServices={setServices}
                         services={services}

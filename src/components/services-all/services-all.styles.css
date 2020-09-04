@@ -25,37 +25,7 @@
     background-color: #eee;
 }
 
-.filter-drop{
-    max-height: 0px;
-    overflow: hidden;
-    margin: auto;
-    user-select: none;
-    min-width: 200px;
-    width: 40%;
-    transition-duration: .8s;
-    font-family: 'Prata', serif;
-}
-
-.filter-drop::-webkit-scrollbar {
-    width: 0em;
-  }
-   
-  .filter-drop::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  }
-   
-  .filter-drop::-webkit-scrollbar-thumb {
-    background-color: rgb(38, 38, 109);
-    outline: 1px solid slategrey;
-  }
-
-.filter-drop.active{
-    max-height: 280px;
-    overflow-y: scroll;
-}
-
-.filter-drop.active__add{
-    max-height: 1080px;
-    transition-duration: 1.8s;
-    overflow-y: scroll
+.service-note{
+    font-size: 10px;
+    padding-top: 20px;
 }

@@ -16,17 +16,3 @@
     background-color: rgb(24, 24, 116);
     color: white
 }
-
-.city-drop{
-    max-height: 0px;
-    width: 210px;
-    overflow: hidden;
-    margin: auto;
-    user-select: none;
-    transition-duration: .8s;
-    width: 30%;
-}
-
-.city-drop.active{
-    max-height: 200px;
-}

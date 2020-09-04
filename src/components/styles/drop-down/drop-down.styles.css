@@ -1,0 +1,67 @@
+.custom-drop::-webkit-scrollbar {
+    width: 0em;
+}
+   
+.custom-drop::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+   
+.custom-drop::-webkit-scrollbar-thumb {
+    background-color: rgb(38, 38, 109);
+    outline: 1px solid slategrey;
+}
+
+.custom-drop-add::-webkit-scrollbar {
+    width: 0em;
+}
+   
+.custom-drop-add::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+   
+.custom-drop-add::-webkit-scrollbar-thumb {
+    background-color: rgb(38, 38, 109);
+    outline: 1px solid slategrey;
+}
+
+.custom-drop{
+    max-height: 0px;
+    transition-duration: .8s;
+    overflow: hidden;
+    margin: auto;
+    user-select: none;
+    width: 200px;
+    font-family: 'Prata', serif;
+    box-shadow: 0 15px 10px #777;
+    background-color: #F8F8FF;
+    overflow-y: scroll;
+    z-index: 150;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+
+.custom-drop-add{
+    max-height: 0px;
+    transition-duration: .8s;
+    overflow: hidden;
+    margin: auto;
+    user-select: none;
+    width: 300px;
+    font-family: 'Prata', serif;
+    box-shadow: 0 15px 10px #777;
+    background-color: #F8F8FF;
+    overflow-y: scroll;
+    z-index: 150;
+    padding-right: 5%;
+    padding-left: 5%;
+    position: relative;
+}
+
+.custom-drop-add.active{
+    max-height: 360px;
+}
+
+.custom-drop.active{
+    max-height: 200px
+}
