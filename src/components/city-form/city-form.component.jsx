@@ -10,9 +10,9 @@ export const CityForm = (props) => {
 
     return (
         <React.Fragment>
-            <CustomButton handleClick={() => setActive(!active)} text={'View City'} />
+            <CustomButton disabled={active} handleClick={() => setActive(!active)} text={'View City'} />
             <br />
-            <DropDown active={active} add={props.add}>
+            <DropDown setActive={setActive} active={active} add={props.add}>
                 {cities.map((selectedCity, key) => {
                     let selected = false;
                     if (props.city) {

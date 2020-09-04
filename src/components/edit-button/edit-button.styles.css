@@ -1,17 +1,18 @@
-.detail-delete__symbol{
-    color: red;
+.fa.fa-edit{
+    height: 17px;
     cursor: pointer;
     font-size: 15px;
     -moz-user-select: none;
     -webkit-user-select: none;
     user-select: none;
-    height: 17px;
-    padding: .2em .3em .2em .4em;
+    color: green;
+    background-color: white;
+    padding: .4em .2em .2em .4em;
     transition-duration: .3s;
     border-radius: 50%
 }
 
-.detail-delete__symbol.active{
-    background-color: red;
-    color: white;
+.fa.fa-edit.active{
+    background-color: green;
+    color: white
 }

@@ -3,19 +3,35 @@ import { AddButton } from '../add-button/add-button.component';
 import './dynamic-detail.styles.css'
 
 export const DynamicDetail = (props) => {
+    const [tempName, setTempName] = React.useState('');
+    const [tempVal, setTempVal] = React.useState('');
+
+    React.useEffect(() => {
+        if (props.tempName) {
+            setTempName(props.tempName)
+        }
+        if (props.tempVal) {
+            setTempVal(props.tempVal)
+        }
+    }, [])
 
     const handleSubmitDesc = (e) => {
         e.preventDefault()
+        if (!tempName || !tempVal) {
+            return;
+        }
         if (props.data.length > 14) {
             return;
         }
         const date = new Date();
         const val = {
-            name: props.tempName,
-            value: props.tempVal,
+            name: tempName,
+            value: tempVal,
             timestamp: date.toString().split(' ').splice(0, 5).join(' ')
         }
-        props.handleSubmit(val);
+        props.handleSubmit(val, props.index);
+        setTempName('');
+        setTempVal('')
     }
 
     const handleEnter = (e) => {
@@ -29,16 +45,16 @@ export const DynamicDetail = (props) => {
         <React.Fragment>
             <div className='dynamic-detail-box'>
                 <div className='dynamic-detail-add'>
-                    <AddButton handleClick={handleSubmitDesc} data={props.data} />
+                    <AddButton handleClick={handleSubmitDesc} />
                     <input
-                        value={props.tempName}
-                        onChange={e => props.setTempName(e.target.value)}
+                        value={tempName}
+                        onChange={e => setTempName(e.target.value)}
                         onKeyPress={handleEnter}
                         placeholder='name'
                     ></input>&nbsp;
                     <input
-                        value={props.tempVal}
-                        onChange={e => props.setTempVal(e.target.value)}
+                        value={tempVal}
+                        onChange={e => setTempVal(e.target.value)}
                         onKeyPress={handleEnter}
                         placeholder='information'
                     ></input>

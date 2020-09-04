@@ -33,10 +33,10 @@ export const ServicesAll = (props) => {
     ];
 
     return (
-        <React.Fragment>
-            <CustomButton handleClick={() => setActive(!active)} text='View Services' />
+        <React.Fragment >
+            <CustomButton disabled={active} handleClick={() => setActive(!active)} text='View Services' />
             <br />
-            <DropDown active={active} add={props.add}>
+            <DropDown setActive={setActive} active={active} add={props.add}>
                 {servicesList.map((service, key) => {
                     let active = false;
                     if (props.services) {

@@ -11,6 +11,7 @@ export const Form = (props) => {
 
     return (
         <React.Fragment>
+            <br />
             <label htmlFor={props.title}>
                 {props.label.length > 0 ? props.label : OGLabel}
             </label>
