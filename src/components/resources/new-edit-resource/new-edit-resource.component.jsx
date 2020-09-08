@@ -14,12 +14,12 @@ import { quickAlert } from '../../../util/functions';
 
 const NewEditResource = (props) => {
     const [state, setState] = React.useContext(AlertBoxContext);
-    const [title, setTitle] = React.useState('Organization Name');
-    const [address, setAddress] = React.useState('Address');
-    const [phone, setPhone] = React.useState('Phone');
+    const [title, setTitle] = React.useState('');
+    const [address, setAddress] = React.useState('');
+    const [phone, setPhone] = React.useState('');
     const [url, setUrl] = React.useState([]);
     const [preview, setPreview] = React.useState('')
-    const [website, setWebsite] = React.useState('Website');
+    const [website, setWebsite] = React.useState('');
     const [services, setServices] = React.useState({})
     const [city, setCity] = React.useState('Boulder')
     const [dynamicData, setDynamicData] = React.useState([]);
@@ -216,7 +216,7 @@ const NewEditResource = (props) => {
             <div className='resource-edit'>
                 <div className='left-edit'>
                     <Form
-                        title='title'
+                        title='Organization Name'
                         label={title}
                         type="text"
                         changeFunction={setTitle} />
@@ -236,12 +236,12 @@ const NewEditResource = (props) => {
                     />
                     <br />
                     <Form
-                        title='website'
+                        title='Website'
                         label={website}
                         type="text"
                         changeFunction={setWebsite} />
                     <Form
-                        title="address"
+                        title="Address"
                         label={address}
                         type="text"
                         changeFunction={setAddress} />
@@ -249,7 +249,7 @@ const NewEditResource = (props) => {
                     <CityForm setCity={setCity} city={city} add={true} />
                     <br />
                     <Form
-                        title='phone'
+                        title="Phone"
                         label={phone}
                         type="text"
                         changeFunction={setPhone} />

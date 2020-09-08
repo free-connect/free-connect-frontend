@@ -1,5 +1,5 @@
 import React from 'react';
-import { AddButton } from '../add-button/add-button.component';
+import { DetailButton } from '../detail-button/detail-button.component';
 import './dynamic-detail.styles.css'
 
 export const DynamicDetail = (props) => {
@@ -13,6 +13,7 @@ export const DynamicDetail = (props) => {
         if (props.tempVal) {
             setTempVal(props.tempVal)
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const handleSubmitDesc = (e) => {
@@ -45,7 +46,10 @@ export const DynamicDetail = (props) => {
         <React.Fragment>
             <div className='dynamic-detail-box'>
                 <div className='dynamic-detail-add'>
-                    <AddButton handleClick={handleSubmitDesc} />
+                    <DetailButton
+                        purpose='add'
+                        handleClick={handleSubmitDesc}
+                    />
                     <input
                         value={tempName}
                         onChange={e => setTempName(e.target.value)}

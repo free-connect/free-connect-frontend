@@ -1,6 +1,5 @@
 import React from 'react';
-import { DeleteDetail } from '../delete-detail/delete-detail.component';
-import { AddButton } from '../add-button/add-button.component';
+import { DetailButton } from '../detail-button/detail-button.component';
 import './detail-text.styles.css'
 
 export const DetailText = (props) => {
@@ -53,13 +52,14 @@ export const DetailText = (props) => {
                 <React.Fragment>
                     {detailArray.map((serviceDetail, key) => {
                         return (
-                            <div key={key} className='detail-text__delete'>
-                                <DeleteDetail
+                            <div key={key} className='detail-text-line'>
+                                <DetailButton
+                                    purpose='delete'
                                     detailArray={detailArray}
                                     handleDelete={handleDelete}
                                     index={key}
                                 />
-                                <p>&nbsp;&nbsp;{serviceDetail}</p>
+                                <p>{serviceDetail}</p>
                             </div>
                         )
                     })}
@@ -67,7 +67,10 @@ export const DetailText = (props) => {
                 null
             }
             <div className='detail-add'>
-                <AddButton handleClick={handleSubmitDescription} />
+                <DetailButton
+                    purpose='add'
+                    handleClick={handleSubmitDescription}
+                />
                 <textarea
                     type="text"
                     cols="40"
