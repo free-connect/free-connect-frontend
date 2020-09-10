@@ -20,6 +20,10 @@
     flex-direction: column;
 }
 
+.detail-service__list li{
+    padding: .3em
+}
+
 .detail-service__list.active{
     max-height: none;
     flex: 1;

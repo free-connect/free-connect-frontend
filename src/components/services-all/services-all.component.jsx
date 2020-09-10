@@ -18,28 +18,6 @@ export const ServicesAll = (props) => {
         props.setServices(newServices);
     }
 
-    let node = React.useRef(false)
-
-    const handleClickOff = (e) => {
-        if (!node.current.contains(e.target)) {
-            setActive(false);
-        }
-    };
-
-    React.useEffect(() => {
-        document.addEventListener("mousedown", handleClickOff);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOff);
-        };
-    });
-
-    React.useEffect(() => {
-        document.addEventListener("touchstart", handleClickOff);
-        return () => {
-            document.removeEventListener("touchstart", handleClickOff);
-        };
-    });
-
     const servicesList = [
         'Housing',
         'Medical Care',
@@ -51,13 +29,13 @@ export const ServicesAll = (props) => {
         'Legal',
         'Employment',
         'Civil Rights',
-        'Domestic Violence'
+        'Domestic Violence',
+        'Financial Assistance'
     ];
 
     return (
         <React.Fragment>
             <CustomButton
-                disabled={active}
                 handleClick={() => setActive(!active)} text='View Services'
             />
             <br />
@@ -66,7 +44,7 @@ export const ServicesAll = (props) => {
                 active={active}
                 add={props.add}
             >
-                <div ref={node}>
+                <div>
                     {servicesList.map((service, key) => {
                         let active = false;
                         if (props.services) {

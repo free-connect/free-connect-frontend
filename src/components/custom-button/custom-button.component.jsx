@@ -3,14 +3,6 @@ import './custom-button.styles.css'
 
 export const CustomButton = (props) => {
     const [active, setActive] = React.useState(false);
-    const [clicked, setClicked] = React.useState(false);
-
-    const handleClick = (e) => {
-        setClicked(!clicked);
-        if (props.handleClick) {
-            props.handleClick(e);
-        }
-    }
 
     return (
         <div
@@ -21,7 +13,7 @@ export const CustomButton = (props) => {
             onTouchStart={() => setActive(!active)}
             onMouseEnter={() => setActive(true)}
             onMouseLeave={() => setActive(false)}
-            onClick={handleClick}
+            onClick={e => props.handleClick ? props.handleClick(e) : null}
         >
             <div className="custom-button-name">{props.text}</div>
         </div>

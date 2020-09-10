@@ -65,21 +65,18 @@ export const ContactPage = () => {
                     <h1>Contact Page</h1>
                     <p>Have a question about the site? Want to volunteer? Interested in expanding? Feel free to reach out!</p>
                     <Form
-                        title="name"
-                        label="Name"
-                        value={name}
+                        title="Name"
+                        label={name}
                         type="text"
                         changeFunction={setName} />
                     <Form
-                        title="email"
-                        label="Email"
-                        value={email}
+                        title="Email"
+                        label={email}
                         type="email"
                         changeFunction={setEmail} />
                     <Form
-                        title="subject"
-                        label="Subject"
-                        value={subject}
+                        title="Subject"
+                        label={subject}
                         type="text"
                         changeFunction={setSubject} />
                     <br />
