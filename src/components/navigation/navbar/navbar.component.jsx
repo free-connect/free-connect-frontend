@@ -40,7 +40,10 @@ const NavBar = (props) => {
 
     return (
         <div ref={node}>
-            <div className='nav-hamburger' onClick={() => setActive(!active)}>
+            <div
+                className='nav-hamburger'
+                onClick={() => setActive(!active)}
+            >
                 <div className={!active ? "line" : 'line active'}></div>
                 <div className={!active ? "line bel" : 'line bel active'}></div>
             </div>

@@ -3,10 +3,9 @@ import './new-edit-resource.styles.css'
 import { siftPhone } from '../../../util/functions'
 import { Dynamic } from '../../dynamic-data/dynamic.component';
 import { Form } from '../../form/form.component';
-import { CityForm } from '../../city-form/city-form.component';
+import { ButtonAndDropdown } from '../../button-and-dropdown/button-and-dropdown.component';
 import { SelectResource } from '../../select-resource/select-resource.component'
 import { withRouter } from 'react-router-dom';
-import { ServicesAll } from '../../services-all/services-all.component';
 import { CustomButton } from '../../custom-button/custom-button.component';
 import { AlertBoxContext } from '../../../util/context/alertContext';
 import { quickAlert } from '../../../util/functions';
@@ -229,7 +228,7 @@ const NewEditResource = (props) => {
                         onChange={handleImage} />
                     <br />
                     <img
-                        src={preview ? preview : require('../../../images/no-image.jpg')}
+                        src={preview === 'none' || !preview ? require('../../../images/no-image.jpg') : preview}
                         width='200px'
                         height='200px'
                         alt="Displays the resource."
@@ -246,7 +245,13 @@ const NewEditResource = (props) => {
                         type="text"
                         changeFunction={setAddress} />
                     <br />
-                    <CityForm setCity={setCity} city={city} add={true} />
+                    <ButtonAndDropdown
+                        purpose='city'
+                        text='View City'
+                        setCity={setCity}
+                        city={city}
+                        add={true}
+                    />
                     <br />
                     <Form
                         title="Phone"
@@ -262,11 +267,14 @@ const NewEditResource = (props) => {
                 <div className='right-edit'>
                     <p>Services</p>
                     <br />
-                    <ServicesAll
+                    <ButtonAndDropdown
+                        purpose='services'
+                        text='View Services'
                         setServices={setServices}
                         services={services}
                         add={true}
-                        {...props} />
+                        {...props}
+                    />
                     <br />
                     <br />
                 </div>

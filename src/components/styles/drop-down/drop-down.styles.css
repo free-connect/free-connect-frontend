@@ -45,7 +45,6 @@
     max-height: 0px;
     transition-duration: .8s;
     overflow: hidden;
-    margin: auto;
     user-select: none;
     width: 300px;
     font-family: 'Prata', serif;
@@ -53,9 +52,8 @@
     background-color: #F8F8FF;
     overflow-y: scroll;
     z-index: 150;
-    padding-right: 5%;
-    padding-left: 5%;
-    position: relative;
+    margin-left: -10vh;
+    position: absolute;
 }
 
 .custom-drop-add.active{

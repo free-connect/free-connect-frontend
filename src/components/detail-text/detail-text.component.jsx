@@ -1,5 +1,6 @@
 import React from 'react';
 import { DetailButton } from '../detail-button/detail-button.component';
+import { TextareaAutosize } from '@material-ui/core';
 import './detail-text.styles.css'
 
 export const DetailText = (props) => {
@@ -71,15 +72,14 @@ export const DetailText = (props) => {
                     purpose='add'
                     handleClick={handleSubmitDescription}
                 />
-                <textarea
+                <TextareaAutosize
+                    aria-label="empty textarea"
+                    cols={40}
                     type="text"
-                    cols="40"
-                    rows="8"
                     onChange={(e) => setDescription(e.target.value)}
                     value={description}
                     onKeyPress={handleEnter}
-                >
-                </textarea>
+                />
             </div>
         </div>
     )

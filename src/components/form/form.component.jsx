@@ -1,19 +1,16 @@
 import React from 'react';
+import { TextField } from '@material-ui/core';
 import './form.styles.css';
 
 export const Form = (props) => {
     return (
         <React.Fragment>
-            <br />
-            <label htmlFor={props.title}>
-                {props.label.length > 0 ? props.label : props.title}
-            </label>
-            <input
-                className='custom-form'
+            <TextField 
+                id="standard-basic" 
+                label={props.title}
                 type={props.type}
-                name={props.title}
                 onChange={(e) => props.changeFunction(e.target.value)}
-                placeholder={props.title}
+                onKeyPress={props.handleKeyPress ? props.handleKeyPress : null}
                 value={props.label}
             />
         </React.Fragment>

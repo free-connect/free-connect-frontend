@@ -4,41 +4,38 @@
     -moz-user-select: none;
     -webkit-user-select: none;
     user-select: none;
-    border-radius: 50%;
 }
 
-.fa.fa-trash{
+.fa{
     padding: .3em;
     border-radius: 50%;
+    transition-duration: .3s;
+}
+
+.fa-trash{
     color: red;
 }
 
-.fa.fa-trash.active{
-    transition-duration: .3s;
+.fa-trash.active{
     background-color: red;
     color:  #F8F8FF;
 }
 
-.fa.fa-edit{
-    padding: .4em;
-    border-radius: 50%;
+.fa-edit{
     color: #7bd6a1;
 }
 
-.fa.fa-edit.active{
-    transition-duration: .3s;
+.fa-edit.active{
     background-color: #7bd6a1;
     color:  #F8F8FF;
 }
 
-.fa.fa-plus{
-    padding: .3em;
-    border-radius: 50%;
+.fa-plus{
     color: rgb(76, 76, 212);
+    margin-top: .3em;
 }
 
-.fa.fa-plus.active{
-    transition-duration: .3s;
+.fa-plus.active{
     background-color: rgb(76, 76, 212);
     color:  #F8F8FF;
 }

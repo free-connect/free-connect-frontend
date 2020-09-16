@@ -1,5 +1,6 @@
 import React from 'react';
 import { DetailButton } from '../detail-button/detail-button.component';
+import { Form } from '../form/form.component';
 import './dynamic-detail.styles.css'
 
 export const DynamicDetail = (props) => {
@@ -45,24 +46,24 @@ export const DynamicDetail = (props) => {
     return (
         <React.Fragment>
             <div className='dynamic-detail-box'>
-                <div className='dynamic-detail-add'>
-                    <DetailButton
-                        purpose='add'
-                        handleClick={handleSubmitDesc}
-                    />
-                    <input
-                        value={tempName}
-                        onChange={e => setTempName(e.target.value)}
-                        onKeyPress={handleEnter}
-                        placeholder='name'
-                    ></input>&nbsp;
-                    <input
-                        value={tempVal}
-                        onChange={e => setTempVal(e.target.value)}
-                        onKeyPress={handleEnter}
-                        placeholder='information'
-                    ></input>
-                </div>
+                <DetailButton
+                    purpose='add'
+                    handleClick={handleSubmitDesc}
+                />
+                <Form
+                    changeFunction={setTempName}
+                    handleKeyPress={handleEnter}
+                    title='Name'
+                    type="text"
+                    label={tempName}
+                />
+                <Form
+                    changeFunction={setTempVal}
+                    handleKeyPress={handleEnter}
+                    title='Information'
+                    type="text"
+                    label={tempVal}
+                />
             </div>
         </React.Fragment>
     )

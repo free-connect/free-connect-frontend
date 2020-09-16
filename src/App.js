@@ -100,12 +100,16 @@ const App = (props) => {
     <React.Fragment>
       <AlertBoxProvider>
         {load ?
-          <NavBar
-            logout={handleSubmitLogout}
-            admin={userId === process.env.REACT_APP_USER_ID ? true : false}
-            isAuth={isAuth}
-            handleLogin={handleLogin}
-          /> :
+          <React.Fragment>
+            <NavBar
+              logout={handleSubmitLogout}
+              admin={userId === process.env.REACT_APP_USER_ID ? true : false}
+              isAuth={isAuth}
+              handleLogin={handleLogin}
+            />
+            <div className='nav-banner'></div>
+          </React.Fragment>
+          :
           null}
         <div className="App">
           <React.Fragment>

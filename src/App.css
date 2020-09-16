@@ -20,3 +20,12 @@
   padding-bottom: 15vh;
   min-height: 100%
 }
+
+.nav-banner{
+  width: 100%;
+  background-image: linear-gradient(#daf0ff, transparent);
+  position: fixed;
+  height: 70px;
+  z-index: 5;
+  opacity: .5;
+}

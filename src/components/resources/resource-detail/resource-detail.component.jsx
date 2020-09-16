@@ -197,7 +197,7 @@ const ResourceDetail = (props) => {
                         <h3>{data.title}</h3>
                         <br />
                             <img
-                                src={data.url}
+                                src={data.url !== 'none' ? data.url : require('../../../images/no-image.jpg')}
                                 alt={data.title}
                                 height='auto'
                                 width='80%'

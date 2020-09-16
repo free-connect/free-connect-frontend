@@ -92,7 +92,7 @@ const Resource = (props) => {
             <div className="resource-left">
                 <h3>{props.data.title}</h3>
                 <img
-                    src={props.data.url}
+                    src={props.data.url !== 'none' ? props.data.url : require('../../../images/no-image.jpg')}
                     alt={props.data.title}
                     height='80vw'
                     width='80vw'

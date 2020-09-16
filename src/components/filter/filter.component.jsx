@@ -1,7 +1,6 @@
 import React from 'react';
 import './filter.styles.css'
-import { CityForm } from '../city-form/city-form.component';
-import { ServicesAll } from '../services-all/services-all.component';
+import { ButtonAndDropdown } from '../button-and-dropdown/button-and-dropdown.component';
 import { CustomButton } from '../custom-button/custom-button.component';
 import { withRouter } from 'react-router-dom';
 
@@ -26,13 +25,20 @@ const Filter = (props) => {
         <div className="filter-block">
             <h1>What are you looking for?</h1>
             <br />
-            <ServicesAll
+            <ButtonAndDropdown
+                purpose='services'
+                text='View Services'
                 setServices={setServices}
                 services={services}
             />
             <h1>Where are you?</h1>
             <br />
-            <CityForm setCity={setCity} city={city} />
+            <ButtonAndDropdown
+                purpose='city'
+                text='View City'
+                setCity={setCity}
+                city={city}
+            />
             <CustomButton handleClick={handleSubmit} text='Find!' />
         </div>
     )
