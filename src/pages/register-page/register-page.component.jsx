@@ -5,7 +5,9 @@ import { withRouter } from 'react-router-dom';
 import { Form } from '../../components/form/form.component';
 import { Loading } from '../../components/loading-icon/loading.component';
 import { AlertBoxContext } from '../../util/context/alertContext';
+import { CustomButton } from '../../components/custom-button/custom-button.component';
 import { quickAlert } from '../../util/functions';
+import { handleEnterKey } from '../../util/functions';
 
 const RegisterPage = (props) => {
     const [state, setState] = React.useContext(AlertBoxContext);
@@ -46,6 +48,7 @@ const RegisterPage = (props) => {
             setWarning('Password is too short, must be 12 characters or more. Try a passphrase! For instance, "Monkeyk@ratemobile!"');
             return;
         }
+        setLoading(true)
         const data = {
             username: username,
             password: password,
@@ -74,7 +77,6 @@ const RegisterPage = (props) => {
                         username: username,
                         password: password
                     }
-                    setLoading(true)
                     props.handleLogin(e, loginData)
                     return;
                 } else {
@@ -94,38 +96,36 @@ const RegisterPage = (props) => {
         <div className='register'>
             {loading ? 
                 <React.Fragment>
-                    <h1>Logging you in...</h1>
+                    <h1>Getting you registered!</h1>
                     <Loading />
                 </React.Fragment> :
-            <form className='register-form' onSubmit={handleSubmit}>
+            <div 
+                className='register-form'
+                onKeyDown={e => handleEnterKey(e, handleSubmit)}
+                >
                 <Form
-                    title="username"
-                    label="Username"
-                    value={username}
+                    title="Username"
+                    label={username}
                     type="text"
                     changeFunction={setUsername} />
                 <Form
-                    title="name"
-                    label="Name"
-                    value={name}
+                    title="Name"
+                    label={name}
                     type="text"
                     changeFunction={setName} />
                 <Form
-                    title="email"
-                    label="Email"
-                    value={email}
+                    title="Email"
+                    label={email}
                     type="email"
                     changeFunction={setEmail} />
                 <Form
-                    title="password"
-                    label="Password"
-                    value={password}
+                    title="Password"
+                    label={password}
                     type="password"
                     changeFunction={setPassword} />
                 <Form
-                    title="confirm-password"
-                    label="Confirm Password"
-                    value={confirmPassword}
+                    title="Confirm Password"
+                    label={confirmPassword}
                     type="password"
                     changeFunction={setConfirmPassword} />
                 <br />
@@ -134,8 +134,11 @@ const RegisterPage = (props) => {
                     <SelectResource handleResource={handleResource} />
                 </p>
                 <br />
-                <button type='submit'>Submit</button>
-            </form>
+                <CustomButton 
+                    text="submit" 
+                    handleClick={handleSubmit}
+                />
+            </div>
             }
             {loading ? null : <p className='register-warning'>{warning}</p>}
         </div>

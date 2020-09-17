@@ -5,6 +5,7 @@ import { LinkStyled } from '../../components/navigation/link-styled/link-styled.
 import { CustomButton } from '../custom-button/custom-button.component';
 import { AlertBoxContext } from '../../util/context/alertContext';
 import { quickAlert, handleEnterKey } from '../../util/functions';
+import { Form } from '../form/form.component';
 
 const Login = (props) => {
     const [state, setState] = React.useContext(AlertBoxContext);
@@ -45,20 +46,17 @@ const Login = (props) => {
                 className='login-form'
                 onKeyPress={e => handleEnterKey(e, handleLogin)}
             >
-                <br />
-                <label htmlFor="email/username">Email/Username</label>
-                <input
+                <Form
                     type="text"
-                    onChange={(e) => setUsername(e.target.value)}
-                    placeholder="email/username"
-                    value={username}
+                    changeFunction={setUsername}
+                    title="Email/Username"
+                    label={username}
                 />
-                <label htmlFor="password">Password</label>
-                <input
+                <Form
                     type="password"
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="password"
-                    value={password}
+                    changeFunction={setPassword}
+                    title="Password"
+                    label={password}
                 />
                 <br />
                 <CustomButton text='Login' handleClick={handleLogin} />

@@ -1,7 +1,9 @@
 .reset-form{
+    padding-top: 20vh;
     display: flex;
     flex-direction: column;
     height: 100vh;
-    margin-left: 30%;
-    margin-right: 30%;
+    margin-left: 20%;
+    margin-right: 20%;
+    min-width: 200px;
 }

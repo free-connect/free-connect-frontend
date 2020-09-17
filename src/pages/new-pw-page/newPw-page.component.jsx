@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom'
 import { Form } from '../../components/form/form.component';
 import { Loading } from '../../components/loading-icon/loading.component';
 import { ErrorPage } from '../error-page/error-page.component';
+import { CustomButton } from '../../components/custom-button/custom-button.component';
 
 const NewPwPage = (props) => {
     const [password, setPassword] = React.useState('');
@@ -73,21 +74,22 @@ const NewPwPage = (props) => {
     return (
         <React.Fragment>
             {authed && loaded ?
-                <form className='new-pw-form' onSubmit={handleNewPw}>
+                <div className='new-pw-form'>
                     <Form
-                        title="new password"
-                        label="new password"
-                        value={password}
+                        title="New Password"
+                        label={password}
                         type="password"
                         changeFunction={setPassword} />
                     <Form
-                        title="confirm password"
-                        label="confirm new password"
-                        value={confPassword}
+                        title="Confirm Password"
+                        label={confPassword}
                         type="password"
                         changeFunction={setConfPassword} />
-                    <button type='submit'>Change Password</button>
-                </form> :
+                    <CustomButton
+                        text="Change Password!"
+                        handleClick={handleNewPw}
+                    />
+                </div> :
                 !authed && loaded ?
                     <ErrorPage /> :
                     <Loading />

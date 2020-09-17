@@ -1,12 +1,17 @@
 import React from 'react';
 import { TextField } from '@material-ui/core';
-import './form.styles.css';
 
 export const Form = (props) => {
     return (
         <React.Fragment>
-            <TextField 
+            <br />
+            <TextField
                 id="standard-basic" 
+                InputProps={{
+                    style: {
+                        fontFamily: "'Prata', serif"
+                    }
+                }}
                 label={props.title}
                 type={props.type}
                 onChange={(e) => props.changeFunction(e.target.value)}

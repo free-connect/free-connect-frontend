@@ -64,9 +64,10 @@ const ResetPage = (props) => {
             {loading ?
                 <Loading /> :
                 <div className='reset-form' onKeyDown={handleEnter}>
+                    <label>Please enter email address associated with your profile.</label>
                     <Form
-                        title="email"
-                        label="Please enter email address associated with your profile."
+                        title="Email"
+                        label={email}
                         type="email"
                         changeFunction={setEmail} />
                     <CustomButton handleClick={handleReset} text={'Send Reset Code!'}/>

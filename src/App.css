@@ -29,3 +29,22 @@
   z-index: 5;
   opacity: .5;
 }
+
+textarea{
+  font-family: 'Prata', serif;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid grey;
+  font-weight: 500;
+  padding-bottom: 1px;
+}
+
+textarea:hover{
+  border-bottom: 1px solid black;
+}
+
+textarea:focus{
+  outline-style: ridge;
+  border-bottom: 0px solid black;
+  padding-bottom: 2px;
+}

@@ -4,7 +4,8 @@ import { Form } from '../../components/form/form.component';
 import { Loading } from '../../components/loading-icon/loading.component';
 import { CustomButton } from '../../components/custom-button/custom-button.component';
 import { AlertBoxContext } from '../../util/context/alertContext';
-import { quickAlert, handleEnterKey } from '../../util/functions';
+import { TextareaAutosize } from '@material-ui/core';
+import { quickAlert } from '../../util/functions';
 
 export const ContactPage = () => {
     const [state, setState] = React.useContext(AlertBoxContext);
@@ -61,7 +62,7 @@ export const ContactPage = () => {
         <React.Fragment>
             {loading ?
                 <Loading /> :
-                <div className='contact-page' onKeyDown={e => handleEnterKey(e, handleSubmit)}>
+                <div className='contact-page'>
                     <h1>Contact Page</h1>
                     <p>Have a question about the site? Want to volunteer? Interested in expanding? Feel free to reach out!</p>
                     <Form
@@ -81,9 +82,14 @@ export const ContactPage = () => {
                         changeFunction={setSubject} />
                     <br />
                     <p>Message</p>
-                    <textarea value={message} onChange={e => setMessage(e.target.value)}></textarea>
+                    <TextareaAutosize
+                        aria-label="empty textarea"
+                        cols={40}
+                        value={message}
+                        onChange={e => setMessage(e.target.value)}
+                    />
                     <br />
-                    <CustomButton handleClick={handleSubmit} text="Submit!"/>
+                    <CustomButton handleClick={handleSubmit} text="Submit!" />
                     <br />
                 </div>
             }

@@ -61,20 +61,20 @@ export const ResourceList = (props) => {
                 {page > 1 ?
                     <div
                         className='button-block__spec'
-                        onClick={() => handleClick('prev')}
                     >
                         <CustomButton
                             text="previous"
+                            handleClick={() => handleClick('prev')}
                         />
                     </div> :
                     null}
                 {page < (count / 4) ?
                     <div
                         className="button-block__spec"
-                        onClick={() => handleClick('next')}
                     >
                         <CustomButton
                             text="next"
+                            handleClick={() => handleClick('next')}
                         />
                     </div> :
                     null}

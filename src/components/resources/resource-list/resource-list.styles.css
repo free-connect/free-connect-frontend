@@ -10,7 +10,8 @@
 }
 
 .button-block{
-    cursor: pointer
+    width: 450px;
+    margin: auto
 }
 
 .button-block__spec{
